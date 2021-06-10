@@ -13,8 +13,22 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        {{ Form::label('name', 'Name', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('name', null, ['class' => 'form-control']) }}
+                                        {{ Form::label('first_name', 'First Name', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('first_name', null, ['class' => 'form-control']) }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="form-group">
+                                        {{ Form::label('middle_name', 'Middle Name', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('middle_name', null, ['class' => 'form-control']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        {{ Form::label('last_name', 'Last Name', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('last_name', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -28,7 +42,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         {{ Form::label('phone_number', 'Phone number', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('phone_number', null, ['class' => 'form-control']) }}
+                                        {{ Form::number('phone_number', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -46,8 +60,14 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        {{ Form::label('role', 'Select Role', ['class' => 'form-control-label']) }}
-                                        {{ Form::select('role', $roles, null, [ 'class'=> 'selectpicker form-control', 'placeholder' => 'Select role...']) }}
+                                        {{ Form::label('role_id', 'Select Role', ['class' => 'form-control-label']) }}
+                                        {{ Form::select('role_id', $roles, null, [ 'class'=> 'selectpicker form-control', 'placeholder' => 'Select role...']) }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        {{ Form::label('nckid', 'NCK ID', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('nckid', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>

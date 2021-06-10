@@ -57,12 +57,12 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $userData = $request->except(['role', 'profile_photo']);
+        $userData = $request->except(['profile_photo']);
         if ($request->profile_photo) {
             $userData['profile_photo'] = parse_url($request->profile_photo, PHP_URL_PATH);
         }
         $user = User::create($userData);
-        $user->assignRole($request->role);
+        $user->assignRole($request->role_id);
         flash('User created successfully!')->success();
         return redirect()->route('users.index');
 

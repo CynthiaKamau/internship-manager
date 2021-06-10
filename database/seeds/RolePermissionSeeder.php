@@ -46,7 +46,7 @@ class RolePermissionSeeder extends Seeder
             Permission::create(['name' => $permission]);
         }
         // Create Super user & role
-        $admin= Role::create(['name' => 'super-admin']);
+        $admin= Role::create(['name' => 'Super Admin']);
         $admin->syncPermissions($permissions);
 
         $usr = User::create([
@@ -67,7 +67,7 @@ class RolePermissionSeeder extends Seeder
         $usr->syncPermissions($permissions);
 
         // Create user & role
-        $role = Role::create(['name' => 'user']);
+        $role = Role::create(['name' => 'User']);
         $role->givePermissionTo('update-settings');
         $role->givePermissionTo('view-user');
 
