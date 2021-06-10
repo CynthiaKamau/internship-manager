@@ -7,7 +7,7 @@
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
                     <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                        <h1 class="text-white">Welcome!</h1>
+                        <h1 class="text-white">Welcome To Aya!</h1>
                         <p class="text-lead text-white">Enter your email and password to login your account.</p>
                     </div>
                 </div>
