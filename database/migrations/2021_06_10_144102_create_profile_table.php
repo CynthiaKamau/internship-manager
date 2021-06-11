@@ -16,9 +16,14 @@ class CreateProfileTable extends Migration
         Schema::create('profile', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username');
+            $table->integer('reg_number');
+            $table->integer('index_number');
             $table->integer('id_number');
             $table->enum('gender',['MALE', 'FEMALE', 'TRANS-GENDER', 'OTHER']);
             $table->date('dob');
+            $table->string('citizenship');
+            $table->string('address');
+            $table->string('profile_photo')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('facility_id');
             $table->unsignedBigInteger('cadre_id');

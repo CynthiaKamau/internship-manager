@@ -16,7 +16,7 @@ class CreateLicensesTable extends Migration
         Schema::create('licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('number');
+            $table->string('nck_number');
             $table->date('expiry_date');
             $table->timestamps();
 

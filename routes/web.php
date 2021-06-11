@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('users', 'UserController');
 
+    Route::resource('register', 'Auth\RegisterController');
+
     Route::get('/profile/{user}', 'UserController@profile')->name('profile.edit');
 
     Route::post('/profile/{user}', 'UserController@profileUpdate')->name('profile.update');

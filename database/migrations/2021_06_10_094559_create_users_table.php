@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->unique()->index();
             $table->string('nckid')->unique();
             $table->unsignedBigInteger('role_id');
-            $table->string('profile_photo')->after('phone_number')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
