@@ -31,7 +31,7 @@ class PostController extends Controller
         }else{
             $posts = Post::with(['user','category'])->paginate(setting('record_per_page', 15));
         }
-        $title =  'Manage Posts';
+        $title =  'Manage Resources';
         return view('post.index', compact('posts','title'));
     }
 
@@ -42,7 +42,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $title = 'Create post';
+        $title = 'Create Resources';
         $categories = Category::pluck('category_name', 'id');
         return view('post.create', compact('categories', 'title'));
     }
@@ -73,7 +73,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $title = "Post Details";
+        $title = "Resource Details";
         $post->with(['category','user']);
         return view('post.show', compact('title', 'post'));
     }
@@ -86,7 +86,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $title = "Post Details";
+        $title = "Resource Details";
         $post->with(['category','user']);
         $categories = Category::pluck('category_name', 'id');
         return view('post.edit', compact('title', 'categories', 'post'));
@@ -106,7 +106,7 @@ class PostController extends Controller
             $postdata['featured_image'] = parse_url($request->featured_image, PHP_URL_PATH);
         }
         $post->update($postdata);
-        flash('Post updated successfully!')->success();
+        flash('Resource updated successfully!')->success();
         return redirect()->route('post.index');
     }
 
@@ -119,7 +119,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        flash('Post deleted successfully!')->info();
+        flash('Resource deleted successfully!')->info();
         return back();
     }
 }

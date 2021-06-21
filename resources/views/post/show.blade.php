@@ -2,7 +2,7 @@
 @push('pg_btn')
     @can('update-post')
         <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit post details" href="{{route('post.edit',$post)}}">
-            <i class="fa fa-edit" aria-hidden="true"></i> Edit Post
+            <i class="fa fa-edit" aria-hidden="true"></i> Edit Resource
         </a>
     @endcan
 @endpush

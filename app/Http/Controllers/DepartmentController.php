@@ -22,4 +22,45 @@ class DepartmentController extends Controller
         return view('department.index', compact('departments', 'title'));
 
     }
+
+    public function create()
+    {
+        $title = 'Create Department';
+        return view('department.create', compact('title'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->merge(['facility_id' => Auth::user()->id]);
+        Category::create($request->all());
+        flash('Deprtment created successfully!')->success();
+        return redirect()->route('department.index');
+    }
+
+    public function show(FacilityDepartment $facilitydepartment)
+    {
+        return back();
+    }
+
+    public function edit(FacilityDepartment $facilitydepartment)
+    {
+        $title = "Department Details";
+        $facilitydepartment->with('facility');
+        return view('department.edit', compact('title', 'facilitydepartment'));
+    }
+
+    public function update(Request $request, FacilityDepartment $facilitydepartment)
+    {
+        $facilitydepartment->update($request->all());
+        flash('Department updated successfully!')->success();
+        return back();
+    }
+
+    public function destroy(FacilityDepartment $facilitydepartment)
+    {
+        $category->delete();
+        flash('Department deleted successfully!')->info();
+        return back();
+    }
+
 }

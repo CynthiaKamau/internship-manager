@@ -96,7 +96,7 @@
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('post*')) ? 'active' : '' }}" href="#navbar-post"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-post">
                                 <i class="fas text-primary fa-tasks"></i>
-                                <span class="nav-link-text">Manage Posts</span>
+                                <span class="nav-link-text">Manage Resources</span>
                             </a>
                             <div class="collapse" id="navbar-post">
                                 <ul class="nav nav-sm flex-column">
