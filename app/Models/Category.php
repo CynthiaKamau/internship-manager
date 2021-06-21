@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -22,10 +22,10 @@ class Category extends Model
     }
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('\App\Models\User;');
     }
     public function posts()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Models\Post');
     }
 }

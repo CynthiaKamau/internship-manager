@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Facility;
+use App\Models\Profile;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -73,8 +74,9 @@ class RegisterController extends Controller
     public function create()
     {
         $title = 'Create user';
-        $facilities = Fcility::pluck('Name', 'id', 'Code');
-        return view('users.create', compact('facilities', 'title'));
+        $facilities = Facility::all();
+
+       return view('auth.register', compact('facilities', 'title'));
     }
 
     protected function store(array $data)

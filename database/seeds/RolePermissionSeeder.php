@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -67,18 +67,37 @@ class RolePermissionSeeder extends Seeder
         $usr->syncPermissions($permissions);
 
         // Create user & role
-        $role = Role::create(['name' => 'User']);
+        $role = Role::create(['name' => 'Practitioner']);
         $role->givePermissionTo('update-settings');
         $role->givePermissionTo('view-user');
 
         $user = User::create([
-            'first_name'=> 'User',
+            'first_name'=> 'Practitioner',
             'middle_name'=> 'User',
             'last_name'=> 'User',
             'email' => 'user@email.com',
             'phone_number' => '0700000002',
             'role_id' => '2',
             'nckid' => 'NCK002',
+            'password' => 'secret',
+            'status' => true,
+            'email_verified_at' => now(),
+        ]);
+        $user->assignRole($role);
+
+        // Create user & role
+        $role = Role::create(['name' => 'Student']);
+        $role->givePermissionTo('update-settings');
+        $role->givePermissionTo('view-user');
+
+        $user = User::create([
+            'first_name'=> 'Student',
+            'middle_name'=> 'User',
+            'last_name'=> 'User',
+            'email' => 'student@email.com',
+            'phone_number' => '0700000003',
+            'role_id' => '3',
+            'nckid' => 'NCK003',
             'password' => 'secret',
             'status' => true,
             'email_verified_at' => now(),
