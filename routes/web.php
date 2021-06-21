@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('category', 'CategoryController')->except('show');
 
+    Route::resource('department', 'DepartmentController')->except('show');
+
     Route::resource('post', 'PostController');
 
     Route::get('/activity-log', 'SettingController@activity')->name('activity-log.index');

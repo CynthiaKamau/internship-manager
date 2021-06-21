@@ -67,6 +67,30 @@
 
                     @endcan
 
+                    @canany(['view-department', 'create-department'])
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('department*')) ? 'active' : '' }}" href="#navbar-department"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-department">
+                                <i class="fas text-primary fa-list-alt"></i>
+                                <span class="nav-link-text">Manage Department</span>
+                            </a>
+                            <div class="collapse" id="navbar-department">
+                                <ul class="nav nav-sm flex-column">
+                                 @can('view-department')
+                                    <li class="nav-item">
+                                        <a href="{{route('department.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Departments</span></a>
+                                    </li>
+                                    @endcan
+                                    @can( 'create-department')
+                                    <li class="nav-item">
+                                        <a href="{{route('department.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Department</span></a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </li>
+
+                    @endcan
+
                     @canany(['view-post', 'create-post'])
 
                         <li class="nav-item">
