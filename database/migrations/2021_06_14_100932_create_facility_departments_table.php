@@ -15,8 +15,8 @@ class CreateFacilityDepartmentsTable extends Migration
     {
         Schema::create('facility_departments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('facility_id')->nullable();
-            $table->unsignedBigInteger('department_id')->nullable();
+            $table->bigInteger('facility_id')->unsigned()->nullable();
+            $table->bigInteger('department_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('set null');

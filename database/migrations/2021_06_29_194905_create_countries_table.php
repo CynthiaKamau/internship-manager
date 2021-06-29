@@ -20,7 +20,7 @@ class CreateCountriesTable extends Migration
             $table->char('iso', 2)->nullable();
             $table->char('iso3', 3)->nullable();
             $table->unsignedBigInteger('phone_code')->nullable();
-            $table->unsignedTinyInteger('status')->default(1);
+            $table->unsignedTinyInteger('status')->default(1)->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
             $table->unsignedInteger('deleted_by')->nullable();
