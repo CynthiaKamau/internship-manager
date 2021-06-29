@@ -15,12 +15,12 @@ class CreateFacilityDepartmentsTable extends Migration
     {
         Schema::create('facility_departments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('facility_id');
-            $table->unsignedBigInteger('department_id');
+            $table->integer('facility_id')->nullable();
+            $table->unsignedBigInteger('department_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('cascade');;
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');;
+            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('set null');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
 
         });
     }
