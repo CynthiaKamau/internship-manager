@@ -40,7 +40,7 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <th scope="row">
-                                            {{$user->name}}
+                                            {{$user->first_name}} {{$user->last_name}}
                                         </th>
                                         <td class="budget">
                                             {{$user->email}}

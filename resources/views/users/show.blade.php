@@ -16,7 +16,7 @@
                             Name
                         </div>
                         <div class="col-sm-3">
-                            <strong>{{ $user->name }}</strong>
+                            <strong>{{ $user->first_name }} {{ $user->last_name }}</strong>
                         </div>
                         <div class="col-sm-8 text-right">
                             @if ($user->profile_photo)
