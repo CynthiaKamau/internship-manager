@@ -18,7 +18,14 @@ class CreateLicensesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('nck_number');
             $table->date('expiry_date');
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
+            $table->unsignedInteger('restored_by')->nullable();
+            $table->timestamp('restored_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
 
             $table->foreign('user_id')->references('id')->on('users');
 

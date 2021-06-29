@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+Route::get('/signup', 'RegisterController@create')->name('signup');
+
+Route::post('/signup', 'RegisterController@store')->name('signup');
+
 Auth::routes(['verify'=>true]);
 
 
@@ -30,10 +34,6 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
 
     Route::resource('users', 'UserController');
-
-    Route::get('/signup', 'RegisterController@create')->name('signup');
-
-    Route::post('/signup', 'RegisterController@store')->name('signup');
 
     Route::get('/profile/{user}', 'UserController@profile')->name('profile.edit');
 

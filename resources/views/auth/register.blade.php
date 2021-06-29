@@ -34,7 +34,7 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" placeholder="First Name" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
 
                                     @error('first_name')
@@ -44,10 +44,20 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name') }}" autocomplete="middle_name" autofocus>
 
                                     @error('middle_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4">
+                                    <input id="last_name" type="text" placeholder="Last Name" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+
+                                    @error('last_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -59,9 +69,9 @@
                             <div class="form-group row">
 
                                 <div class="col-md-6">
-                                    <input id="last_name" type="text" placeholder="Last Name" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                                    <input id="phone_number" type="number" placeholder="Phone Number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number">
 
-                                    @error('last_name')
+                                    @error('phone_number')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -81,15 +91,15 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-6">
-                                    <input id="phone_number" type="number" placeholder="Phone Number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number">
-
-                                    @error('phone_number')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                            <div class="col-md-6">
+                                    <label>Select Citizenship</label>
+                                    <select class="selectpicker form-control" data-width="100%" id="citizenship" name="citizenship" data-actions-box="true">
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->name}}" > {{$country->name}}</option>
+                                        @endforeach
+                                    </select>  
+                                    
+                                </div> 
                            
                                 <div class="col-md-6">
                                     <input id="nckid" type="number" placeholder="NCK Number" class="form-control @error('nckid') is-invalid @enderror" name="nckid" value="{{ old('nckid') }}" required autocomplete="nckid">
@@ -137,18 +147,8 @@
 
                             <div class="form-group row">
 
-                                <!-- <div class="col-md-6">
-                                    <input id="dob" type="number" placeholder="Date Of Birth" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob">
-
-                                    @error('dob')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div> -->
-
                                 <div class="input-group date col-md-6" data-provide="datepicker">
-                                    <input type="text" class="form-control" name="dob" id="dob" >
+                                    <input type="text" class="form-control" name="dob" id="dob" placeholder="Date Of Birth" >
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-th"></span>
                                     </div>
@@ -163,10 +163,12 @@
                            
                                 <div class="col-md-6">
                                     <label>Select Facility</label>
-                                    <select class="selectpicker form-control" data-width="100%" id="mfl_code" name="mfl_code" data-actions-box="true">
-                                        
-                                        
-                                    </select>
+                                    <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true">
+                                        @foreach($facilities as $facility)
+                                            <option value="{{ $facility->id}}" > {{$facility->name}}</option>
+                                        @endforeach
+                                    </select>  
+                                    
                                 </div>    
                             </div>
 

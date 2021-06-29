@@ -15,20 +15,20 @@ class CreateProfileTable extends Migration
     {
         Schema::create('profile', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('username');
-            $table->integer('reg_number');
-            $table->integer('index_number');
-            $table->integer('id_number');
-            $table->enum('gender',['MALE', 'FEMALE', 'TRANS-GENDER', 'OTHER']);
-            $table->date('dob');
-            $table->string('citizenship');
-            $table->string('address');
+            $table->string('username')->nullable();
+            $table->integer('reg_number')->nullable();
+            $table->integer('index_number')->nullable();
+            $table->integer('id_number')->nullable();
+            $table->enum('gender',['MALE', 'FEMALE', 'TRANS-GENDER', 'OTHER'])->nullable();
+            $table->date('dob')->nullable();
+            $table->string('citizenship')->nullable();
+            $table->string('address')->nullable();
             $table->string('profile_photo')->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('facility_id');
-            $table->unsignedBigInteger('cadre_id');
-            $table->unsignedBigInteger('department_id');
-            $table->unsignedBigInteger('licence_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('facility_id')->nullable();
+            $table->unsignedBigInteger('cadre_id')->nullable();
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('licence_id')->nullable();
             $table->timestamps();
 
             

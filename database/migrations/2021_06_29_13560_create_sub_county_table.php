@@ -18,7 +18,13 @@ class CreateSubCountyTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('county_id');
             $table->string('status');
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
+            $table->unsignedInteger('restored_by')->nullable();
+            $table->timestamp('restored_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('county_id')->references('id')->on('counties');
 

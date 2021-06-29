@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCadresTable extends Migration
+class CreateCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateCadresTable extends Migration
      */
     public function up()
     {
-        Schema::create('cadres', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name', 80);
+            $table->string('nice_name', 80)->nullable();
+            $table->char('iso', 2)->nullable();
+            $table->char('iso3', 3)->nullable();
+            $table->unsignedBigInteger('phone_code')->nullable();
+            $table->unsignedTinyInteger('status')->default(1);
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
             $table->unsignedInteger('deleted_by')->nullable();
@@ -24,6 +29,7 @@ class CreateCadresTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['name', 'iso', 'iso3', 'phone_code']);
         });
     }
 
@@ -34,6 +40,6 @@ class CreateCadresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cadres');
+        Schema::dropIfExists('countries');
     }
 }

@@ -17,7 +17,14 @@ class CreateCountiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('status');
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
+            $table->unsignedInteger('restored_by')->nullable();
+            $table->timestamp('restored_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

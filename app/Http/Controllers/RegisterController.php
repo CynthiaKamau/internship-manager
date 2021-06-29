@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Facility;
+use App\Models\Country;
 use App\Models\Profile;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -88,8 +89,19 @@ class RegisterController extends Controller
             'nckid' => $data['nckid'],
             'phone_number' => $data['phone_number'],
             'email' => $data['email'],
+            'role_id' => $data['role_id'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $profile = Profile::create([
+            'user_id' => $user->id,
+            'citizenship' => $data['citizenship'],
+            'gender' => $data['gender'],
+            'licence_id' => $data['licence_id'],
+            'dob' => $data['dob'],
+            'facility_id' => $data['facility_id'],
+        ]);
+
         if (setting('register_notification_email')) {
             Mail::to($data['email'])->send( new UserRegistered($user));
         }
