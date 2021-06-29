@@ -10,6 +10,12 @@ class Facility extends Model
     public $timestamps = false;
     
     protected $fillable = [
-       'Code', 'Name', 'Keph_level', 'Facility_type', 'County', 'Sub_county', 'Active',
+       'id', 'code', 'name', 'keph_level', 'facility_type', 'county', 'sub_county', 'active',
     ];
+
+    public function departments() 
+    {
+        return $this->belongsToMany('App\Models\Department', 'facility_departments');
+    }
+
 }

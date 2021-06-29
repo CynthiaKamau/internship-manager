@@ -10,6 +10,12 @@ class Department extends Model
     public $timestamps = false;
     
     protected $fillable = [
-       'name'
+       'name', 'status'
     ];
+
+    public function facilities() 
+    {
+
+        return $this->belongsToMany('App\Models\Facility', 'facility_departments');
+    }
 }

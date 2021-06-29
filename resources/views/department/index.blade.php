@@ -16,7 +16,7 @@
                         <div class="col-lg-4">
                     {!! Form::open(['route' => 'users.index', 'method'=>'get']) !!}
                         <div class="form-group mb-0">
-                        {{ Form::text('search', request()->query('search'), ['class' => 'form-control form-control-sm', 'placeholder'=>'Search users']) }}
+                        {{ Form::text('search', request()->query('search'), ['class' => 'form-control form-control-sm', 'placeholder'=>'Search departments']) }}
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -29,7 +29,6 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Added by</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created at</th>
                                     <th scope="col" class="text-center">Action</th>
@@ -39,11 +38,8 @@
                                 @foreach($departments as $department)
                                     <tr>
                                         <th scope="row">
-                                            {{$department->department_name}}
+                                            {{$department->name}}
                                         </th>
-                                        <td class="budget">
-                                            {{$department->user->name}}
-                                        </td>
                                         <td>
                                             @if($department->status)
                                                 <span class="badge badge-pill badge-lg badge-success">Active</span>
@@ -52,7 +48,6 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{$department->created_at->diffForHumans()}}
                                         </td>
                                         <td class="text-center">
                                             @can('destroy-department')

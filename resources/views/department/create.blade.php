@@ -19,6 +19,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Select Facility</label>
+                                        <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true">
+                                            @foreach($facilities as $facility)
+                                                <option value="{{ $facility->id}}" > {{$facility->name}}</option>
+                                            @endforeach
+                                        </select>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-md-12">
