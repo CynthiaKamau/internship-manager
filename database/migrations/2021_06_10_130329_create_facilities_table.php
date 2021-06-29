@@ -15,31 +15,31 @@ class CreateFacilitiesTable extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('Code');
-            $table->string('Name');
-            $table->string('OfficialName');
-            $table->string('Registration_number');
-            $table->string('Keph level');
-            $table->string('Facility_type');
-            $table->string('Facility_type_category');
-            $table->string('Owner');
-            $table->string('Owner_type');
-            $table->string('Regulatory_body');
-            $table->string('Beds');
-            $table->string('Cots');
-            $table->string('County');
-            $table->string('Sub_county');
-            $table->string('Ward');
-            $table->string('Operation status');
-            $table->string('Open_whole_day');
-            $table->string('Open_public_holidays');
-            $table->string('Open_weekends');
-            $table->string('Open_late_night');
-            $table->string('Service_names');
-            $table->string('Approved');
-            $table->string('Public visible');
-            $table->string('Closed');
-            $table->string('Active');
+            $table->integer('code');
+            $table->string('name');
+            $table->string('official_name');
+            $table->string('registration_number');
+            $table->string('keph_level');
+            $table->string('facility_type');
+            $table->string('facility_type_category');
+            $table->string('owner');
+            $table->string('owner_type');
+            $table->string('regulatory_body');
+            $table->string('beds');
+            $table->string('cots');
+            $table->string('county');
+            $table->string('sub_county');
+            $table->string('ward');
+            $table->string('operation_status');
+            $table->string('open_whole_day');
+            $table->string('open_public_holidays');
+            $table->string('open_weekends');
+            $table->string('open_late_night');
+            $table->string('service_names');
+            $table->string('approved');
+            $table->string('public_visible');
+            $table->string('closed');
+            $table->string('active');
         });
     }
 

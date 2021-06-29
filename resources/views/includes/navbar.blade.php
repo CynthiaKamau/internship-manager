@@ -102,12 +102,12 @@
                                 <ul class="nav nav-sm flex-column">
                                  @can('view-post')
                                     <li class="nav-item">
-                                        <a href="{{route('post.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Posts</span></a>
+                                        <a href="{{route('post.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Resources</span></a>
                                     </li>
                                     @endcan
                                     @can( 'create-post')
                                     <li class="nav-item">
-                                        <a href="{{route('post.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Post</span></a>
+                                        <a href="{{route('post.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Resource</span></a>
                                     </li>
                                     @endcan
                                 </ul>
