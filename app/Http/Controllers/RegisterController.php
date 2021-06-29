@@ -76,8 +76,9 @@ class RegisterController extends Controller
     {
         $title = 'Create user';
         $facilities = Facility::all();
+        $countries = Country::all();
 
-       return view('auth.register', compact('facilities', 'title'));
+       return view('auth.register', compact('facilities', 'title', 'countries'));
     }
 
     protected function store(array $data)
