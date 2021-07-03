@@ -19,3 +19,7 @@ RUN curl --silent --show-error "https://getcomposer.org/installer" | php -- --in
 
 # Install Laravel Envoy
 RUN composer global require "laravel/envoy=~1.0"
+
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
+
+RUN apt-get install -y nodejs
