@@ -24,7 +24,7 @@ composer:
     paths:
       - vendor/
   script:
-      - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+      - composer install --ignore-platform-reqs
       - cp .env.example .env
       - php artisan key:generate
   artifacts:
