@@ -53,6 +53,7 @@ codestyle:
   stage: test
   dependencies: []
   script:
+    - vendor/bin/phpunit
     - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
     
 phpunit:
@@ -60,6 +61,7 @@ phpunit:
   dependencies:
     - composer
   script:
+    - vendor/bin/phpunit
     - phpunit --coverage-text --colors=never
 
 staging:
