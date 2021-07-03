@@ -1,4 +1,4 @@
-image: lorisleiva/laravel-docker:latest
+image: registry.gitlab.com/m-health/aya_dashboard
 
 .init_ssh: &init_ssh |
   eval $(ssh-agent -s)
