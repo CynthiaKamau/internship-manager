@@ -2,7 +2,7 @@
 FROM php:7.4
 
 # Update packages
-RUN apt-get update && apt-get install -y libzip-dev && docker-php-ext-install zip
+RUN apt-get update
 
 # Install PHP and composer dependencies
 RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev
@@ -19,3 +19,7 @@ RUN curl --silent --show-error "https://getcomposer.org/installer" | php -- --in
 
 # Install Laravel Envoy
 RUN composer global require "laravel/envoy=~1.0"
+
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
+
+RUN apt-get install -y nodejs
