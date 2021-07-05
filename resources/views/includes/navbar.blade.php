@@ -91,22 +91,22 @@
 
                     @endcan
 
-                    @canany(['view-department', 'create-department'])
+                    @canany(['view-facility-department', 'create-facility-department'])
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('facility_department*')) ? 'active' : '' }}" href="#navbar-facility-department"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-facility-department">
+                            <a class="nav-link {{ (request()->is('facility_department.show', $profile ?? '')) ? 'active' : '' }}" href="#navbar-facility-department"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-facility-department">
                                 <i class="fas text-primary fa-list-alt"></i>
                                 <span class="nav-link-text">Manage Facility Department</span>
                             </a>
                             <div class="collapse" id="navbar-facility-department">
                                 <ul class="nav nav-sm flex-column">
-                                 @can('view-department')
+                                 @can('view-facility-department')
                                     <li class="nav-item">
-                                        <a href="{{route('facility_department.show', $profile ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Facility Departments</span></a>
+                                        <a href="{{ route('facility_department.show', $profile ?? '') }}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Facility Departments</span></a>
                                     </li>
                                     @endcan
-                                    @can( 'create-department')
+                                    @can( 'create-facility-department')
                                     <li class="nav-item">
-                                        <a href="{{route('facility_department.create', $profile ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Department</span></a>
+                                        <a href="{{ route('facility_department.create', $profile ?? '') }}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Department</span></a>
                                     </li>
                                     @endcan
                                 </ul>

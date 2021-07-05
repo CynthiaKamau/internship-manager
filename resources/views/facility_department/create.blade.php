@@ -1,20 +1,20 @@
 @extends('layouts.app')
 @push('pg_btn')
-    <a href="{{route('department.index')}}" class="btn btn-sm btn-neutral">Facility Departments</a>
+    <a href="{{route('facility_department.show')}}" class="btn btn-sm btn-neutral">Facility Departments</a>
 @endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-5">
                 <div class="card-body">
-                    {!! Form::open(['route' => 'department.store']) !!}
+                    {!! Form::open(['route' => 'facility_department.store', $profile]) !!}
                     <h6 class="heading-small text-muted mb-4">department information</h6>
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        {{ Form::label('name', 'Department Name', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('name', null, ['class' => 'form-control']) }}
+                                        {{ Form::label('dname', 'Department Name', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('dname', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>

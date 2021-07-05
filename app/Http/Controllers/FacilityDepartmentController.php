@@ -22,41 +22,41 @@ class FacilityDepartmentController extends Controller
 
         $title = 'Manage Facility Departments';
 
-        return view('facility_department.index', compact('title', 'departments'));
+        return view('facility_department.index', compact('title', 'departments', 'profile'));
 
     }
 
     public function create(Profile $profile)
     {
-        $title = 'Create Department';
+        $title = 'Create Facility Department';
         $facilities = Facility::where('id', $profile->facility_id)->get();
         
-        return view('department.create', compact('title', 'facilities'));
+        return view('facility_department.create', compact('title', 'facilities', 'profile'));
     }
 
     public function store(DepartmentRequest $request)
     {
         try {
             $department = new Department;
-            $department->name = $request->department_name;
+            $department->name = $request->dname;
             $department->status = $request->status;
             $department->created_at = Carbon::now();
 
             if($department->save() ) {
 
-                $facility_id = $request->facility_id;
+                $facility_id = Facility::where('id', $profile->facility_id)->get();
 
                 $department->facilities()->sync($facility_id);
 
-                flash('Deprtment created successfully!')->success();
-                return redirect()->route('department.index');
+                flash('Depertment created successfully!')->success();
+                return redirect()->route('facility_department.index');
 
             }
 
         } catch (\Exception $e) {
 
-            //flash('Failed!')->success();
-            return $e;
+            flash('Failed!')->success();
+            return redirect()->route('facility_department.index');
 
         }
 
@@ -67,11 +67,11 @@ class FacilityDepartmentController extends Controller
         return back();
     }
 
-    public function edit(Department $department)
+    public function edit(FacilityDepartment $department)
     {
         $title = "Department Details";
         $department->with('facility');
-        return view('department.edit', compact('title', 'department'));
+        return view('facility_department.edit', compact('title', 'department'));
     }
 
     public function update(Request $request, Department $department)
@@ -81,7 +81,7 @@ class FacilityDepartmentController extends Controller
         return back();
     }
 
-    public function destroy(Department $department)
+    public function destroy(FacilityDepartment $department)
     {
         $department->delete();
         flash('Department deleted successfully!')->info();

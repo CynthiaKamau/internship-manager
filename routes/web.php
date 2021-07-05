@@ -47,11 +47,16 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('department', 'DepartmentController')->except('show');
 
-    Route::get('department/{profile}', 'FacilityDepartmentController@index')->name('facility_department.show');
+    Route::get('facility_department/{profile}', 'FacilityDepartmentController@index')->name('facility_department.show');
 
-    Route::get('add/department/{profile}', 'FacilityDepartmentController@create')->name('facility_department.create');
+    Route::get('facility_department/add/{profile}', 'FacilityDepartmentController@create')->name('facility_department.create');
 
-    Route::post('edit/department/{profile}', 'FacilityDepartmentController@edit')->name('facility_department.update');
+    Route::get('facility_department/edit/{profile}', 'FacilityDepartmentController@edit')->name('facility_department.update');
+
+    Route::post('facility_department/edit/{profile}', 'FacilityDepartmentController@update')->name('facility_department.update');
+
+    Route::delete('facility_department/delete/{profile}', 'FacilityDepartmentController@destroy')->name('facility_department.destroy');
+
 
 
 

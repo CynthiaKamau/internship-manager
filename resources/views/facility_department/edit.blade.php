@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('pg_btn')
-    <a href="{{route('department.index')}}" class="btn btn-sm btn-neutral">All Departments</a>
+    <a href="{{route('facility_department.show')}}" class="btn btn-sm btn-neutral">All Departments</a>
 @endpush
 @section('content')
     <div class="row">
@@ -8,7 +8,7 @@
             <div class="card mb-5">
                 <div class="card-body">
                     @can('update-department')
-                    {!! Form::open(['route' => ['department.update', $department], 'method'=>'put']) !!}
+                    {!! Form::open(['route' => ['facility_department.update', $department], 'method'=>'put']) !!}
                     @endcan
                     <h6 class="heading-small text-muted mb-4">department information</h6>
                         <div class="pl-lg-4">

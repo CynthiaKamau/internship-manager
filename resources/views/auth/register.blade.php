@@ -91,22 +91,8 @@
 
                             <div class="form-group row">
 
-                                <div class="input-group date col-md-6" data-provide="datepicker">
-                                    <input type="text" class="form-control" name="dob" id="dob" placeholder="Date Of Birth" >
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-
-                                    @error('dob')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                    
-                                </div>
-
                                 <div class="col-md-6">
-                                    <input id="nckid" type="number" placeholder="NCK Number" class="form-control @error('nckid') is-invalid @enderror" name="nckid" value="{{ old('nckid') }}" required autocomplete="nckid">
+                                    <input id="nckid" type="number" placeholder="NCK ID" class="form-control @error('nckid') is-invalid @enderror" name="nckid" value="{{ old('nckid') }}" required autocomplete="nckid">
 
                                     @error('nckid')
                                         <span class="invalid-feedback" role="alert">
@@ -114,69 +100,27 @@
                                         </span>
                                     @enderror
                                 </div>    
-                            </div>
-
-                                <div class="form-group row">
-
-                                    <div class="col-md-6">
-                                        <select class="selectpicker form-control" aria-label="Default select example">
-                                            <option selected>Select Gender</option>
-                                            <option value="MALE">Male</option>
-                                            <option value="FEMALE">Female</option>
-                                            <option value="TRANS-GENDER">Trans-Gender</option>
-                                            <option value="OTHER">Other</option>
-                                        </select>
-
-                                        @error('gender')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div> 
                             
-                                    <div class="col-md-6">
-                                        <select class="selectpicker form-control" aria-label="Default select example">
-                                            <option selected>Select Role</option>
-                                            <option value="2">Practitioner</option>
-                                            <option value="3">Student</option>
-                                        </select>
-
-                                        @error('role_id')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>    
-                            
-                            </div>
-
-                            <div class="form-group row">
-
                                 <div class="col-md-6">
-                                    <label>Select Citizenship</label>
-                                    <select class="selectpicker form-control" data-width="100%" id="citizenship" name="citizenship" data-actions-box="true">
-                                        @foreach($countries as $country)
-                                            <option value="{{ $country->name}}" > {{$country->name}}</option>
-                                        @endforeach
-                                    </select>  
-                                    
-                                </div> 
-                           
-                                <div class="col-md-6">
-                                    <label>Select Facility</label>
-                                    <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true">
-                                        @foreach($facilities as $facility)
-                                            <option value="{{ $facility->id}}" > {{$facility->name}}</option>
-                                        @endforeach
-                                    </select>  
-                                    
+                                    <select class="selectpicker form-control" id="role_id" name="role_id" aria-label="Default select example">
+                                        <option selected>Select Role</option>
+                                        <option value="2">Practitioner</option>
+                                        <option value="3">Student</option>
+                                    </select>
+
+                                    @error('role_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>    
+                            
                             </div>
 
                             <div class="form-group row">
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required >
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -186,7 +130,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" placeholder="Confirm Password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password_confirmation" type="password" placeholder="Confirm Password" class="form-control" name="password_confirmation" required>
                                 </div>
                             </div>
 
@@ -232,7 +176,7 @@
 <script>
 
 $('.datepicker').datepicker({
-    format: 'mm/dd/yyyy',
+    format: 'yyyy/mm/dd',
     startDate: '-3d'
 });
 

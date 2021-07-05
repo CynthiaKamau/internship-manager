@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Facility;
 use App\Models\Country;
 use App\Models\Profile;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Requests\UserStoreRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -48,24 +51,6 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'nckid'=> 'required',
-            'msisdn'=> 'required',
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
-
-    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -81,26 +66,19 @@ class RegisterController extends Controller
        return view('auth.register', compact('facilities', 'title', 'countries'));
     }
 
-    protected function store(array $data)
+    protected function store(UserStoreRequest $request)
     {
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'middle_name' => $data['middle_name'],
-            'last_name' => $data['last_name'],
-            'nckid' => $data['nckid'],
-            'msisdn' => $data['msisdn'],
-            'email' => $data['email'],
-            'role_id' => $data['role_id'],
-            'password' => Hash::make($data['password']),
-        ]);
 
-        $profile = Profile::create([
-            'user_id' => $user->id,
-            'citizenship' => $data['citizenship'],
-            'gender' => $data['gender'],
-            'licence_id' => $data['licence_id'],
-            'dob' => $data['dob'],
-            'facility_id' => $data['facility_id'],
+        $user = User::create([
+            'first_name' => request('first_name'),
+            'middle_name' => request('middle_name'),
+            'last_name' => request('last_name'),
+            'nckid' => request('nckid'),
+            'msisdn' => request('msisdn'),
+            'email' => request('email'),
+            'role_id' => request('role_id'),
+            'status' => 1,
+            'password' => request('password')
         ]);
 
         if (setting('register_notification_email')) {
@@ -109,6 +87,8 @@ class RegisterController extends Controller
         if ( setting('default_role')) {
             $user->assignRole(setting('default_role'));
         }
-        return $user;
+        
+        flash('User created successfully!')->success();
+        return redirect()->route('users.index');
     }
 }

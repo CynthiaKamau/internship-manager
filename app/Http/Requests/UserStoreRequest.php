@@ -26,10 +26,11 @@ class UserStoreRequest extends FormRequest
         return [
             'first_name'=> 'required',
             'last_name'=> 'required',
-            'nckid'=> 'required',
-            'msisdn'=> 'required',
+            'nckid'=> 'required|unique:users,nckid',
+            'role_id'=> 'required',
+            'msisdn'=> 'required|unique:users,msisdn',
             'email' => 'required|unique:users,email|email',
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|confirmed|min:8'
         ];
     }
 }

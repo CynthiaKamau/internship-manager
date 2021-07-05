@@ -45,7 +45,7 @@
                                             {{$department->department->name}}
                                         </th>
                                         <td>
-                                            @if($department->status)
+                                            @if($department->department->status)
                                                 <span class="badge badge-pill badge-lg badge-success">Active</span>
                                             @else
                                                 <span class="badge badge-pill badge-lg badge-danger">Disabled</span>
@@ -56,11 +56,11 @@
                                         </td>
                                         <td class="text-center">
                                             @can('destroy-department')
-                                            {!! Form::open(['route' => ['department.destroy', $department],'method' => 'delete',  'class'=>'d-inline-block dform']) !!}
+                                            {!! Form::open(['route' => ['facility_department.destroy', $department],'method' => 'delete',  'class'=>'d-inline-block dform']) !!}
                                             @endcan
 
                                             @can('update-department')
-                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit department details" href="{{route('department.edit',$department)}}">
+                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit department details" href="{{route('facility_department.update',$profile)}}">
                                                 <i class="fa fa-edit" aria-hidden="true"></i>
                                             </a>
                                             @endcan
