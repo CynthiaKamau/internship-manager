@@ -8,13 +8,13 @@
             <div class="card mb-5">
                 <div class="card-body">
                     {!! Form::open(['route' => 'department.store']) !!}
-                    <h6 class="heading-small text-muted mb-4">department information</h6>
+                    <h6 class="heading-small text-muted mb-4">Department information</h6>
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        {{ Form::label('department_name', 'Department Name', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('department_name', null, ['class' => 'form-control']) }}
+                                        {{ Form::label('dname', 'Department Name', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('dname', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>

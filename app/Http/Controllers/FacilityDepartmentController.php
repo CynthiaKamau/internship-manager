@@ -2,33 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\FacilityDepartment;
 use App\Models\Facility;
+use App\Models\Profile;
 use App\Http\Requests\DepartmentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class DepartmentController extends Controller
+class FacilityDepartmentController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Profile $profile)
     {
         if ($request->has('search')) {
-            $departments = Department::with(['facilities'])->where('name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+           //$departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
         } else {
-            $departments = Department::with(['facilities'])->paginate(setting('record_per_page', 15));
+            $departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', $profile->facility_id)->paginate(setting('record_per_page', 15));
         }
 
-        $title = 'Manage Departments';
+        $title = 'Manage Facility Departments';
 
-        return view('department.index', compact('departments', 'title'));
+        return view('facility_department.index', compact('title', 'departments'));
 
     }
 
-    public function create()
+    public function create(Profile $profile)
     {
         $title = 'Create Department';
-        $facilities = Facility::all();
+        $facilities = Facility::where('id', $profile->facility_id)->get();
+        
         return view('department.create', compact('title', 'facilities'));
     }
 
@@ -36,7 +38,7 @@ class DepartmentController extends Controller
     {
         try {
             $department = new Department;
-            $department->name = $request->dname;
+            $department->name = $request->department_name;
             $department->status = $request->status;
             $department->created_at = Carbon::now();
 
@@ -53,8 +55,8 @@ class DepartmentController extends Controller
 
         } catch (\Exception $e) {
 
-            flash('Failed!')->success();
-            return redirect()->route('department.index');
+            //flash('Failed!')->success();
+            return $e;
 
         }
 

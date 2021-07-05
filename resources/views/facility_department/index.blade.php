@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @push('pg_btn')
 @can('create-department')
-    <a href="{{ route('department.create') }}" class="btn btn-sm btn-neutral">Create New department</a>
+    <a href="{{ route('facility_department.create', $profile ?? '') }}" class="btn btn-sm btn-neutral">Create New Facility Department</a>
 @endcan
 @endpush
 @section('content')
@@ -11,7 +11,7 @@
                 <div class="card-header bg-transparent">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h3 class="mb-0">All departments</h3>
+                            <h3 class="mb-0">All Departments</h3>
                         </div>
                         <div class="col-lg-4">
                     {!! Form::open(['route' => 'users.index', 'method'=>'get']) !!}
@@ -28,6 +28,7 @@
                             <table class="table table-hover align-items-center">
                                 <thead class="thead-light">
                                 <tr>
+                                    <th scope="col">Facility</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created at</th>
@@ -38,7 +39,10 @@
                                 @foreach($departments as $department)
                                     <tr>
                                         <th scope="row">
-                                            {{$department->name}}
+                                            {{$department->facility->name}}
+                                        </th>
+                                        <th scope="row">
+                                            {{$department->department->name}}
                                         </th>
                                         <td>
                                             @if($department->status)
@@ -48,7 +52,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{$department->created_at}}
+                                            {{$department->department->created_at}}
                                         </td>
                                         <td class="text-center">
                                             @can('destroy-department')

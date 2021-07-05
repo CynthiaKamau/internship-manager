@@ -47,6 +47,14 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('department', 'DepartmentController')->except('show');
 
+    Route::get('department/{profile}', 'FacilityDepartmentController@index')->name('facility_department.show');
+
+    Route::get('add/department/{profile}', 'FacilityDepartmentController@create')->name('facility_department.create');
+
+    Route::post('edit/department/{profile}', 'FacilityDepartmentController@edit')->name('facility_department.update');
+
+
+
     Route::resource('post', 'PostController');
 
     Route::get('/activity-log', 'SettingController@activity')->name('activity-log.index');

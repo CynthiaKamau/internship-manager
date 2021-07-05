@@ -24,8 +24,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ Form::label('phone_number', 'Phone number', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('phone_number', $user->phone_number, ['class' => 'form-control']) }}
+                                        {{ Form::label('msisdn', 'Phone number', ['class' => 'form-control-label']) }}
+                                        {{ Form::text('msisdn', $user->msisdn, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                                 <div class="col-md-4">

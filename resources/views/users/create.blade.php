@@ -41,8 +41,8 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        {{ Form::label('phone_number', 'Phone number', ['class' => 'form-control-label']) }}
-                                        {{ Form::number('phone_number', null, ['class' => 'form-control']) }}
+                                        {{ Form::label('msisdn', 'Phone number', ['class' => 'form-control-label']) }}
+                                        {{ Form::number('msisdn', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -39,7 +39,7 @@
                             Phone
                         </div>
                         <div class="col-sm-3">
-                            <strong>{{ $user->phone_number }}</strong>
+                            <strong>{{ $user->msisdn }}</strong>
                         </div>
                     </div>
                     <div class="row">
