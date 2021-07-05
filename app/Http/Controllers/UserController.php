@@ -116,8 +116,7 @@ class UserController extends Controller
         $user->update($userData);
         $user->syncRoles($request->role);
         flash('User updated successfully!')->success();
-        return redirect()->route('users.index');
-    }
+        return back();    }
 
     /**
      * Remove the specified resource from storage.

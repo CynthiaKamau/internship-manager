@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="card mb-5">
                 <div class="card-body">
-                    {!! Form::open(['route' => ['users.update', $user], 'files' => true]) !!}
+                    {!! Form::open(['route' => ['users.update', $user], 'method' => 'put','files' => true]) !!}
                     <h6 class="heading-small text-muted mb-4">Profile</h6>
                         <div class="pl-lg-4">
                             <div class="row">
@@ -55,8 +55,8 @@
 
                             <div class="row">
                                 <div class="col-md-6">
+                                    <label> Select Role </label>
                                     <select class="selectpicker form-control" id="role_id" name="role_id" aria-label="Default select example">
-                                        <option selected>Select Role</option>
                                         <option value="2">Practitioner</option>
                                         <option value="3">Student</option>
                                     </select>
