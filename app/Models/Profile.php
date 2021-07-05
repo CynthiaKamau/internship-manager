@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     protected $fillable = [
-        'username', 'user_id', 'reg_number', 'index_number', 'id_number', 'gender', 'dob', 'citizenship', 'address', 'profile_photo', 'facility_id', 'cadre_id', 'department_id', 'licence_id', 'created-at'
+        'username', 'user_id', 'reg_number', 'index_number', 'id_number', 'gender', 'dob', 'citizenship', 'address', 'profile_photo', 'facility_id', 'cadre_id', 'department_id', 'licence_id', 'created_at'
     ];
 
     public function user()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 }

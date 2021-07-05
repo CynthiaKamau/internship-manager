@@ -16,7 +16,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         {{ Form::label('name', 'Name', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('name', $user->name, ['class' => 'form-control']) }}
+                                        {{ Form::text('name', $user->first_name, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -57,12 +57,19 @@
                                                 </a>
                                             @endif
                                     </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        {{ Form::label('role', 'Select Role', ['class' => 'form-control-label']) }}
-                                        {{ Form::select('role', $roles, $user->roles, [ 'class'=> 'selectpicker form-control', 'placeholder' => 'Select role...']) }}
-                                    </div>
-                                </div>
+                                    <div class="col-md-6">
+                                    <select class="selectpicker form-control" id="role_id" name="role_id" aria-label="Default select example">
+                                        <option selected>Select Role</option>
+                                        <option value="2">Practitioner</option>
+                                        <option value="3">Student</option>
+                                    </select>
+
+                                    @error('role_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>  
                             </div>
                         </div>
                         <hr class="my-4" />

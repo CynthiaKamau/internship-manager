@@ -161,23 +161,4 @@
 
 @endsection
 
-@push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/select2/dist/css/select2.min.css') }}">
-@endpush
 
-@push('scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"> </script>
-    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"> </script>
-    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"> </script>
-    <script type="text/javascript" src="{{ asset('assets/vendor/select2/dist/js/select2.min.js') }}"> </script>
-
-<script>
-
-$('.datepicker').datepicker({
-    format: 'yyyy/mm/dd',
-    startDate: '-3d'
-});
-
-</script>

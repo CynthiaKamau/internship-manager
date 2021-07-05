@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use App\Models\Facility;
+use App\Models\FacilityDepartment;
+use App\Models\Country;
+use App\Models\Profile;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -91,6 +96,7 @@ class UserController extends Controller
     {
         $title = "User Details";
         $roles = Role::pluck('name', 'id');
+
         return view('users.edit', compact('user','title', 'roles'));
     }
 
@@ -103,7 +109,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $userData = $request->except(['role', 'profile_photo']);
+        $userData = $request->except(['profile_photo']);
         if ($request->profile_photo) {
             $userData['profile_photo'] = parse_url($request->profile_photo, PHP_URL_PATH);
         }
@@ -134,18 +140,78 @@ class UserController extends Controller
     public function profile(User $user)
     {
         $title = 'Edit Profile';
-        return view('users.profile', compact('title','user'));
+        $facilities = Facility::all();
+        $countries = Country::all();
+
+        $user = $user->load('profile');
+
+        $f = $user->profile->facility_id ;
+
+        $departments = FacilityDepartment::where('facility_id', $f )->with('department')->get();
+
+        return view('users.profile', compact('title', 'user', 'countries', 'facilities', 'departments'));
     }
 
-    public function profileUpdate(UserUpdateRequest $request, User $user)
+    public function profileUpdate(Request $request,User $user)
     {
-        $userData = $request->except('profile_photo');
-        if ($request->profile_photo) {
-            $userData['profile_photo'] = parse_url($request->profile_photo, PHP_URL_PATH);
+
+        $time = Carbon::now();
+
+        if(empty($user->profile->id)) {
+
+            $profile = new Profile;
+
+            $profile->create([
+                'user_id' =>$id,
+                'citizenship' => request('citizenship'),
+                'dob' => Carbon::parse(request('dob'))->toDate(),
+                'address' => request('address'),
+                'department_id' => request('department_id'),
+                'facility_id' => request('facility_id'),
+                'index_no' => request('index_no'),
+                'reg_no' => request('reg_no'),
+                'gender' => request('gender'),
+                'profile_photo' => parse_url($request->profile_photo, PHP_URL_PATH),
+                'created_at' => $time
+            ]);
+
+            flash('Profile updated successfully!')->success();
+            return back();
+
+        } else {
+
+            $p = Profile::where('user_id', $user->id)->pluck('id')->first();
+
+            $profile = Profile::find($p);
+
+            $profile->update([
+                'citizenship' => request('citizenship'),
+                'dob' => Carbon::parse(request('dob'))->toDate(),
+                'address' => request('address'),
+                'department_id' => request('department_id'),
+                'facility_id' => request('facility_id'),
+                'index_no' => request('index_no'),
+                'reg_no' => request('reg_no'),
+                'gender' => request('gender'),
+                'profile_photo' => parse_url($request->profile_photo, PHP_URL_PATH),
+                'created_at' => $time
+            ]);
+
+            // $profile->citizenship = $request->citizenship;
+            // $profile->dob = $request->dob;
+            // $profile->address = $request->address;
+            // $profile->department_id = $request->department_id;
+            // $profile->facility_id = $request->facility_id;
+            // $profile->index_no = $request->index_no;
+            // $profile->reg_no = $request->reg_no;
+            // $profile->gender = $request->gender;
+            // $profile->save();
+
+            flash('Profile updated successfully!')->success();
+            return back();
+
         }
 
-        $user->update($userData);
-        flash('Profile updated successfully!')->success();
-        return back();
+        
     }
 }

@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Models\Facility;
-use App\Models\Country;
-use App\Models\Profile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Http\Requests\UserStoreRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -60,10 +56,8 @@ class RegisterController extends Controller
     public function create()
     {
         $title = 'Create user';
-        $facilities = Facility::all();
-        $countries = Country::all();
 
-       return view('auth.register', compact('facilities', 'title', 'countries'));
+       return view('auth.register', compact('title'));
     }
 
     protected function store(UserStoreRequest $request)
