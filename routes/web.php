@@ -47,20 +47,9 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('department', 'DepartmentController')->except('show');
 
-    Route::resource('checkin', 'CheckinController')->except('show');
+    Route::resource('checkins', 'CheckinController')->except('show');
 
-    Route::get('facility_department/{profile}', 'FacilityDepartmentController@index')->name('facility_department.show');
-
-    Route::get('facility_department/add/{profile}', 'FacilityDepartmentController@create')->name('facility_department.create');
-
-    Route::get('facility_department/edit/{profile}', 'FacilityDepartmentController@edit')->name('facility_department.update');
-
-    Route::post('facility_department/edit/{profile}', 'FacilityDepartmentController@update')->name('facility_department.update');
-
-    Route::delete('facility_department/delete/{profile}', 'FacilityDepartmentController@destroy')->name('facility_department.destroy');
-
-
-
+    Route::resource('facility_department', 'FacilityDepartmentController')->except('show');
 
     Route::resource('post', 'PostController');
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('pg_btn')
-    <a href="{{route('facility_department.show')}}" class="btn btn-sm btn-neutral">Facility Departments</a>
+    <a href="{{route('facility_department.index')}}" class="btn btn-sm btn-neutral">Facility Departments</a>
 @endpush
 @section('content')
     <div class="row">
