@@ -53,16 +53,15 @@ codestyle:
   stage: test
   dependencies: []
   script:
-    - vendor/bin/phpunit
-    - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
+    - composer require --dev emielmolenaar/phpcs-laravel
+    - php vendor/bin/phpcs --standard=phpcs-laravel app/
     
 phpunit:
   stage: test
   dependencies:
     - composer
   script:
-    - vendor/bin/phpunit
-    - phpunit --coverage-text --colors=never
+    - vendor/bin/phpunit --coverage-text --colors=never
 
 staging:
   stage: deploy
