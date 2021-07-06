@@ -73,5 +73,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\Profile', 'user_id');
     }
 
+    public function checkins()
+    {
+        return $this->hasMany('App\Models\Checkins');
+    }
+
     
 }

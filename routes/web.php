@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('department', 'DepartmentController')->except('show');
 
+    Route::resource('checkin', 'CheckinController')->except('show');
+
     Route::get('facility_department/{profile}', 'FacilityDepartmentController@index')->name('facility_department.show');
 
     Route::get('facility_department/add/{profile}', 'FacilityDepartmentController@create')->name('facility_department.create');

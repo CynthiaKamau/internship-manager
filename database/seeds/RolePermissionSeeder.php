@@ -49,6 +49,10 @@ class RolePermissionSeeder extends Seeder
             'create-post',
             'update-post',
             'destroy-post',
+            'view-checkins',
+            'create-checkins',
+            'update-checkins',
+            'destroy-checkins',
         ];
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
@@ -78,6 +82,13 @@ class RolePermissionSeeder extends Seeder
         $role = Role::create(['name' => 'Practitioner']);
         $role->givePermissionTo('update-settings');
         $role->givePermissionTo('view-user');
+        $role->givePermissionTo('create-user');
+        $role->givePermissionTo('view-checkins');
+        $role->givePermissionTo('create-checkins');
+        $role->givePermissionTo('view-facility-department');
+        $role->givePermissionTo('create-facility-department');
+        $role->givePermissionTo('view-post');
+        $role->givePermissionTo('create-post');
 
         $user = User::create([
             'first_name'=> 'Practitioner',
