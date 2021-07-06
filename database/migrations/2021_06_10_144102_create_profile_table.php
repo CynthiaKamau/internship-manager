@@ -29,7 +29,13 @@ class CreateProfileTable extends Migration
             $table->unsignedBigInteger('cadre_id')->nullable();
             $table->unsignedBigInteger('department_id')->nullable();
             $table->unsignedBigInteger('licence_id')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
+            $table->unsignedInteger('restored_by')->nullable();
+            $table->timestamp('restored_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             
             $table->foreign('user_id')->references('id')->on('users');
