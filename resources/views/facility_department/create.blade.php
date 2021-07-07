@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="card mb-5">
                 <div class="card-body">
-                    {!! Form::open(['route' => 'facility_department.store', $profile]) !!}
+                    {!! Form::open(['route' => 'facility_department.store']) !!}
                     <h6 class="heading-small text-muted mb-4">department information</h6>
                         <div class="pl-lg-4">
                             <div class="row">

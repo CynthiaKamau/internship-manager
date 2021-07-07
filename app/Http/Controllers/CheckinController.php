@@ -3,33 +3,44 @@
 namespace App\Http\Controllers;
 use App\Models\Checkin;
 use Illuminate\Http\Request;
+use DataTables;
 
 class CheckinController extends Controller
 {
 
     public function index(Request $request)
     {
-        if($request->has('search')) {
-            $checkins = Checkin::with(['user'])->where('name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
-        } else {
-            $checkins = Checkin::with(['user'])->paginate(setting('record_per_page', 25));
+        if ($request->ajax()) {
+
+            $checkins = Checkin::with(['user'])->get();
+    
+            $checkins = $checkins->map(function ($checkin) {
+
+                $location = $this->getAddress($checkin->lat,$checkin->long);
+
+                return [
+                    'id' => $checkin->id,
+                    'location' => $location,
+                    'student' => $checkin->user->first_name. ' ' .$checkin->user->first_name,
+                    'supervisor' => $checkin->supervisor === null ? '' : $checkin->supervisor->first_name. ' ' .$checkin->supervisor->last_name  ,
+                    'created_at' => $checkin->created_at,
+                ];
+            });
+
+            return Datatables::of($checkins)
+            ->addIndexColumn()
+            ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                    return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         }
+        
+        return view('checkins.index');
 
-        $title = "Manage Checkins";
-
-        $checkins = $checkins->map(function ($checkin) {
-
-            $location = $this->getAddress($checkin->lat,$checkin->long);
-
-            return [
-                'location' => $location,
-                'student' => $checkin->user->first_name. ' ' .$checkin->user->first_name,
-                'supervisor' => $checkin->supervisor === null ? '' : $checkin->supervisor->first_name. ' ' .$checkin->supervisor->last_name  ,
-                'created_at' => $checkin->created_at,
-            ];
-        });
-
-        return view('checkins.index', compact('checkins', 'title'));
     }
 
     protected function getAddress($RG_Lat,$RG_Lon)

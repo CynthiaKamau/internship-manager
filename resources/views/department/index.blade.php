@@ -20,8 +20,8 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
-                    </div>
-                </div>
+            </div>
+        </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <div>

@@ -51,6 +51,14 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('facility_department', 'FacilityDepartmentController')->except('show');
 
+    // Route::get('/facility_department', 'FacilityDepartmentController@index')->name('facility_department.index');
+
+    // Route::get('/facility_department/{facility_departmemt}/create', 'FacilityDepartmentController@create')->name('facility_department.create');
+
+    // Route::put('/facility_department/{facility_department}/edit', 'FacilityDepartmentController@update')->name('facility_department.update');
+
+    // Route::delete('/facility_department/{facility_department}', 'FacilityDepartmentController@destroy')->name('facility_department.destroy');
+
     Route::resource('post', 'PostController');
 
     Route::get('/activity-log', 'SettingController@activity')->name('activity-log.index');

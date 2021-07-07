@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 @push('pg_btn')
 @can('create-checkins')
     <a href="{{ route('checkins.create') }}" class="btn btn-sm btn-neutral">Create New checkins</a>
@@ -13,86 +18,39 @@
                         <div class="col-lg-8">
                             <h3 class="mb-0">All Checkins</h3>
                         </div>
-                        <div class="col-lg-4">
-                    {!! Form::open(['route' => 'users.index', 'method'=>'get']) !!}
-                        <div class="form-group mb-0">
-                        {{ Form::text('search', request()->query('search'), ['class' => 'form-control form-control-sm', 'placeholder'=>'Search checkins']) }}
-                    </div>
-                    {!! Form::close() !!}
-                </div>
                     </div>
                 </div>
+
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <div>
-                            <table class="table table-hover align-items-center">
-                                <thead class="thead-light">
+                        <table class="table table-bordered data-table">
+                            <thead>
                                 <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Supervisor</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Created at</th>
-                                    <th scope="col" class="text-center">Action</th>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Supervisor</th>
+                                <th>Location</th>
+                                <th>Created at</th>
+                                <th width="100px">Action</th>
                                 </tr>
-                                </thead>
-                                <tbody class="list">
-                                @foreach($checkins as $checkin)
-                                    <tr>
-                                        <th scope="row">
-                                            {{$checkin}}
-                                        </th>
-                                        <td>
-                                        {{$checkin}}
-                                        </td>
-                                        <td>
-                                            {{$checkin->supervisor}}
-                                        </td>
-                                        <td>
-                                            @if($checkin->supervisor != '')
-                                                <span class="badge badge-pill badge-lg badge-success">Approved</span>
-                                            @else
-                                                <span class="badge badge-pill badge-lg badge-danger">Not Approved</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{$checkin->created_at}}
-                                        </td>
-                                        <td class="text-center">
-                                            @can('destroy-checkins')
-                                            {!! Form::open(['route' => ['checkins.destroy', $checkin],'method' => 'delete',  'class'=>'d-inline-block dform']) !!}
-                                            @endcan
-
-                                            @can('update-checkins')
-                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit checkins details" href="{{route('checkins.edit',$checkin ?? '')}}">
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                            </a>
-                                            @endcan
-                                            @can('destroy-checkins')
-                                                <button type="submit" class="btn delete btn-danger btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Delete checkins" href="">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            {!! Form::close() !!}
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                                <tfoot >
-                                <tr>
-                                    <td colspan="6">
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </div>        
+
             </div>
         </div>
     </div>
 @endsection
 @push('scripts')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
         jQuery(document).ready(function(){
@@ -118,7 +76,23 @@
                 });
             })
         })
-        
+
+        $(function() {
+            $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('checkins.index') !!}',
+                columns: [
+                { data: 'id', name: 'id' },
+                { data: 'student', name: 'student' },
+                { data: 'supervisor', name: 'supervisor' },
+                { data: 'location', name: 'location' },
+                { data: 'created_at', name: 'created_at' },
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });    
+  
     </script>  
     
   ​
