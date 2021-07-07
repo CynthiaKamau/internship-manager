@@ -44,6 +44,8 @@
                                         </th>
                                         <td>
                                         {{$checkin->lat}}
+                                        <div id="latlng" value="54.9882,-1.5747"></div>
+                                        <div id="test"></div>
                                         </td>
                                         <td>
                                             {{$checkin->supervisor->first_name}} {{$checkin->supervisor->last_name}}
@@ -93,6 +95,8 @@
     </div>
 @endsection
 @push('scripts')
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
     <script>
         jQuery(document).ready(function(){
             $('.delete').on('click', function(e){
@@ -118,5 +122,29 @@
             })
         })
 
-    </script>
+        var geocoder;
+        initialize();
+        codeLatLng();
+        function initialize() {
+
+            geocoder = new google.maps.Geocoder();
+        }
+
+        function codeLatLng() {
+
+            var input = document.getElementById("latlng").getAttribute('value');
+            console.log(input);
+            var latlngStr = input.split(",", 2);
+            var lat = parseFloat(latlngStr[0]);
+            var lng = parseFloat(latlngStr[1]);
+            var latlng = new google.maps.LatLng(lat, lng);
+            geocoder.geocode({
+            'latLng': latlng
+            }, function(results, status) {
+
+                document.getElementById("test").innerHTML = '' + (results[4].formatted_address); + ''
+            });
+        }
+        
+    </script>    ​
 @endpush
