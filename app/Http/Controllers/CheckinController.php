@@ -17,11 +17,19 @@ class CheckinController extends Controller
 
         $title = "Manage Checkins";
 
-        foreach($checkins as $value){
-            return $this->getAddress($value->lat,$value->long);
-        }
+        $checkins = $checkins->map(function ($checkin) {
 
-        //return view('checkins.index', compact('checkins', 'title'));
+            $location = $this->getAddress($checkin->lat,$checkin->long);
+
+            return [
+                'location' => $location,
+                'student' => $checkin->user->first_name. ' ' .$checkin->user->first_name,
+                'supervisor' => $checkin->supervisor === null ? '' : $checkin->supervisor->first_name. ' ' .$checkin->supervisor->last_name  ,
+                'created_at' => $checkin->created_at,
+            ];
+        });
+
+        return view('checkins.index', compact('checkins', 'title'));
     }
 
     protected function getAddress($RG_Lat,$RG_Lon)

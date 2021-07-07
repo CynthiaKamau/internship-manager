@@ -40,16 +40,16 @@
                                 @foreach($checkins as $checkin)
                                     <tr>
                                         <th scope="row">
-                                            {{$checkin->user->first_name}} {{$checkin->user->last_name}}
+                                            {{$checkin}}
                                         </th>
                                         <td>
-                                        {{$checkin->lat}}
+                                        {{$checkin}}
                                         </td>
                                         <td>
-                                            {{$checkin->supervisor->first_name}} {{$checkin->supervisor->last_name}}
+                                            {{$checkin->supervisor}}
                                         </td>
                                         <td>
-                                            @if($checkin->approved_by == 1)
+                                            @if($checkin->supervisor != '')
                                                 <span class="badge badge-pill badge-lg badge-success">Approved</span>
                                             @else
                                                 <span class="badge badge-pill badge-lg badge-danger">Not Approved</span>
@@ -93,7 +93,6 @@
     </div>
 @endsection
 @push('scripts')
-   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
     <script>
         jQuery(document).ready(function(){
@@ -118,29 +117,6 @@
                     }
                 });
             })
-        })
-
-        $.ajax({
-            url: "https://nominatim.openstreetmap.org/reverse",
-            data: {
-                lat: 38.748666,
-                lon: -9.103002,
-                format: "json"
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(
-                'User-Agent',
-                'ID of your APP/service/website/etc. v0.1'
-                )
-            },
-            dataType: "json",
-            type: "GET",
-            async: true,
-            crossDomain: true
-            }).done(function (res) {
-            console.log(res.address)
-            }).fail(function (error) {
-            console.error(error)
         })
         
     </script>  
