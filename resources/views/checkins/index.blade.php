@@ -44,8 +44,6 @@
                                         </th>
                                         <td>
                                         {{$checkin->lat}}
-                                        <div id="latlng" value="54.9882,-1.5747"></div>
-                                        <div id="test"></div>
                                         </td>
                                         <td>
                                             {{$checkin->supervisor->first_name}} {{$checkin->supervisor->last_name}}
@@ -122,29 +120,30 @@
             })
         })
 
-        var geocoder;
-        initialize();
-        codeLatLng();
-        function initialize() {
-
-            geocoder = new google.maps.Geocoder();
-        }
-
-        function codeLatLng() {
-
-            var input = document.getElementById("latlng").getAttribute('value');
-            console.log(input);
-            var latlngStr = input.split(",", 2);
-            var lat = parseFloat(latlngStr[0]);
-            var lng = parseFloat(latlngStr[1]);
-            var latlng = new google.maps.LatLng(lat, lng);
-            geocoder.geocode({
-            'latLng': latlng
-            }, function(results, status) {
-
-                document.getElementById("test").innerHTML = '' + (results[4].formatted_address); + ''
-            });
-        }
+        $.ajax({
+            url: "https://nominatim.openstreetmap.org/reverse",
+            data: {
+                lat: 38.748666,
+                lon: -9.103002,
+                format: "json"
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                'User-Agent',
+                'ID of your APP/service/website/etc. v0.1'
+                )
+            },
+            dataType: "json",
+            type: "GET",
+            async: true,
+            crossDomain: true
+            }).done(function (res) {
+            console.log(res.address)
+            }).fail(function (error) {
+            console.error(error)
+        })
         
-    </script>    ​
+    </script>  
+    
+  ​
 @endpush
