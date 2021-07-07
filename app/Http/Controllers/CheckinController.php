@@ -12,7 +12,7 @@ class CheckinController extends Controller
         if($request->has('search')) {
             $checkins = Checkin::with(['user'])->where('name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
         } else {
-            $checkins = Checkin::with(['user'])->paginate(setting('record_per_page', 15));
+            $checkins = Checkin::with(['user'])->paginate(setting('record_per_page', 25));
         }
 
         $title = "Manage Checkins";

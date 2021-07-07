@@ -15,7 +15,7 @@ class FacilityDepartmentController extends Controller
     public function index(Request $request, Profile $profile)
     {
         if ($request->has('search')) {
-           //$departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+           $departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
         } else {
             $departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', $profile->facility_id)->paginate(setting('record_per_page', 15));
         }

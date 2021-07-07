@@ -29,6 +29,7 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Location</th>
                                     <th scope="col">Supervisor</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created at</th>
@@ -36,23 +37,26 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list">
-                                @foreach($checkins as $checkins)
+                                @foreach($checkins as $checkin)
                                     <tr>
                                         <th scope="row">
-                                            {{$checkins->user->first_name}} {{$checkins->user->last_name}}
+                                            {{$checkin->user->first_name}} {{$checkin->user->last_name}}
                                         </th>
                                         <td>
-                                            {{$checkins->supervisor->first_name}} {{$checkins->supervisor->last_name}}
+                                        {{$checkin->lat}}
                                         </td>
                                         <td>
-                                            @if($checkins->approved_by == 1)
+                                            {{$checkin->supervisor->first_name}} {{$checkin->supervisor->last_name}}
+                                        </td>
+                                        <td>
+                                            @if($checkin->approved_by == 1)
                                                 <span class="badge badge-pill badge-lg badge-success">Approved</span>
                                             @else
                                                 <span class="badge badge-pill badge-lg badge-danger">Not Approved</span>
                                             @endif
                                         </td>
                                         <td>
-                                            {{$checkins->created_at}}
+                                            {{$checkin->created_at}}
                                         </td>
                                         <td class="text-center">
                                             @can('destroy-checkins')
@@ -60,7 +64,7 @@
                                             @endcan
 
                                             @can('update-checkins')
-                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit checkins details" href="{{route('checkins.edit',$checkin)}}">
+                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit checkins details" href="{{route('checkins.edit',$checkin ?? '')}}">
                                                 <i class="fa fa-edit" aria-hidden="true"></i>
                                             </a>
                                             @endcan

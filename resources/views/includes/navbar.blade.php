@@ -125,7 +125,7 @@
                                 <ul class="nav nav-sm flex-column">
                                  @can('view-checkins')
                                     <li class="nav-item">
-                                        <a href="{{route('checkins.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Checkinss</span></a>
+                                        <a href="{{route('checkins.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Checkins</span></a>
                                     </li>
                                     @endcan
                                     @can( 'create-checkins')
