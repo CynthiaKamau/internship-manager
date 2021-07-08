@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('pg_btn')
-    <a href="{{route('facility_department.index')}}" class="btn btn-sm btn-neutral">Facility Departments</a>
+    <a href="{{route('facility_department.index')}}" class="btn btn-sm btn-neutral">All Facility Departments</a>
 @endpush
 @section('content')
     <div class="row">
@@ -13,8 +13,12 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        {{ Form::label('dname', 'Department Name', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('dname', null, ['class' => 'form-control']) }}
+                                        <label>Select Department</label>
+                                        <select class="selectpicker form-control" data-width="100%" id="department_id" name="department_id" data-actions-box="true" data-live-search="true">
+                                            @foreach($departments as $department)
+                                                <option value="{{ $department->id}}" > {{$department->name}}</option>
+                                            @endforeach
+                                        </select>    
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +29,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Select Facility</label>
-                                        <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true">
+                                        <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true" data-live-search="true">
                                             @foreach($facilities as $facility)
                                                 <option value="{{ $facility->id}}" > {{$facility->name}}</option>
                                             @endforeach

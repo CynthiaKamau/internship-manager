@@ -16,31 +16,50 @@ class FacilityDepartmentController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->has('search')) {
-           $departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+        if(Auth::user()->role_id == '1') {
+
+            if ($request->has('search')) {
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+            } else {
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->paginate(setting('record_per_page', 15));
+            }
+
         } else {
-            $departments = FacilityDepartment::with(['facility'])->where('facility_id', Auth::user()->profile->facility_id)->paginate(setting('record_per_page', 15));
+
+            if ($request->has('search')) {
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+            } else {
+                 $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', Auth::user()->profile->facility_id)->paginate(setting('record_per_page', 15));
+            }
+
         }
 
         $title = 'Manage Facility Departments';
 
-        return view('facility_department.index', compact('title', 'departments'));
+        return view('facility_department.index', compact('title', 'facility_departments'));
 
     }
 
     public function create()
     {
         $title = 'Create Facility Department';
-        $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
-        
-        return view('facility_department.create', compact('title', 'facilities'));
+        if(Auth::user()->role_id == '1') {
+            $facilities = Facility::all();
+        } else {
+            $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
+        }
+
+        $departments = Department::all();
+
+        return view('facility_department.create', compact('title', 'facilities', 'departments'));
     }
 
-    public function store(DepartmentRequest $request)
+    public function store(Request $request)
     {
         try {
-            $department = new Department;
-            $department->name = $request->dname;
+            $department = new FacilityDepartment;
+            $department->department_id = $request->department_id;
+            $department->facility_id = $request->facility_id;
 
             if(empty($request->status)) {
                 $department->status = 0;
@@ -49,16 +68,11 @@ class FacilityDepartmentController extends Controller
             }
             $department->created_at = Carbon::now();
 
-            if($department->save() ) {
+            $department->save();
 
-                $facility_id = Facility::where('id', Auth::user()->profile->facility_id)->get();
+            flash('Depertment created successfully!')->success();
+            return redirect()->route('facility_department.index');
 
-                $department->facilities()->sync($facility_id);
-
-                flash('Depertment created successfully!')->success();
-                return redirect()->route('facility_department.index');
-
-            }
 
         } catch (\Exception $e) {
 
@@ -77,9 +91,13 @@ class FacilityDepartmentController extends Controller
     public function edit(FacilityDepartment $facility_department)
     {
         $title = "Department Details";
-        $facility_department->with('facility');
-        $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
-        return view('facility_department.edit', compact('title', 'facility_department', 'facilities'));
+        $departments = Department::all();
+        if(Auth::user()->role_id == '1') {
+            $facilities = Facility::all();
+        } else {
+            $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
+        }
+        return view('facility_department.edit', compact('title', 'facility_department', 'departments', 'facilities'));
     }
 
     public function update(Request $request, FacilityDepartment $facility_department)
@@ -95,15 +113,6 @@ class FacilityDepartmentController extends Controller
         $facility_department->delete();
         flash('Department deleted successfully!')->info();
         return back();
-    }
-
-    public function get_departments(Request $request)
-    {
-        
-        $departments = FacilityDepartment::with(['facility', 'department'])->where('facility_id', $request->facility_id)->get();
-
-        return $departments;
-
     }
 
 

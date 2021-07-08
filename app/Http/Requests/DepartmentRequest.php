@@ -25,7 +25,6 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'dname' => 'required|max:255',
-            'facility_id' => 'required'
         ];
     }
 }

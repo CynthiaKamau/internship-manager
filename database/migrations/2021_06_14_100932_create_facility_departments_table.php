@@ -17,10 +17,11 @@ class CreateFacilityDepartmentsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('facility_id')->unsigned()->nullable();
             $table->bigInteger('department_id')->unsigned()->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
 
-            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('set null');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
+            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
 
         });
     }

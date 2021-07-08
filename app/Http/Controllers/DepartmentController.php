@@ -28,8 +28,7 @@ class DepartmentController extends Controller
     public function create()
     {
         $title = 'Create Department';
-        $facilities = Facility::all();
-        return view('department.create', compact('title', 'facilities'));
+        return view('department.create', compact('title'));
     }
 
     public function store(DepartmentRequest $request)
@@ -39,21 +38,14 @@ class DepartmentController extends Controller
             $department->name = $request->dname;
             $department->status = $request->status;
             $department->created_at = Carbon::now();
+            $department->save();
 
-            if($department->save() ) {
-
-                $facility_id = $request->facility_id;
-
-                $department->facilities()->sync($facility_id);
-
-                flash('Deprtment created successfully!')->success();
-                return redirect()->route('department.index');
-
-            }
+            flash('Deprtment created successfully!')->success();
+            return redirect()->route('department.index');
 
         } catch (\Exception $e) {
 
-            flash('Failed!')->success();
+            flash('Failed!')->danger();
             return redirect()->route('department.index');
 
         }
@@ -68,16 +60,22 @@ class DepartmentController extends Controller
     public function edit(Department $department)
     {
         $title = "Department Details";
-        $department->with('facility');
         return view('department.edit', compact('title', 'department'));
     }
 
     public function update(Request $request, Department $department)
     {
-        $department->update($request->all());
-        flash('Department updated successfully!')->success();
-        return back();
-    }
+        try {
+            $department->update($request->all());
+            flash('Department updated successfully!')->success();
+            return back();
+
+        }catch (\Exception $e) {
+            flash('Failed!')->danger();
+            return back();
+        }
+        
+    }    
 
     public function destroy(Department $department)
     {

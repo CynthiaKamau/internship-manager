@@ -36,7 +36,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list">
-                                @foreach($departments as $facility_department)
+                                @foreach($facility_departments as $facility_department)
                                     <tr>
                                         <th scope="row">
                                             {{$facility_department->facility->name}}
@@ -77,7 +77,7 @@
                                 <tfoot >
                                 <tr>
                                     <td colspan="6">
-                                        {{$departments->links()}}
+                                        {{$facility_departments->links()}}
                                     </td>
                                 </tr>
                                 </tfoot>
