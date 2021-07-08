@@ -63,10 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\Post');
     }
-    public function facilities()
-    {
-        return $this->belongsTo('App\Models\Facility');
-    }
 
     public function profile()
     {

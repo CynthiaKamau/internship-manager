@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Checkin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use DataTables;
 
 class CheckinController extends Controller
@@ -10,6 +11,9 @@ class CheckinController extends Controller
 
     public function index(Request $request)
     {
+
+        $checkins = Checkin::with(['user'])->get();
+
         if ($request->ajax()) {
 
             $checkins = Checkin::with(['user'])->get();
@@ -18,24 +22,32 @@ class CheckinController extends Controller
 
                 $location = $this->getAddress($checkin->lat,$checkin->long);
 
+                $actions = '<div class="text-center text-uppercase">';
+
+                $actions .= '<a href="' . route('checkins.edit', [$checkin]) . '" class="btn btn-sm btn-success">Approve</a>';
+
+                $actions .= '</div>';
+
+                if($checkin->approved == 1) {
+                    $approved = "Approved";
+                } else {
+                    $approved = "Not Approved";
+                }
+
                 return [
                     'id' => $checkin->id,
                     'location' => $location,
+                    'approved' => $approved,
                     'student' => $checkin->user->first_name. ' ' .$checkin->user->first_name,
                     'supervisor' => $checkin->supervisor === null ? '' : $checkin->supervisor->first_name. ' ' .$checkin->supervisor->last_name  ,
-                    'created_at' => $checkin->created_at,
+                    'created_at' => Carbon::parse($checkin->created_at)->format('M d Y'),
+                    'action' => $actions
                 ];
             });
 
+
             return Datatables::of($checkins)
             ->addIndexColumn()
-            ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-                    return $btn;
-            })
-            ->rawColumns(['action'])
             ->make(true);
         }
         
@@ -71,7 +83,7 @@ class CheckinController extends Controller
     public function edit(Checkin $checkin)
     {
         $title = "Approve Checkin";
-        $checkin->with('user');
+        $checkin->load(['user', 'supervisor']);
         return view('checkins.edit', compact('title', 'checkin'));
 
     }

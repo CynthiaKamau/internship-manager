@@ -14,4 +14,14 @@ class Profile extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function facility()
+    {
+        return $this->belongsTo('App\Models\Facility', 'facility_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department', 'department_id');
+    }
 }

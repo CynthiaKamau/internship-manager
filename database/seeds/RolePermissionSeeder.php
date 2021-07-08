@@ -84,6 +84,7 @@ class RolePermissionSeeder extends Seeder
         $role->givePermissionTo('view-user');
         $role->givePermissionTo('create-user');
         $role->givePermissionTo('view-checkins');
+        $role->givePermissionTo('update-checkins');
         $role->givePermissionTo('create-checkins');
         $role->givePermissionTo('view-facility-department');
         $role->givePermissionTo('create-facility-department');

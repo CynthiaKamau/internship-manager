@@ -30,6 +30,7 @@
                                 <th>Student</th>
                                 <th>Supervisor</th>
                                 <th>Location</th>
+                                <th>Approved</th>
                                 <th>Created at</th>
                                 <th width="100px">Action</th>
                                 </tr>
@@ -87,6 +88,7 @@
                 { data: 'student', name: 'student' },
                 { data: 'supervisor', name: 'supervisor' },
                 { data: 'location', name: 'location' },
+                { data: 'approved', name: 'approved'},
                 { data: 'created_at', name: 'created_at' },
                 {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]

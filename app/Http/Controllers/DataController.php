@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class TestController extends Controller
+class DataController extends Controller
 {
   
 

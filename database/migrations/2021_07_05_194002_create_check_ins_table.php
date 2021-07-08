@@ -19,6 +19,7 @@ class CreateCheckInsTable extends Migration
             $table->unsignedBigInteger('approved_by')->nullable();
             $table->string('lat', 250)->nullable();
             $table->string('long', 250)->nullable();
+            $table->boolean('approved')->default(0);
             $table->unsignedBigInteger('facility_id')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
