@@ -56,9 +56,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label> Select Role </label>
-                                    <select class="selectpicker form-control" id="role_id" name="role_id" aria-label="Default select example">
-                                        <option value="2">Practitioner</option>
-                                        <option value="3">Student</option>
+                                    <select class="form-control" id="role_id" name="role_id" aria-label="Default select example">
+                                        <option value="2" disabled {{$user->role_id == 1 ? 'selected' : 'Super Admin' }}>Super Admin</option>
+                                        <option value="2" {{$user->role_id == 2 ? 'selected' : 'Practitioner' }}>Practitioner</option>
+                                        <option value="3" {{$user->role_id == 3 ? 'selected' : 'Student'}}>Student</option>
                                     </select>
 
                                     @error('role_id')
@@ -93,7 +94,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         {{ Form::label('index_number', 'Index Number', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('index_number', $user->profile->index_number , ['class' => 'form-control']) }}
+                                        {{ Form::text('index_number', $user->profile->index_number, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
 
@@ -147,9 +148,10 @@
                                 </div>    
 
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="selectpicker form-group">
                                         <label>Select Gender</label>
                                         <select class="form-control" aria-label="Default select example" id="gender" name="gender">
+                                            <option value={{$user->profile->gender}} selected> {{$user->profile->gender}} </option>
                                             <option value="MALE">Male</option>
                                             <option value="FEMALE">Female</option>
                                             <option value="TRANS-GENDER">Trans-Gender</option>
@@ -167,13 +169,12 @@
                             </div> 
 
                             <div class="row">
-
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="selectpicker form-group">
                                         <label>Select Citizenship</label>
-                                        <select class="selectpicker form-control" width="100%" aria-label="Default select example" id="citizenship" name="citizenship">
+                                        <select class="form-control" width="100%" aria-label="Default select example" id="citizenship" name="citizenship">
                                             @foreach($countries as $country)
-                                                <option value="{{$country->name}}" > {{$country->name}}</option>
+                                                <option value="{{$country->nice_name}}" {{ $country->nice_name == $user->profile->citizenship ? 'selected' : '' }} > {{$country->nice_name}}</option>
                                             @endforeach
                                         </select> 
                                     </div>     
@@ -182,10 +183,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Select Facility</label>
-                                        <select class="form-control" aria-label="Default select example" id="facility_id" name="facility_id">
+                                        <select class="form-control" aria-label="Default select example" id="facility_id" name="facility_id" onchange="ChangecatList()">
                                             <option value="">Select Facility</option>
                                             @foreach($facilities as $facility)
-                                                <option value="{{$facility->id}}" > {{$facility->name}}</option>
+                                                <option value="{{$facility->id}}" {{ $facility->id == $user->profile->facility_id ? 'selected' : '' }} > {{$facility->name}}</option>
                                             @endforeach
                                         </select> 
                                     </div>     
@@ -197,12 +198,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Select Department</label>
-                                        <select class="selectpicker form-control" width="100%" aria-label="Default select example" id="department" name="department">
-                                            <option value="">Select Department</option>
-                                            @if(Auth::user()->profile->department_id != "")
-
-                                            <option value="{{Auth::user()->profile->department_id}}">{{ ucwords(Auth::user()->profile) }}</option>
-                                            @endif
+                                        <select class="form-control" width="100%" aria-label="Default select example" id="department_id" name="department_id">
+                                            <!-- @if(Auth::user()->profile->department_id != "")
+                                            <option value="{{Auth::user()->profile->department_id}}">{{ ucwords(Auth::user()->profile->department_id) }}</option>
+                                            @endif -->
                                         </select> 
                                     </div>     
                                 </div> 
@@ -233,44 +232,21 @@
     </div>
 @endsection
 
-@push('styles') 
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.css') }}" type="text/css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.14/css/bootstrap-select.min.css"> -->
-
-@endpush
-
 @push('scripts')
-    <script type="text/javascript" src="{{asset('assets/vendor/jquery/dist/jquery.min.js') }}"> </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
-    <script type="text/javascript" src="{{asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"> </script>
-    <script type="text/javascript" src="{{asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"> </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.14/js/bootstrap-select.min.js"></script>.
-    <!-- <script type="text/javascript" src="{{ asset('assets/js/bootstrap-select.min.js') }}"> </script> -->
     <script>
-        // jQuery(document).ready(function(){
-        //     jQuery('#uploadFile').filemanager('file');
-        // })
+        jQuery(document).ready(function(){
+            jQuery('#uploadFile').filemanager('file');
+        })
 
         $('.datepicker').datepicker({
             format: 'yyyy/mm/dd',
             startDate: '-3d'
         });
 
-        $('#gender').change(function() {
+        function ChangecatList() {
+            var facList = document.getElementById("facility_id").value;
 
-        var selected = $('#gender option:selected').val();
-        alert(selected);  
-
-        });
-
-        $('#facility_id').change(function() {
-
-            $('#department').empty();
-
-            var z = $(this).val();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -278,33 +254,29 @@
                 type: "POST",
                 url: '/get_facility_departments',
                 data: {
-                    "facility_id": z
+                    "facility_id": facList
                 },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
-                    var select = document.getElementById("department"),
+                    var select = document.getElementById("department_id"),
                         opt = document.createElement("option");
 
                         opt.value = "";
                         opt.textContent = "Select Department";
                         select.appendChild(opt);
                     for (var i = 0; i < data.length; i++) {
-                        console.log(data);
                         
-                    var select = document.getElementById("department"),
+                        var select = document.getElementById("department_id"),
                         opt = document.createElement("option");
 
-                        // opt.value = data[i].id;
-                        // opt.textContent = data[i].name;
-
-                        opt.value = data;
-                        opt.textContent = data;
+                        opt.value = data[i].department.id;
+                        opt.textContent = data[i].department.name;
 
                         select.appendChild(opt);
                     }
                 }
             })
-        });
+            
+        } 
 
     </script>

@@ -144,11 +144,7 @@ class UserController extends Controller
 
         $user = $user->load('profile');
 
-        $f = $user->profile->facility_id ;
-
-        $departments = FacilityDepartment::where('facility_id', $f )->with('department')->get();
-
-        return view('users.profile', compact('title', 'user', 'countries', 'facilities', 'departments'));
+        return view('users.profile', compact('title', 'user', 'countries', 'facilities'));
     }
 
     public function profileUpdate(Request $request,User $user)

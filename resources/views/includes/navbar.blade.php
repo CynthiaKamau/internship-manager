@@ -91,7 +91,7 @@
 
                     @endcan
 
-                    @if (Auth::user()->profile->facility_id != '')
+                    @if (!empty(Auth::user()->profile->facility_id))
                     @canany(['view-facility-department', 'create-facility-department'])
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('facility_department*', $user ?? '')) ? 'active' : '' }}" href="#navbar-facility-department"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-facility-department">

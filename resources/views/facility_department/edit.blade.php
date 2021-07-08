@@ -17,9 +17,8 @@
                                     <div class="form-group">
                                         <label>Select Department</label>
                                         <select class="selectpicker form-control" data-width="100%" id="department_id" name="department_id" data-actions-box="true" data-live-search="true">
-                                            <option value="{{ $facility_department->department_id}}" selected> {{$facility_department->department->name}}</option>
                                             @foreach($departments as $department)
-                                                <option value="{{ $department->id}}" > {{$department->name}}</option>
+                                                <option value="{{ $department->id}}" {{ $department->id == $facility_department->department_id ? 'selected' : '' }} > {{$department->name}}</option>
                                             @endforeach
                                         </select>    
                                     </div>
@@ -35,9 +34,8 @@
                                     <div class="form-group">
                                         <label>Select Facility</label>
                                         <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true">
-                                            <option value="{{ $facility_department->facility_id}}" selected> {{$facility_department->facility->name}}</option>
                                             @foreach($facilities as $facility)
-                                                <option value="{{ $facility->id}}" > {{$facility->name}}</option>
+                                                <option value="{{ $facility->id}}" {{ $facility->id == $facility_department->facility_id ? 'selected' : ''}} > {{$facility->name}}</option>
                                             @endforeach
                                         </select>    
                                     </div>
