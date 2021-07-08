@@ -21,4 +21,9 @@ class Checkin extends Model
     {
         return $this->belongsTo('App\Models\User', 'approved_by');
     }
+
+    public function facility()
+    {
+        return $this->belongsTo('App\Models\Facility', 'facility_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Checkin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 
 class CheckinController extends Controller
@@ -12,11 +13,13 @@ class CheckinController extends Controller
     public function index(Request $request)
     {
 
-        $checkins = Checkin::with(['user'])->get();
-
         if ($request->ajax()) {
 
-            $checkins = Checkin::with(['user'])->get();
+            if(Auth::user()->role_id == '1') {
+                $checkins = Checkin::with(['user', 'facility'])->get();
+            } else {
+                $checkins = Checkin::with(['user', 'facility'])->where('facility_id' , Auth::user()->profile->facility_id)->get();
+            }
     
             $checkins = $checkins->map(function ($checkin) {
 
@@ -40,6 +43,7 @@ class CheckinController extends Controller
                     'approved' => $approved,
                     'student' => $checkin->user->first_name. ' ' .$checkin->user->first_name,
                     'supervisor' => $checkin->supervisor === null ? '' : $checkin->supervisor->first_name. ' ' .$checkin->supervisor->last_name  ,
+                    'facility' => $checkin->facility === null ? '' : $checkin->facility->name ,
                     'created_at' => Carbon::parse($checkin->created_at)->format('M d Y'),
                     'action' => $actions
                 ];

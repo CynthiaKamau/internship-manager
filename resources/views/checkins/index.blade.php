@@ -29,6 +29,7 @@
                                 <th>ID</th>
                                 <th>Student</th>
                                 <th>Supervisor</th>
+                                <th>Facility</th>
                                 <th>Location</th>
                                 <th>Approved</th>
                                 <th>Created at</th>
@@ -87,6 +88,7 @@
                 { data: 'id', name: 'id' },
                 { data: 'student', name: 'student' },
                 { data: 'supervisor', name: 'supervisor' },
+                { data: 'facility', name: 'facility'},
                 { data: 'location', name: 'location' },
                 { data: 'approved', name: 'approved'},
                 { data: 'created_at', name: 'created_at' },

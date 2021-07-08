@@ -18,4 +18,9 @@ class Facility extends Model
         return $this->belongsToMany('App\Models\Department', 'facility_departments');
     }
 
+    public function checkins()
+    {
+        return $this->hasMany('App\Models\Checkin');
+    }
+
 }
