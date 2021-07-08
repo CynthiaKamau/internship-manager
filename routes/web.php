@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('facility_department', 'FacilityDepartmentController')->except('show');
 
-    // Route::get('/facility_department', 'FacilityDepartmentController@index')->name('facility_department.index');
+    Route::post('/get_facility_departments', 'TestController@get_departments')->name('get_facility_department');
 
     // Route::get('/facility_department/{facility_departmemt}/create', 'FacilityDepartmentController@create')->name('facility_department.create');
 

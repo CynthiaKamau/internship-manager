@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/fullcalendar/dist/fullcalendar.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/sweetalert2/dist/sweetalert2.min.css')}}">
 
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.css') }}" type="text/css">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('assets/css/jquery-confirm.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('assets/css/dashboard.css')}}" type="text/css">

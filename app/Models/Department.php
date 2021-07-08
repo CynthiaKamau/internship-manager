@@ -15,7 +15,6 @@ class Department extends Model
 
     public function facilities() 
     {
-
         return $this->belongsToMany('App\Models\Facility', 'facility_departments');
     }
 }

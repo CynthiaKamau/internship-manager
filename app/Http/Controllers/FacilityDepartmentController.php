@@ -97,5 +97,14 @@ class FacilityDepartmentController extends Controller
         return back();
     }
 
+    public function get_departments(Request $request)
+    {
+        
+        $departments = FacilityDepartment::with(['facility', 'department'])->where('facility_id', $request->facility_id)->get();
+
+        return $departments;
+
+    }
+
 
 }
