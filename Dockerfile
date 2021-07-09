@@ -23,3 +23,5 @@ RUN composer global require "laravel/envoy=~1.0"
 RUN curl -sL https://deb.nodesource.com/setup_15.x | bash
 
 RUN apt-get install -y nodejs
+
+RUN apt install php-xdebug
