@@ -13,7 +13,7 @@ class Facility extends Model
        'id', 'code', 'name', 'keph_level', 'facility_type', 'county', 'sub_county', 'active',
     ];
 
-    public function departments() 
+    public function departments()
     {
         return $this->belongsToMany('App\Models\Department', 'facility_departments');
     }
@@ -22,5 +22,4 @@ class Facility extends Model
     {
         return $this->hasMany('App\Models\Checkin');
     }
-
 }

@@ -13,7 +13,7 @@ class Country extends Model
        'name', 'status'
     ];
 
-    public function users() 
+    public function users()
     {
 
         return $this->belongsTo('App\Models\Country');

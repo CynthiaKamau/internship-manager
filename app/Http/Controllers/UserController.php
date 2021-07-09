@@ -35,10 +35,12 @@ class UserController extends Controller
 
         if ($request->has('search')) {
             $users = User::where('name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
-        }else{
+        } else {
             $users= User::paginate(setting('record_per_page', 15));
         }
+
         $title =  'Manage Users';
+
         return view('users.index', compact('users','title'));
     }
 
@@ -66,11 +68,11 @@ class UserController extends Controller
         if ($request->profile_photo) {
             $userData['profile_photo'] = parse_url($request->profile_photo, PHP_URL_PATH);
         }
+
         $user = User::create($userData);
         $user->assignRole($request->role_id);
         flash('User created successfully!')->success();
         return redirect()->route('users.index');
-
     }
 
     /**
@@ -116,7 +118,8 @@ class UserController extends Controller
         $user->update($userData);
         $user->syncRoles($request->role);
         flash('User updated successfully!')->success();
-        return back();    }
+        return back();
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -133,7 +136,6 @@ class UserController extends Controller
         $user->delete();
         flash('User deleted successfully!')->info();
         return back();
-
     }
 
     public function profile(User $user)
@@ -147,13 +149,12 @@ class UserController extends Controller
         return view('users.profile', compact('title', 'user', 'countries', 'facilities'));
     }
 
-    public function profileUpdate(Request $request,User $user)
+    public function profileUpdate(Request $request, User $user)
     {
 
         $time = Carbon::now();
 
-        if(empty($user->profile->id)) {
-
+        if (empty($user->profile->id)) {
             $profile = new Profile;
 
             $profile->create([
@@ -172,9 +173,7 @@ class UserController extends Controller
 
             flash('Profile updated successfully!')->success();
             return back();
-
         } else {
-
             $p = Profile::where('user_id', $user->id)->pluck('id')->first();
 
             $profile = Profile::find($p);
@@ -192,21 +191,8 @@ class UserController extends Controller
                 'created_at' => $time
             ]);
 
-            // $profile->citizenship = $request->citizenship;
-            // $profile->dob = $request->dob;
-            // $profile->address = $request->address;
-            // $profile->department_id = $request->department_id;
-            // $profile->facility_id = $request->facility_id;
-            // $profile->index_no = $request->index_no;
-            // $profile->reg_no = $request->reg_no;
-            // $profile->gender = $request->gender;
-            // $profile->save();
-
             flash('Profile updated successfully!')->success();
             return back();
-
         }
-
-        
     }
 }

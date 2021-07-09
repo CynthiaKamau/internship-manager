@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Checkin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -12,17 +13,11 @@ class CheckinController extends Controller
 
     public function index(Request $request)
     {
-
         if ($request->ajax()) {
-
-            if(Auth::user()->role_id == '1') {
-
+            if (Auth::user()->role_id == '1') {
                 $checkins = Checkin::with(['user', 'facility'])->get();
-
             } else {
-
                 $checkins = Checkin::with(['user', 'facility'])->where('facility_id' , Auth::user()->profile->facility_id)->get();
-
             }
     
             $checkins = $checkins->map(function ($checkin) {
@@ -35,7 +30,7 @@ class CheckinController extends Controller
 
                 $actions .= '</div>';
 
-                if($checkin->approved == 1) {
+                if ($checkin->approved == 1) {
                     $approved = "Approved";
                 } else {
                     $approved = "Not Approved";
@@ -60,10 +55,9 @@ class CheckinController extends Controller
         }
         
         return view('checkins.index');
-
     }
 
-    protected function getAddress($RG_Lat,$RG_Lon)
+    protected function getAddress($RG_Lat, $RG_Lon)
     {
 
         $json = "https://nominatim.openstreetmap.org/reverse?format=json&lat=".$RG_Lat."&lon=".$RG_Lon."&zoom=27&addressdetails=1";
@@ -77,9 +71,6 @@ class CheckinController extends Controller
         $RG_array = json_decode($jsonfile,true);
 
         return $RG_array['display_name'];
-        //return $RG_array['address']['city'];
-        // $RG_array['address']['country'];
-
     }
 
 
@@ -94,7 +85,6 @@ class CheckinController extends Controller
         $checkin->load(['user', 'supervisor']);
         
         return view('checkins.edit', compact('title', 'checkin'));
-
     }
 
     public function update(Request $request, Checkin $checkin)
@@ -102,9 +92,9 @@ class CheckinController extends Controller
         
         $query = Checkin::where('id',  '=' , $checkin->id)
             ->update([
-                'approved' => $request->approved, 
+                'approved' => $request->approved,
                 'approved_by' => Auth::user()->id,
-                'updated_at' => Carbon::now() 
+                'updated_at' => Carbon::now()
             ]);
       
         flash('Checkin updated successfully!')->success();
@@ -117,5 +107,4 @@ class CheckinController extends Controller
         flash('Checkin deleted successfully!')->info();
         return back();
     }
-    
 }

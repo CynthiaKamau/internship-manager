@@ -22,7 +22,6 @@ class DepartmentController extends Controller
         $title = 'Manage Departments';
 
         return view('department.index', compact('departments', 'title'));
-
     }
 
     public function create()
@@ -42,14 +41,10 @@ class DepartmentController extends Controller
 
             flash('Deprtment created successfully!')->success();
             return redirect()->route('department.index');
-
         } catch (\Exception $e) {
-
             flash('Failed!')->danger();
             return redirect()->route('department.index');
-
         }
-
     }
 
     public function show(Department $department)
@@ -69,13 +64,11 @@ class DepartmentController extends Controller
             $department->update($request->all());
             flash('Department updated successfully!')->success();
             return back();
-
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             flash('Failed!')->danger();
             return back();
         }
-        
-    }    
+    }
 
     public function destroy(Department $department)
     {
@@ -83,6 +76,4 @@ class DepartmentController extends Controller
         flash('Department deleted successfully!')->info();
         return back();
     }
-
-
 }

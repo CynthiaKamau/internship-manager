@@ -26,9 +26,10 @@ class CategoryController extends Controller
     {
         if ($request->has('search')) {
             $categories = Category::with(['user'])->where('category_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
-        }else{
+        } else {
             $categories = Category::with(['user'])->paginate(setting('record_per_page', 15));
         }
+        
         $title =  'Manage Categories';
         return view('category.index', compact('categories','title'));
     }

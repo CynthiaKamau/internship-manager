@@ -57,22 +57,19 @@ class LoginController extends Controller
         }
 
         $credentials = $request->only('email', 'password');
-        if(Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $request->remember)){
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $request->remember)) {
             $userStatus = Auth::User()->status;
-            if($userStatus==1) {
+            if ($userStatus==1) {
                 return redirect()->intended(url('/home'));
-            }else{
+            } else {
                 Auth::logout();
                 flash('You are temporary blocked. please contact to admin')->warning();
                 return redirect()->route('login')->withInput();
             }
-        }
-        else {
+        } else {
             $this->incrementLoginAttempts($request);
             flash('Incorrect username or password. Please try again')->error();
             return redirect()->route('login')->withInput();
         }
     }
-
-
 }

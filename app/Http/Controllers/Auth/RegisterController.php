@@ -89,9 +89,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         if (setting('register_notification_email')) {
-            Mail::to($data['email'])->send( new UserRegistered($user));
+            Mail::to($data['email'])->send(new UserRegistered($user));
         }
-        if ( setting('default_role')) {
+        if (setting('default_role')) {
             $user->assignRole(setting('default_role'));
         }
         return $user;

@@ -17,40 +17,29 @@ class FacilityDepartmentController extends Controller
     public function index(Request $request)
     {
 
-        if(Auth::user()->role_id == 1) {
-
+        if (Auth::user()->role_id == 1) {
             if ($request->has('search')) {
-
                 $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 25));
-
             } else {
-
                 $facility_departments = FacilityDepartment::with(['department', 'facility'])->paginate(setting('record_per_page', 25));
             }
-
         } else {
-
             if ($request->has('search')) {
-
                 $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 25));
-            
             } else {
-
-                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', Auth::user()->profile->facility_id )->paginate(setting('record_per_page', 25));
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', Auth::user()->profile->facility_id)->paginate(setting('record_per_page', 25));
             }
-            
         }
 
         $title = 'Manage Facility Departments';
 
         return view('facility_department.index', compact('title', 'facility_departments'));
-
     }
 
     public function create()
     {
         $title = 'Create Facility Department';
-        if(Auth::user()->role_id == '1') {
+        if (Auth::user()->role_id == '1') {
             $facilities = Facility::all();
         } else {
             $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
@@ -68,7 +57,7 @@ class FacilityDepartmentController extends Controller
             $department->department_id = $request->department_id;
             $department->facility_id = $request->facility_id;
 
-            if(empty($request->status)) {
+            if (empty($request->status)) {
                 $department->status = 0;
             } else {
                 $department->status = $request->status;
@@ -79,15 +68,10 @@ class FacilityDepartmentController extends Controller
 
             flash('Depertment created successfully!')->success();
             return redirect()->route('facility_department.index');
-
-
         } catch (\Exception $e) {
-
             flash('Failed!')->success();
             return redirect()->route('facility_department.index');
-
         }
-
     }
 
     public function show(FacilityDepartment $facility_department)
@@ -99,7 +83,7 @@ class FacilityDepartmentController extends Controller
     {
         $title = "Department Details";
         $departments = Department::all();
-        if(Auth::user()->role_id == '1') {
+        if (Auth::user()->role_id == '1') {
             $facilities = Facility::all();
         } else {
             $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
@@ -121,6 +105,4 @@ class FacilityDepartmentController extends Controller
         flash('Department deleted successfully!')->info();
         return back();
     }
-
-
 }

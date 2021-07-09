@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function setPasswordAttribute($password)
     {
-        if(Hash::needsRehash($password)){
+        if (Hash::needsRehash($password)) {
             $password = Hash::make($password);
             $finalNodeGeneratedHash = str_replace("$2y$", "$2b$", $password);
             $this->attributes['password'] = $finalNodeGeneratedHash;
@@ -74,6 +74,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\Checkins');
     }
-
-    
 }

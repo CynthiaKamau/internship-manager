@@ -59,12 +59,11 @@ class PermissionController extends Controller
         activity('permission')
         ->causedBy(Auth::user())
         ->log('created');
-        foreach (explode(',',$request->name) as  $perm) {
+        foreach (explode(',',$request->name) as $perm) {
             $permission = Permission::create(['name' => $perm]);
             $permission->assignRole('super-admin');
         }
         flash('Permission created successfully!')->success();
         return redirect()->route('permissions.index');
     }
-
 }

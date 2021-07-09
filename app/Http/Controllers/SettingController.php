@@ -15,7 +15,9 @@ class SettingController extends Controller
         $this->middleware('permission:update-settings');
         $this->middleware('permission:view-activity-log', ['only' => ['activity']]);
     }
-    public function index() {
+
+    public function index()
+    {
         activity('settings')
             ->causedBy(Auth::user())
             ->log('view');
@@ -24,12 +26,13 @@ class SettingController extends Controller
         return view('settings.edit', compact('roles', 'title'));
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
 
         foreach ($request->all() as $key => $value) {
             if ($request->company_logo) {
                 Setting::set($key, parse_url($value, PHP_URL_PATH));
-            }else{
+            } else {
                 Setting::set($key, $value);
             }
         }
@@ -40,9 +43,10 @@ class SettingController extends Controller
             ->log('updated');
         flash('Settings updated successfully!')->success();
         return back();
-
     }
-    public function activity(Request $request){
+
+    public function activity(Request $request)
+    {
         $title= 'Activity Logs';
         activity('activity')
         ->causedBy(Auth::user())

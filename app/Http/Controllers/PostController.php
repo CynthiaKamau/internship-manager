@@ -28,7 +28,7 @@ class PostController extends Controller
     {
         if ($request->has('search')) {
             $posts = Post::with(['user','category'])->where('post_title', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
-        }else{
+        } else {
             $posts = Post::with(['user','category'])->paginate(setting('record_per_page', 15));
         }
         $title =  'Manage Resources';
