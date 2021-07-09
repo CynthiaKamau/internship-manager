@@ -22,7 +22,7 @@ class CheckinController extends Controller
             } else {
 
                 $checkins = Checkin::with(['user', 'facility'])->where('facility_id' , Auth::user()->profile->facility_id)->get();
-                
+
             }
     
             $checkins = $checkins->map(function ($checkin) {
@@ -92,13 +92,21 @@ class CheckinController extends Controller
     {
         $title = "Approve Checkin";
         $checkin->load(['user', 'supervisor']);
+        
         return view('checkins.edit', compact('title', 'checkin'));
 
     }
 
     public function update(Request $request, Checkin $checkin)
     {
-        $checkin->update($request->all());
+        
+        $query = Checkin::where('id',  '=' , $checkin->id)
+            ->update([
+                'approved' => $request->approved, 
+                'approved_by' => Auth::user()->id,
+                'updated_at' => Carbon::now() 
+            ]);
+      
         flash('Checkin updated successfully!')->success();
         return back();
     }

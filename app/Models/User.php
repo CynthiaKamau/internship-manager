@@ -52,7 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if(Hash::needsRehash($password)){
             $password = Hash::make($password);
-            $this->attributes['password'] = $password;
+            $finalNodeGeneratedHash = str_replace("$2y$", "$2b$", $password);
+            $this->attributes['password'] = $finalNodeGeneratedHash;
         }
     }
     public function categories()

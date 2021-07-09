@@ -93,6 +93,13 @@
                 { data: 'approved', name: 'approved'},
                 { data: 'created_at', name: 'created_at' },
                 {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+                columnDefs: [
+                    { width: null},
+                    { width: null},
+                    { width: null},
+                    { width: null},
+                    { width: '100', targets: 0 }
                 ]
             });
         });    
