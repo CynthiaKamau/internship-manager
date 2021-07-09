@@ -16,22 +16,29 @@ class FacilityDepartmentController extends Controller
 {
     public function index(Request $request)
     {
-        if(Auth::user()->role_id == '1') {
+
+        if(Auth::user()->role_id == 1) {
 
             if ($request->has('search')) {
-                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 25));
+
             } else {
-                $facility_departments = FacilityDepartment::with(['department', 'facility'])->paginate(setting('record_per_page', 15));
+
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->paginate(setting('record_per_page', 25));
             }
 
         } else {
 
             if ($request->has('search')) {
-                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
-            } else {
-                 $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', Auth::user()->profile->facility_id)->paginate(setting('record_per_page', 15));
-            }
 
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('department_name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 25));
+            
+            } else {
+
+                $facility_departments = FacilityDepartment::with(['department', 'facility'])->where('facility_id', Auth::user()->profile->facility_id )->paginate(setting('record_per_page', 25));
+            }
+            
         }
 
         $title = 'Manage Facility Departments';

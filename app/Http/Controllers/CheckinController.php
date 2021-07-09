@@ -16,9 +16,13 @@ class CheckinController extends Controller
         if ($request->ajax()) {
 
             if(Auth::user()->role_id == '1') {
+
                 $checkins = Checkin::with(['user', 'facility'])->get();
+
             } else {
+
                 $checkins = Checkin::with(['user', 'facility'])->where('facility_id' , Auth::user()->profile->facility_id)->get();
+                
             }
     
             $checkins = $checkins->map(function ($checkin) {
