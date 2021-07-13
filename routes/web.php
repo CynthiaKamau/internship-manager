@@ -53,11 +53,17 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::post('/get_facility_departments', 'DataController@get_departments')->name('get_facility_department');
 
+    Route::get('/user_data', 'DataController@get_users')->name('get_users');
+
+    Route::get('/student_data', 'DataController@get_students')->name('get_students');
+
+    Route::get('/practitioner_data', 'DataController@get_practitioners')->name('get_practitioners');
+
+    Route::get('/user_demographics', 'DataController@user_demographics')->name('user_demographics');
+
     // Route::get('/facility_department/{facility_departmemt}/create', 'FacilityDepartmentController@create')->name('facility_department.create');
 
     // Route::put('/facility_department/{facility_department}/edit', 'FacilityDepartmentController@update')->name('facility_department.update');
-
-    // Route::delete('/facility_department/{facility_department}', 'FacilityDepartmentController@destroy')->name('facility_department.destroy');
 
     Route::resource('post', 'PostController');
 

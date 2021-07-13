@@ -20,4 +20,30 @@ class DataController extends Controller
 
         return $departments;
     }
+
+    public function get_users()
+    {
+
+        $users = User::all();
+
+        return $users;
+    }
+
+    public function get_students()
+    {
+
+        $students = User::where('role_id', 3);
+
+        return $students;
+    }
+
+    public function get_practitioners()
+    {
+
+        $practitioners = User::where('role_id', 2);
+
+        return $practitioners;
+    }
+
+    
 }
