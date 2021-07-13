@@ -49,12 +49,12 @@ npm:
       - public/css/
       - public/js/
 
-codestyle:
-  stage: test
-  dependencies: []
-  script:
-    - composer require --dev emielmolenaar/phpcs-laravel
-    - php vendor/bin/phpcs --standard=phpcs-laravel app/
+# codestyle:
+#   stage: test
+#   dependencies: []
+#   script:
+#     - composer require --dev emielmolenaar/phpcs-laravel
+#     - php vendor/bin/phpcs --standard=phpcs-laravel app/
     
 phpunit:
   stage: test
