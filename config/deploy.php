@@ -96,7 +96,7 @@ return [
 
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
-        'repository' => 'aya.mhealthkenya.co.ke',
+        'repository' => 'https://gitlab.com/m-health/aya_dashboard',
         'php_fpm_service' => 'php7.4.3-fpm',
     ],
 
