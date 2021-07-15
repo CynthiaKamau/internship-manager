@@ -96,7 +96,7 @@ return [
 
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
-        'repository' => 'https://aya.mhealthkenya.co.ke',
+        'repository' => 'aya.mhealthkenya.co.ke',
         'php_fpm_service' => 'php7.4.3-fpm',
     ],
 
@@ -112,12 +112,12 @@ return [
     */
 
     'hosts' => [
-        'https://aya.mhealthkenya.co.ke' => [
+        'aya.mhealthkenya.co.ke' => [
             'deploy_path' => '/var/www/aya_dashboard',
             'port' => 33,
             'user' => 'deployer1',
         ],
-        'https://aya.mhealthkenya.co.ke' => [
+        'aya.mhealthkenya.co.ke' => [
             'deploy_path' => '/var/www/aya_dashboard',
             'port' => 33,
             'user' => 'deployer1',
