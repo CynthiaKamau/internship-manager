@@ -73,9 +73,9 @@ staging:
     name: staging
     url: https://aya.mhealthkenya.co.ke
   only:
-    - master
+    - main
   
-staging:
+production:
   stage: deploy
   script:
     - *init_ssh
@@ -86,4 +86,4 @@ staging:
     url: https://aya.mhealthkenya.co.ke
   when: manual
   only:
-   - master
+   - main
