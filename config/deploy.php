@@ -115,12 +115,12 @@ return [
         'aya.mhealthkenya.co.ke' => [
             'deploy_path' => '/var/www/aya_dashboard',
             'port' => 33,
-            'http_user' => 'forge',
+            'http_user' => 'deployer1',
         ],
         'aya.mhealthkenya.co.ke' => [
             'deploy_path' => '/var/www/aya_dashboard',
             'port' => 33,
-            'http_user' => 'forge',
+            'http_user' => 'deployer1',
         ],
     ],
 
