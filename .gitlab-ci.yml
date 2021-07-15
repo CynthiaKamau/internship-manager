@@ -75,7 +75,7 @@ staging:
   only:
     - master
   
-production:
+staging:
   stage: deploy
   script:
     - *init_ssh
