@@ -5,7 +5,7 @@ image: registry.gitlab.com/m-health/aya_dashboard
   echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
   mkdir -p ~/.ssh
   chmod 700 ~/.ssh
-  # [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 # Replace the last line with the following lines if you'd rather
 # leave StrictHostKeyChecking enabled (replace yourdomain.com):
