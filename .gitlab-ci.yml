@@ -5,13 +5,13 @@ image: registry.gitlab.com/m-health/aya_dashboard
   echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
   mkdir -p ~/.ssh
   chmod 700 ~/.ssh
-  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  # [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 # Replace the last line with the following lines if you'd rather
 # leave StrictHostKeyChecking enabled (replace yourdomain.com):
 #
-#  ssh-keyscan yourdomain.com >> ~/.ssh/known_hosts
-#  chmod 644 ~/.ssh/known_hosts
+ ssh-keyscan aya.mhealthkenya.co.ke >> ~/.ssh/known_hosts
+ chmod 644 ~/.ssh/known_hosts
   
 .change_file_permissions: &change_file_permissions |
   find . -type f -not -path "./vendor/*" -exec chmod 664 {} \;    
@@ -68,10 +68,10 @@ staging:
   script:
     - *init_ssh
     - *change_file_permissions
-    - php artisan deploy https://aya.mhealthkenya.co.ke -s upload
+    - php artisan deploy aya.mhealthkenya.co.ke -s upload
   environment:
     name: staging
-    url: https://aya.mhealthkenya.co.ke
+    url: aya.mhealthkenya.co.ke
   only:
     - main
   
@@ -80,10 +80,10 @@ production:
   script:
     - *init_ssh
     - *change_file_permissions
-    - php artisan deploy https://aya.mhealthkenya.co.ke -s upload
+    - php artisan deploy aya.mhealthkenya.co.ke -s upload
   environment:
     name: production
-    url: https://aya.mhealthkenya.co.ke
+    url: aya.mhealthkenya.co.ke
   when: manual
   only:
    - main

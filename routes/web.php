@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/test', function () {
+//     return view('welcome');
+// });
+
 Route::get('/signup', 'RegisterController@create')->name('signup');
 
 Route::post('/signup', 'RegisterController@store')->name('signup');
