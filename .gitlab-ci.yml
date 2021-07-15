@@ -10,7 +10,7 @@ image: registry.gitlab.com/m-health/aya_dashboard
 # Replace the last line with the following lines if you'd rather
 # leave StrictHostKeyChecking enabled (replace yourdomain.com):
 #
-# ssh-keyscan aya.mhealthkenya.co.ke >> ~/.ssh/known_hosts
+# ssh-keyscan https://aya.mhealthkenya.co.ke >> ~/.ssh/known_hosts
 # chmod 644 ~/.ssh/known_hosts
   
 .change_file_permissions: &change_file_permissions |
@@ -68,10 +68,10 @@ staging:
   script:
     - *init_ssh
     - *change_file_permissions
-    - php artisan deploy aya.mhealthkenya.co.ke -s upload
+    - php artisan deploy https://aya.mhealthkenya.co.ke -s upload
   environment:
     name: staging
-    url: aya.mhealthkenya.co.ke
+    url: https://aya.mhealthkenya.co.ke
   only:
     - main
   
@@ -80,7 +80,7 @@ production:
   script:
     - *init_ssh
     - *change_file_permissions
-    - php artisan deploy aya.mhealthkenya.co.ke -s upload
+    - php artisan deploy https://aya.mhealthkenya.co.ke -s upload
   environment:
     name: production
     url: https://aya.mhealthkenya.co.ke
