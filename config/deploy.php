@@ -96,7 +96,7 @@ return [
 
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
-        'repository' => 'https://gitlab.com/m-health/aya_dashboard',
+        'repository' => 'git clone https://aya:$deploy_token@gitlab.com:m-health/aya_dashboard.git',
         'php_fpm_service' => 'php7.4.3-fpm',
     ],
 
