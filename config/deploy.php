@@ -51,8 +51,7 @@ return [
         
         // Code and composer vendors are ready but nothing is built.
         'build' => [
-            'npm:install',
-            'npm:production',
+            //
         ],
         
         // Deployment is done but not live yet (before symlink)
@@ -60,6 +59,7 @@ return [
             'artisan:storage:link',
             'artisan:view:clear',
             'artisan:config:cache',
+            'artisan:migrate',
         ],
         
         // Deployment is done and live
@@ -96,8 +96,9 @@ return [
 
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
-        'repository' => 'https://gitlab.com/m-health/aya_dashboard',
+        'repository' => 'https://aya:A8RD-ZJAEDkLnDT_nE1N@gitlab.com/m-health/aya_dashboard.git',
         'php_fpm_service' => 'php7.4.3-fpm',
+        'writable_mode' => 'chmod'
     ],
 
     /*
@@ -113,8 +114,14 @@ return [
 
     'hosts' => [
         'aya.mhealthkenya.co.ke' => [
-            'deploy_path' => '/home/forge/aya.mhealthkenya.co.ke',
-            'user' => 'forge',
+            'deploy_path' => '/var/www/aya_dashboard',
+            'port' => 33,
+            'user' => 'deployer1',
+        ],
+        'aya.mhealthkenya.co.ke' => [
+            'deploy_path' => '/var/www/aya_dashboard',
+            'port' => 33,
+            'user' => 'deployer1',
         ],
     ],
 
