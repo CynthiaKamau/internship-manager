@@ -10,6 +10,8 @@ RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetyp
 # Clear out the local repository of retrieved package files
 RUN apt-get clean
 
+RUN apt install ssh rsync
+
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
 RUN docker-php-ext-install exif fileinfo gd session gettext pdo pdo_mysql zip
