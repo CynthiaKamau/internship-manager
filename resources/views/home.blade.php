@@ -139,7 +139,13 @@
     var data = <?php echo json_encode($users) ?> ;
     var data1 = <?php echo json_encode($g_users) ?>
 
-    console.log(data1);
+    var cat = [];
+
+    data1.forEach(function(item) {
+
+      cat.push(item.monthyear);
+
+    });
 
     Highcharts.chart('chart', {
       chart: {
@@ -191,6 +197,9 @@
     });
 
     Highcharts.chart('container', {
+        chart: {
+          type: 'column'
+        },
         title: {
             text: 'New User Growth, 2020'
         },
@@ -198,9 +207,7 @@
             text: 'Source: positronx.io'
         },
         xAxis: {
-            categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                'October', 'November', 'December'
-            ]
+            categories: cat
         },
         yAxis: {
             title: {

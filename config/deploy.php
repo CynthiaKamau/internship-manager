@@ -98,6 +98,7 @@ return [
         'application' => env('APP_NAME', 'Laravel'),
         'repository' => 'https://aya:A8RD-ZJAEDkLnDT_nE1N@gitlab.com/m-health/aya_dashboard.git',
         'php_fpm_service' => 'php7.4.3-fpm',
+        'writable_mode' => 'chmod'
     ],
 
     /*

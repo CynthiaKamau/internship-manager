@@ -54,10 +54,10 @@ class HomeController extends Controller
                 // ->whereBetween('users.created_at', [$start_date, $end_date]);
                 // ->pluck('role_count');
 
-            $g_users = User::select(DB::raw("COUNT(*) as count"))
-                ->whereYear('created_at', date('Y'))
-                ->groupBy(DB::raw("Month(created_at)"))
-                ->pluck('count');
+            $g_users = User::select(DB::raw("COUNT(*) as y"),
+                DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))           ->whereYear('created_at', date('Y'))
+                ->groupBy('monthyear')
+                ->get();
 
         } else {
 
@@ -94,13 +94,13 @@ class HomeController extends Controller
                 ->groupBy('roles.name')
                 ->get();
 
-            $g_users = User::select(DB::raw("COUNT(*) as count"),
-            )
-            ->join('roles', 'roles.id', 'users.role_id')
-            ->whereYear('created_at', date('Y'))
+            $g_users = User::select(DB::raw("COUNT(*) as y"),
+            DB::raw("CONCAT_WS('-',MONTH(users.created_at),YEAR(users.created_at)) as monthyear"))
+            ->join('profiles', 'profiles.user_id', 'users.id')
+            ->whereYear('users.created_at', date('Y'))
             ->where('profiles.facility_id', Auth::user()->profile->facility_id)
-            ->groupBy('created_at')
-            ->pluck('count');
+            ->groupBy('monthyear')
+            ->get();
                
 
 
