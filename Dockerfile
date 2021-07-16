@@ -6,13 +6,16 @@ RUN apt-get update
 
 # Install PHP and composer dependencies
 RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev
-
 # Clear out the local repository of retrieved package files
 RUN apt-get clean
 
+RUN apt-get install ssh rsync
+
+RUN apt-get install php7.4-mysql
+
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
-RUN docker-php-ext-install exif fileinfo gd session gettext pdo pdo_mysql zip
+RUN docker-php-ext-install mysqli pdo pdo_mysql exif fileinfo gd2 session gettext pdo_odbc zip
 
 RUN a2enmod rewrite
 
