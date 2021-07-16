@@ -97,88 +97,7 @@
               </div>
               <div class="table-responsive">
                 <!-- Projects table -->
-                <table class="table align-items-center table-flush">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Page name</th>
-                      <th scope="col">Visitors</th>
-                      <th scope="col">Unique users</th>
-                      <th scope="col">Bounce rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">
-                        /dashboard/
-                      </th>
-                      <td>
-                        4,569
-                      </td>
-                      <td>
-                        340
-                      </td>
-                      <td>
-                        <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        /dashboard/index.html
-                      </th>
-                      <td>
-                        3,985
-                      </td>
-                      <td>
-                        319
-                      </td>
-                      <td>
-                        <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        /dashboard/charts.html
-                      </th>
-                      <td>
-                        3,513
-                      </td>
-                      <td>
-                        294
-                      </td>
-                      <td>
-                        <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        /dashboard/tables.html
-                      </th>
-                      <td>
-                        2,050
-                      </td>
-                      <td>
-                        147
-                      </td>
-                      <td>
-                        <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        /dashboard/profile.html
-                      </th>
-                      <td>
-                        1,795
-                      </td>
-                      <td>
-                        190
-                      </td>
-                      <td>
-                        <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div id="container"> </div>
               </div>
             </div>
           </div>
@@ -217,42 +136,90 @@
 
   <script type="text/javascript">
 
-    var data = <?php echo json_encode($users) ?>
+    var data = <?php echo json_encode($users) ?> ;
+    var data1 = <?php echo json_encode($g_users) ?>
 
-    console.log(data);
+    console.log(data1);
 
     Highcharts.chart('chart', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Users Per Role'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-              connectorColor: 'silver'
+      chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+      },
+      title: {
+          text: 'Users Per Role'
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      accessibility: {
+          point: {
+              valueSuffix: '%'
           }
-        }
-    },
-    series: [{
+      },
+      plotOptions: {
+          pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                connectorColor: 'silver'
+            }
+          }
+      },
+      series: [{
             name: 'AYA Users',
             data: data
+        }],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+    });
+
+    Highcharts.chart('container', {
+        title: {
+            text: 'New User Growth, 2020'
+        },
+        subtitle: {
+            text: 'Source: positronx.io'
+        },
+        xAxis: {
+            categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                'October', 'November', 'December'
+            ]
+        },
+        yAxis: {
+            title: {
+                text: 'Number of New Users'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true
+            }
+        },
+        series: [{
+            name: 'New Users',
+            data: data1
         }],
         responsive: {
             rules: [{

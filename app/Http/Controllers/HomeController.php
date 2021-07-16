@@ -54,6 +54,11 @@ class HomeController extends Controller
                 // ->whereBetween('users.created_at', [$start_date, $end_date]);
                 // ->pluck('role_count');
 
+            $g_users = User::select(DB::raw("COUNT(*) as count"))
+                ->whereYear('created_at', date('Y'))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('count');
+
         } else {
 
             $students = User::select(DB::raw("COUNT(*) as count"))
@@ -88,14 +93,19 @@ class HomeController extends Controller
                 ->where('profiles.facility_id', Auth::user()->profile->facility_id)
                 ->groupBy('roles.name')
                 ->get();
-                // ->whereBetween('users.created_at', [$start_date, $end_date]);
-                // ->pluck('role_count');
+
+            $g_users = User::select(DB::raw("COUNT(*) as count"),
+            )
+            ->join('roles', 'roles.id', 'users.role_id')
+            ->whereYear('created_at', date('Y'))
+            ->where('profiles.facility_id', Auth::user()->profile->facility_id)
+            ->groupBy('created_at')
+            ->pluck('count');
+               
 
 
         }
 
-        
-
-        return view('home', compact('users', 'students', 'practitioners', 'everyone', 'new_users'));
+        return view('home', compact('users', 'g_users', 'students', 'practitioners', 'everyone', 'new_users'));
     }
 }
