@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
     git \
     curl 
 
+RUN apt-get --yes --force-yes install git ssh rsync
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 

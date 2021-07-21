@@ -1,11 +1,5 @@
 image: registry.gitlab.com/m-health/aya_dashboard
 
-default:
-    before_script:
-    - sudo apt-get update
-    - sudo apt-get --yes --force-yes install git ssh rsync
-    - sudo git submodule update --init --recursive
-
 .init_ssh: &init_ssh |
   eval $(ssh-agent -s)
   echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
