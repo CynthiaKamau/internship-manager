@@ -4,19 +4,18 @@
 
         <div class="row">
             <div class="col-md-12">
-                <form role="form" method="post" action="#" id="dataFilter">
-                    {{ csrf_field() }}
-                    <div class="card d-flex flex-row mb-5">
+                <div class="card d-flex flex-row mb-5">
+                    <form role="form" method="post" action="#" id="dataFilter">
+
+                        {{ csrf_field() }}
 
                         <div class="col-xl-3 col-md-3 col-sm-3">
                             <div class="form-group">
                                 <label class="col-form-label"><b>Select County</b></label>
                                 <select class="form-control" data-width="100%" id="county" name="county" data-actions-box="true" data-live-search="true">
-
                                     @foreach($counties as $county)
                                         <option value="{{ $county->id}}" > {{$county->name}}</option>
                                     @endforeach
-
                                 </select>    
                             </div>
                         </div>
@@ -53,9 +52,8 @@
                                 <button type="submit" class="btn btn-warning"><b>Filter Results </b></button>
                             </div>
                         </div> 
-                    </div>    
 
-                </form>      
+                    </form>      
 
                 </div>    
             </div>
@@ -201,118 +199,113 @@
 
   <script type="text/javascript">
 
-    function charts(data, data1) {
+    // var data = <?php echo json_encode($users) ?> ;
+    // var data1 = <?php echo json_encode($g_users) ?>
 
-        console.log(data);
+    // var cat = [];
 
-        console.log(data1);
+    // data1.forEach(function(item) {
 
-        var cat = [];
+    //   cat.push(item.monthyear);
 
-        data1.forEach(function(item) {
+    // });
 
-          cat.push(item.monthyear);
+    // Highcharts.chart('chart', {
+    //   chart: {
+    //       plotBackgroundColor: null,
+    //       plotBorderWidth: null,
+    //       plotShadow: false,
+    //       type: 'pie'
+    //   },
+    //   title: {
+    //       text: 'Users Per Role'
+    //   },
+    //   tooltip: {
+    //       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    //   },
+    //   accessibility: {
+    //       point: {
+    //           valueSuffix: '%'
+    //       }
+    //   },
+    //   plotOptions: {
+    //       pie: {
+    //           allowPointSelect: true,
+    //           cursor: 'pointer',
+    //           dataLabels: {
+    //             enabled: true,
+    //             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+    //             connectorColor: 'silver'
+    //         }
+    //       }
+    //   },
+    //   series: [{
+    //         name: 'AYA Users',
+    //         data: data
+    //     }],
+    //     responsive: {
+    //         rules: [{
+    //             condition: {
+    //                 maxWidth: 500
+    //             },
+    //             chartOptions: {
+    //                 legend: {
+    //                     layout: 'horizontal',
+    //                     align: 'center',
+    //                     verticalAlign: 'bottom'
+    //                 }
+    //             }
+    //         }]
+    //     }
+    // });
 
-        });
-
-        Highcharts.chart('chart', {
-          chart: {
-              plotBackgroundColor: null,
-              plotBorderWidth: null,
-              plotShadow: false,
-              type: 'pie'
-          },
-          title: {
-              text: 'Users Per Role'
-          },
-          tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          accessibility: {
-              point: {
-                  valueSuffix: '%'
-              }
-          },
-          plotOptions: {
-              pie: {
-                  allowPointSelect: true,
-                  cursor: 'pointer',
-                  dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    connectorColor: 'silver'
-                }
-              }
-          },
-          series: [{
-                name: 'AYA Users',
-                data: data
-            }],
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-        });
-
-        Highcharts.chart('container', {
-            chart: {
-              type: 'column'
-            },
-            title: {
-                text: 'New User Growth, 2021'
-            },
-            subtitle: {
-                text: 'User Monthly Registration Series '
-            },
-            xAxis: {
-                categories: cat
-            },
-            yAxis: {
-                title: {
-                    text: 'Number of New Users'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                series: {
-                    allowPointSelect: true
-                }
-            },
-            series: [{
-                name: 'New Users',
-                data: data1
-            }],
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-        });
-
-    }
+    // Highcharts.chart('container', {
+    //     chart: {
+    //       type: 'column'
+    //     },
+    //     title: {
+    //         text: 'New User Growth, 2021'
+    //     },
+    //     subtitle: {
+    //         text: 'User Monthly Registration Series '
+    //     },
+    //     xAxis: {
+    //         categories: cat
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: 'Number of New Users'
+    //         }
+    //     },
+    //     legend: {
+    //         layout: 'vertical',
+    //         align: 'right',
+    //         verticalAlign: 'middle'
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             allowPointSelect: true
+    //         }
+    //     },
+    //     series: [{
+    //         name: 'New Users',
+    //         data: data1
+    //     }],
+    //     responsive: {
+    //         rules: [{
+    //             condition: {
+    //                 maxWidth: 500
+    //             },
+    //             chartOptions: {
+    //                 legend: {
+    //                     layout: 'horizontal',
+    //                     align: 'center',
+    //                     verticalAlign: 'bottom'
+    //                 }
+    //             }
+    //         }]
+    //     }
+    // });
 
     $(function() {
         $('#daterange').daterangepicker({
@@ -412,30 +405,51 @@
         type: 'GET',
         url: "{{ route('data') }}",
         success: function(data) {
-            charts(data.users, data.g_users);
+            // maps(data.county_numbers);
+            // pullCheck(data.pulled_data);
             // $('#county').empty();
             // $('#sub_county').empty();
-            // $.each(data.counties, function(number, county) {
+            // $.each(data.all_units, function(number, unit) {
+            //     $("#units").append($('<option>').text(unit.name).attr('value',
+            //         unit.id));
+            // });
+            // $.each(data.all_counties, function(number, county) {
             //     $("#counties").append($('<option>').text(county.name).attr('value',
             //         county.id));
             // });
-            // // $.each(data.counties, function(number, county) {
-            // //     $("#counties").append($('<option>').text(county.name).attr('value',
-            // //         county.id));
-            // // });
-            // $("#county").selectpicker('refresh');
-            // $("#sub_county").selectpicker('refresh');
+            $("#county").selectpicker('refresh');
+            $("#sub_county").selectpicker('refresh');
             $("#everyone").html(data.everyone);
             $("#students").html(data.students);
             $("#practitioners").html(data.practitioners);
             $("#new_users").html(data.new_users);
             
+            // let userlevel = '{!!Auth::user()->user_level!!}';
+            // if (userlevel == 2) {
+            //     let unitId = '{!!Auth::user()->unit_id!!}';
+            //     $('#units').attr("disabled", true);
+            //     $('#units').selectpicker('val', unitId);
+            //     $("#units").selectpicker('refresh');
+            // }
+            // if (userlevel == 3) {
+            //     let unitId = '{!!Auth::user()->unit_id!!}';
+            //     $('#units').attr("disabled", true);
+            //     $('#units').selectpicker('val', unitId);
+            //     $("#units").selectpicker('refresh');
+            //     let countyId = data.all_counties[0].id;
+            //     $('#counties').attr("disabled", true);
+            //     $('#counties').selectpicker('val', countyId);
+            //     $("#counties").selectpicker('refresh');
+            //     $('#subcounties').attr("disabled", true);
+            //     $('#facilities').attr("disabled", true);
+            // }
+            // $("#dashboard_overlay").hide();
         }
     });
 
     $('#dataFilter').on('submit', function(e) {
         e.preventDefault();
-        // $("#dashboard_overlay").show();
+        $("#dashboard_overlay").show();
         let county = $('#county').val();
         let sub_county = $('#sub_county').val();
         let facility = $('#facility').val();
@@ -455,20 +469,19 @@
                 },
                 url: "{{ route('filtered_data') }}",
                 success: function(data) {
-                    charts(data.users, data.g_users);
-                    // $('#county').empty();
-                    // $('#sub_county').empty();
+                    $('#county').empty();
+                    $('#sub_county').empty();
                     // $.each(data.all_units, function(number, unit) {
                     //     $("#units").append($('<option>').text(unit.name).attr(
                     //         'value',
                     //         unit.id));
                     // });
-                    // $.each(data.counties, function(number, county) {
+                    // $.each(data.all_counties, function(number, county) {
                     //     $("#counties").append($('<option>').text(county.name).attr('value',
                     //         county.id));
                     // });
-                    // $("#county").selectpicker('refresh');
-                    // $("#sub_county").selectpicker('refresh');
+                    $("#county").selectpicker('refresh');
+                    $("#sub_county").selectpicker('refresh');
                     $("#everyone").html(data.everyone);
                     $("#students").html(data.students);
                     $("#practitioners").html(data.practitioners);

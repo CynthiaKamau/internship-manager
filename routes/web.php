@@ -32,6 +32,10 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('/data', 'HomeController@data')->name('data');
+
+    Route::post('/filtered_data', 'HomeController@filtered_data')->name('filtered_data');
+
     Route::get('/components', function(){
         return view('components');
     })->name('components');
@@ -57,13 +61,9 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::post('/get_facility_departments', 'DataController@get_departments')->name('get_facility_department');
 
-    Route::get('/user_data', 'DataController@get_users')->name('get_users');
+    Route::post('/sub_counties', 'DataController@get_sub_counties')->name('sub_counties');
 
-    Route::get('/student_data', 'DataController@get_students')->name('get_students');
-
-    Route::get('/practitioner_data', 'DataController@get_practitioners')->name('get_practitioners');
-
-    Route::get('/user_demographics', 'DataController@user_demographics')->name('user_demographics');
+    Route::post('/facilities', 'DataController@get_facilities')->name('get_facilities');
 
     // Route::get('/facility_department/{facility_departmemt}/create', 'FacilityDepartmentController@create')->name('facility_department.create');
 
