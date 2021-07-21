@@ -12,9 +12,11 @@ RUN apt-get clean
 
 RUN apt install ssh rsync
 
+RUN apt-get install php7.2-mysql
+
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
-RUN docker-php-ext-install exif fileinfo gd session gettext pdo pdo_mysql zip
+RUN docker-php-ext-install mysqli pdo pdo_mysql exif fileinfo gd2 session gettext pdo_odbc zip
 
 RUN a2enmod rewrite
 

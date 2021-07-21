@@ -89,8 +89,12 @@ class RolePermissionSeeder extends Seeder
         $role->givePermissionTo('view-facility-department');
         $role->givePermissionTo('create-facility-department');
         $role->givePermissionTo('update-facility-department');
+        $role->givePermissionTo('destroy-facility-department');
         $role->givePermissionTo('view-post');
         $role->givePermissionTo('create-post');
+        $role->givePermissionTo('update-post');
+        $role->givePermissionTo('destroy-post');
+        $role->givePermissionTo('destroy-checkins');
 
         $user = User::create([
             'first_name'=> 'Practitioner',
