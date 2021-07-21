@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FacilityDepartment;
-use App\Models\Department;
+use App\Models\County;
 use App\Models\Facility;
-use App\Models\Profile;
-use App\Models\User;
-use App\Http\Requests\DepartmentRequest;
+use App\Models\Subcounty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,28 +19,20 @@ class DataController extends Controller
         return $departments;
     }
 
-    public function get_users()
+    public function get_sub_counties(Request $request)
     {
 
-        $users = User::all();
+        $sub_counties = Subcounty::where('county_id', $request->county_id)->get();
 
-        return $users;
+        return $sub_counties;
     }
 
-    public function get_students()
+    public function get_facilities(Request $request)
     {
 
-        $students = User::where('role_id', 3);
+        $facilities = Facility::where('sub_county', $request->sub_county)->get();
 
-        return $students;
-    }
-
-    public function get_practitioners()
-    {
-
-        $practitioners = User::where('role_id', 2);
-
-        return $practitioners;
+        return $facilities;
     }
 
     
