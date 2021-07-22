@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserSummary;
 use App\Models\County;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,6 @@ class HomeController extends Controller
         $counties = County::all();
 
         if(Auth::user()->role_id == 1) {
-
 
             $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('role', 'Student')->groupBy('role')

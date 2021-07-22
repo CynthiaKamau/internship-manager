@@ -32,12 +32,32 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if(Auth::user()->role_id == 1) {
 
-        if ($request->has('search')) {
-            $users = User::where('name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 15));
+            if ($request->has('search')) {
+                $users = User::where('name', 'like', '%'.$request->search.'%')->paginate(setting('record_per_page', 25));
+            } else {
+                $users= User::paginate(setting('record_per_page', 25));
+            }
+
         } else {
-            $users= User::paginate(setting('record_per_page', 15));
+
+            if ($request->has('search')) {
+                $users= User::whereHas('profile', function ($query) {
+                    $query->where('facility_id', Auth::user()->profile->facility_id);
+                })
+                ->where('name', 'like', '%'.$request->search.'%')
+                ->paginate(setting('record_per_page', 25));
+
+            } else {
+                $users= User::whereHas('profile', function ($query) {
+                    $query->where('facility_id', Auth::user()->profile->facility_id);
+                })
+                ->paginate(setting('record_per_page', 25));
+            }
+
         }
+
 
         $title =  'Manage Users';
 
