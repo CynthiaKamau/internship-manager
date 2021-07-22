@@ -43,6 +43,11 @@ class HomeController extends Controller
 
         if(Auth::user()->role_id == 1) {
 
+            $county_numbers = UserSummary::selectRaw('county_id, count(*) AS users, count(DISTINCT(facility_id)) as facilities')->groupBy('county_id')->get();
+
+            $county_breakdown  = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')->selectRaw('counties.name, COUNT(users_summary.created_at ) AS all_users, COUNT(users_summary.role ) AS roles  ')
+                            ->groupBy('counties.name')->orderBy('counties.name')->get();
+
             $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('role', 'Student')->groupBy('role')
                             ->count();
@@ -74,6 +79,14 @@ class HomeController extends Controller
                     ->get();
 
         } else {
+
+            $county_numbers = UserSummary::selectRaw('county_id, count(*) AS users, count(DISTINCT(facility_id)) as facilities')
+                                ->where('facility_id', Auth::user()->profile->facility_id )
+                                ->groupBy('county_id')->get();
+
+            $county_breakdown  = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')->selectRaw('counties.name, COUNT(users_summary.created_at ) AS all_users, COUNT(users_summary.role ) AS roles  ')
+                                ->where('users_summary.facility_id', Auth::user()->profile->facility_id )
+                                ->groupBy('counties.name')->orderBy('counties.name')->get();
 
             $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('role', 'Student')
@@ -122,6 +135,8 @@ class HomeController extends Controller
         $data["new_users"] = $new_users;
         $data["everyone"] = $everyone;
         $data["counties"] = $counties;
+        $data["county_numbers"] = $county_numbers;
+        $data["county_breakdown"] = $county_breakdown;
 
         return $data;
 
@@ -146,6 +161,10 @@ class HomeController extends Controller
         $start_date = Carbon::createFromFormat('m/d/Y', $unformatted_startdate)->format('Y-m-d');
         $end_date = Carbon::createFromFormat('m/d/Y', $unformatted_enddate)->format('Y-m-d');
 
+        $county_numbers = UserSummary::selectRaw('county_id, count(*) AS users, count(DISTINCT(facility_id)) as facilities')->groupBy('county_id')->whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date);
+
+        $county_breakdown  = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')->selectRaw('counties.name, COUNT(users_summary.created_at ) AS all_users, COUNT(users_summary.role ) AS roles  ')
+                            ->groupBy('counties.name')->orderBy('counties.name');
 
         $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                     ->where('role', 'Student')
@@ -180,6 +199,10 @@ class HomeController extends Controller
 
         if(!empty($county)) {
 
+            $county_numbers = $county_numbers->whereIn('county_id', $county);
+
+            $county_breakdown = $county_breakdown->whereIn('county_id', $county);
+
             $students = $students->whereIn('county_id', $county);
 
             $practitioners = $practitioners->whereIn('county_id', $county);
@@ -196,6 +219,10 @@ class HomeController extends Controller
 
         if(!empty($sub_county)) {
 
+            $county_numbers = $county_numbers->whereIn('sub_county_id', $sub_county);
+
+            $county_breakdown = $county_breakdown->whereIn('sub_county_id', $sub_county);
+
             $students = $students->whereIn('sub_county_id', $sub_county);
 
             $practitioners = $practitioners->whereIn('sub_county_id', $sub_county);
@@ -211,6 +238,10 @@ class HomeController extends Controller
         }
 
         if(!empty($facility)) {
+
+            $county_numbers = $county_numbers->whereIn('facility_id', $facility);
+
+            $county_breakdown = $county_breakdown->whereIn('facility_id', $facility);
 
             $students = $students->whereIn('facility_id', $facility);
 
@@ -233,6 +264,8 @@ class HomeController extends Controller
         $data["new_users"] = $new_users->count();
         $data["everyone"] = $everyone->count();
         $data["counties"] = $counties;
+        $data["county_numbers"] = $county_numbers->get();
+        $data["county_breakdown"] = $county_breakdown->get();
 
         return $data;
 

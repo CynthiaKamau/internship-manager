@@ -59,7 +59,7 @@ return [
             'artisan:storage:link',
             'artisan:view:clear',
             'artisan:config:cache',
-            'artisan:migrate',
+            // 'artisan:migrate',
         ],
         
         // Deployment is done and live

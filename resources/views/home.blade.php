@@ -13,7 +13,7 @@
                             <label class="col-form-label"><b>Select County</b></label>
                             <select class="selectpicker form-control" data-width="100%" id="county" name="county[]" data-live-search="true" multiple>
                                 @if(Auth::user()->role_id != '1')
-                                    <option selected value="{{Auth::user()->profile->facility->county}}" > {{ ucwords(Auth::user()->profile->facility->county) }}</option>
+                                    <option selected value="{{Auth::user()->profile->facility->subcounty->county->id}}" > {{ ucwords(Auth::user()->profile->facility->subcounty->county->name) }}</option>
                                 @else
                                     @foreach($counties as $county)
                                         <option value="{{ $county->id}}" > {{$county->name}}</option>
@@ -152,7 +152,7 @@
             <div class="card-header border-0">
             <div class="row align-items-center">
                 <div class="col">
-                <h3 class="mb-0">Page visits</h3>
+                <h3 class="mb-0">Users</h3>
                 </div>
                 <div class="col text-right">
                 <a href="#!" class="btn btn-sm btn-primary">See all</a>
@@ -183,6 +183,13 @@
             <div id="chart"> </div>
             </div>
         </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col" id="map"></div>
+        <div class="col" id="countyBreakdown">
+
         </div>
     </div>
 
@@ -222,9 +229,6 @@
 
     function charts(data, data1) {
 
-        console.log(data);
-
-        console.log(data1);
 
         var cat = [];
 
@@ -432,6 +436,8 @@
         url: "{{ route('data') }}",
         success: function(data) {
             charts(data.users, data.g_users);
+            maps(data.county_numbers);
+            countyBreakdown(data.county_breakdown);
             // $('#county').empty();
             // $('#sub_county').empty();
             // $.each(data.counties, function(number, county) {
@@ -444,7 +450,6 @@
             // // });
             // $("#county").selectpicker('refresh');
             // $("#sub_county").selectpicker('refresh');
-            console.log(data.students);
             $("#everyone").html(data.everyone);
             $("#students").html(data.students);
             $("#practitioners").html(data.practitioners);
@@ -476,8 +481,9 @@
                 },
                 url: "{{ route('filtered_data') }}",
                 success: function(data) {
-                    console.log(data.students);
                     charts(data.users, data.g_users);
+                    maps(data.county_numbers);
+                    countyBreakdown(data.pulled_data);
                     // $('#county').empty();
                     // $('#sub_county').empty();
                     // $.each(data.all_units, function(number, unit) {
@@ -499,6 +505,127 @@
                 }
             });
     });
+
+    //Maps Chart
+    async function maps(data) {
+        let geojson = await fetchJSON('kenyan-counties.geojson');
+        // Initiate the chart
+        Highcharts.mapChart('map', {
+            chart: {
+                map: geojson,
+                height: 600
+            },
+            title: {
+                text: 'Users by County'
+            },
+            legend: {
+                layout: 'horizontal',
+                borderWidth: 0,
+                backgroundColor: 'rgba(255,255,255,0.85)',
+                floating: true,
+                verticalAlign: 'top',
+                y: 25
+            },
+            exporting: {
+                sourceWidth: 600,
+                sourceHeight: 500
+            },
+            mapNavigation: {
+                enabled: true
+            },
+            colorAxis: {
+                min: 1,
+                type: 'logarithmic',
+                minColor: '#EEEEFF',
+                maxColor: '#000022',
+                stops: [
+                    [0, '#EFEFFF'],
+                    [0.67, '#4444FF'],
+                    [1, '#000022']
+                ]
+            },
+            series: [{
+                data: data,
+                keys: ['facilities', 'results'],
+                joinBy: 'county_id',
+                name: 'Users by County',
+                states: {
+                    hover: {
+                        color: '#004D1A'
+                    }
+                },
+                dataLabels: {
+                    enabled: false,
+                    format: '{point.properties.COUNTY}'
+                },
+                tooltip: {
+                    pointFormat: 'County: {point.properties.COUNTY}<br> Users: {point.users} <br> Facilities: {point.facilities}'
+                }
+            }]
+        });
+    }
+
+    function countyBreakdown(data) {
+        let counties = [];
+        let all_users = [];
+        let roles = [];
+        for (let i = 0; i < data.length; i++) {
+            counties.push(data[i].name);
+            all_users.push(data[i].all_users);
+            roles.push(data[i].roles);
+        }
+        Highcharts.chart('countyBreakdown', {
+            chart: {
+                type: 'bar',
+                height: 600
+            },
+            title: {
+                text: 'Users by County'
+            },
+            xAxis: {
+                categories: counties,
+                crosshair: true
+            },
+            yAxis: [{
+                title: {
+                    text: 'Users'
+                },
+            }],
+            legend: {
+                shadow: false
+            },
+            tooltip: {
+                shared: true
+            },
+            plotOptions: {
+                column: {
+                    grouping: false,
+                    shadow: false,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'All Users',
+                color: 'rgba(248,161,63,1)',
+                data: all_users,
+                pointPadding: 0.3,
+                pointPlacement: 0.2
+            }, {
+                name: 'Users By Role',
+                color: 'rgba(186,60,61,.9)',
+                data: roles,
+                pointPadding: 0.4,
+                pointPlacement: 0.2
+            }]
+        });
+    }
+
+    function fetchJSON(url) {
+        return fetch(url)
+            .then(function(response) {
+                return response.json();
+            });
+    }
 
   </script>
 
