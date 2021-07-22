@@ -2,145 +2,149 @@
 
 @section('content')   
 
-        <div class="row">
-            <div class="col-md-12">
-                <form role="form" method="post" action="#" id="dataFilter">
-                    {{ csrf_field() }}
-                    <div class="card d-flex flex-row mb-5">
+    <div class="row">
+        <div class="col-md-12">
+            <form role="form" method="post" action="#" id="dataFilter">
+                {{ csrf_field() }}
+                <div class="card d-flex flex-row mb-5">
 
-                        <div class="col-xl-3 col-md-3 col-sm-3">
-                            <div class="form-group">
-                                <label class="col-form-label"><b>Select County</b></label>
-                                <select class="form-control" data-width="100%" id="county" name="county" data-actions-box="true" data-live-search="true">
-
+                    <div class="col-xl-3 col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label"><b>Select County</b></label>
+                            <select class="selectpicker form-control" data-width="100%" id="county" name="county[]" data-live-search="true" multiple>
+                                @if(Auth::user()->role_id != '1')
+                                    <option selected value="{{Auth::user()->profile->facility->county}}" > {{ ucwords(Auth::user()->profile->facility->county) }}</option>
+                                @else
                                     @foreach($counties as $county)
                                         <option value="{{ $county->id}}" > {{$county->name}}</option>
                                     @endforeach
+                                @endif
 
-                                </select>    
-                            </div>
+                            </select>    
                         </div>
+                    </div>
 
-                        <div class="col-xl-3 col-md-3 col-sm-3">
-                            <div class="form-group">
-                                <label class="col-form-label"><b>Select Sub County</b></label>
-                                <select class="form-control" data-width="100%" id="sub_county" name="sub_county" data-actions-box="true" data-live-search="true">
-                                
-                                </select>    
-                            </div>
+                    <div class="col-xl-3 col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label"><b>Select Sub County</b></label>
+                            <select class="form-control selectpicker" data-width="100%" id="sub_county" name="sub_county[]"  data-live-search="true" multiple>
+                                @if(Auth::user()->role_id != '1')
+                                    <option selected value="{{Auth::user()->profile->facility->subcounty->id}}" > {{ ucwords(Auth::user()->profile->facility->subcounty->name) }}</option>
+                                @endif
+                            </select>    
                         </div>
+                    </div>
 
-                        <div class="col-xl-3 col-md-3 col-sm-3">
-                            <div class="form-group">
-                                <label class="col-form-label"><b>Select Facility</b></label>
-                                <select class="form-control" data-width="100%" id="facility" name="facility" data-actions-box="true" data-live-search="true">
-                                
-                                </select>    
-                            </div>
+                    <div class="col-xl-3 col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label"><b>Select Facility</b></label>
+                            <select class="selectpicker form-control" data-width="100%" id="facility" name="facility" data-live-search="true" multiple>
+                                @if(Auth::user()->role_id != '1')
+                                    <option selected value="{{Auth::user()->profile->facility->id}}" > {{ ucwords(Auth::user()->profile->facility->name) }}</option>
+                                @endif
+                            </select>    
                         </div>
+                    </div>
 
-                        <div class="col-xl-2 col-md-2 col-sm-2">
-                            <div class="form-group">
-                                <label for="daterange" class="col-form-label"><b>Select Date Range</b></label>
-                                <input class="form-control" id="daterange" type="text" name="daterange" />
-                            </div>
+                    <div class="col-xl-2 col-md-2 col-sm-2">
+                        <div class="form-group">
+                            <label for="daterange" class="col-form-label"><b>Select Date Range</b></label>
+                            <input class="form-control" id="daterange" type="text" name="daterange" />
                         </div>
+                    </div>
 
-                        <div class="col-xl-1 col-md-1 col-sm-1">
+                    <div class="col-xl-1 col-md-1 col-sm-1">
 
-                            <div class="form-group">
-                                <label for="daterange" class="col-form-label "></label>
-                                <button type="submit" class="btn btn-warning"><b>Filter Results </b></button>
-                            </div>
-                        </div> 
-                    </div>    
-
-                </form>      
-
+                        <div class="form-group">
+                            <label for="daterange" class="col-form-label "></label>
+                            <button type="submit" class="btn btn-warning"><b>Filter Results </b></button>
+                        </div>
+                    </div> 
                 </div>    
-            </div>
-        </div> 
 
-        <div class="row">
-            <div class="col-xl-3 col-md-6">
-                <div class="card card-stats">
-                    <!-- Card body -->
+            </form>      
 
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Total Users</h5>
-                                <span class="h2 font-weight-bold mb-0" id="everyone"></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                    <i class="ni ni-active-40"></i>
-                                </div>
-                            </div>
+            </div>    
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Total Users</h5>
+                            <span class="h2 font-weight-bold mb-0" id="everyone"></span>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card card-stats">
-                    <!-- Card body -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-                                <span class="h2 font-weight-bold mb-0" id="new_users"></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                    <i class="ni ni-chart-pie-35"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card card-stats">
-                    <!-- Card body -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Practitioners</h5>
-                                <span class="h2 font-weight-bold mb-0" id="practitioners"></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                    <i class="ni ni-money-coins"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card card-stats">
-                    <!-- Card body -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Students</h5>
-                                <span class="h2 font-weight-bold mb-0" id="students"></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                    <i class="ni ni-chart-bar-32"></i>
-                                </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                <i class="ni ni-active-40"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+                            <span class="h2 font-weight-bold mb-0" id="new_users"></span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                <i class="ni ni-chart-pie-35"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Practitioners</h5>
+                            <span class="h2 font-weight-bold mb-0" id="practitioners"></span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                <i class="ni ni-money-coins"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Students</h5>
+                            <span class="h2 font-weight-bold mb-0" id="students"></span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="ni ni-chart-bar-32"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- ============= --}}
-
 
     <div class="row">
         <div class="col-xl-8">
@@ -180,6 +184,21 @@
             </div>
         </div>
         </div>
+    </div>
+
+    {{-- ============= --}}
+
+    <div id="dashboard_overlay">
+        <img style="  position:absolute;
+        background-size: cover;
+        width: 100%;
+        length: 100%;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;" src="{{url('/assets/img/brand/loader.gif')}}" alt="loader" />
+
     </div>
 
 @endsection
@@ -425,17 +444,19 @@
             // // });
             // $("#county").selectpicker('refresh');
             // $("#sub_county").selectpicker('refresh');
+            console.log(data.students);
             $("#everyone").html(data.everyone);
             $("#students").html(data.students);
             $("#practitioners").html(data.practitioners);
             $("#new_users").html(data.new_users);
-            
+            $("#dashboard_overlay").hide();
+
         }
     });
 
     $('#dataFilter').on('submit', function(e) {
         e.preventDefault();
-        // $("#dashboard_overlay").show();
+        $("#dashboard_overlay").show();
         let county = $('#county').val();
         let sub_county = $('#sub_county').val();
         let facility = $('#facility').val();
@@ -455,6 +476,7 @@
                 },
                 url: "{{ route('filtered_data') }}",
                 success: function(data) {
+                    console.log(data.students);
                     charts(data.users, data.g_users);
                     // $('#county').empty();
                     // $('#sub_county').empty();
@@ -473,10 +495,7 @@
                     $("#students").html(data.students);
                     $("#practitioners").html(data.practitioners);
                     $("#new_users").html(data.new_users);
-                    // $("#unit_numbers").html(data.units);
-                    // $("#suppressed_negative").html(arr[0]);
-                    // $("#unsuppressed_positive").html(arr[1]);
-                    // $("#dashboard_overlay").hide();
+                    $("#dashboard_overlay").hide();
                 }
             });
     });

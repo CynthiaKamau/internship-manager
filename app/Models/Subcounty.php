@@ -17,4 +17,9 @@ class Subcounty extends Model
     {
         return $this->belongsTo('App\Models\County');
     }
+
+    public function facilities()
+    {
+        return $this->hasMany('App\Models\Facility');
+    }
 }

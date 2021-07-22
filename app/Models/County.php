@@ -13,8 +13,13 @@ class County extends Model
        'name', 'status'
     ];
 
-    public function sub_counties()
+    public function subcounties()
     {
         return $this->hasMany('App\Models\SubCounty');
+    }
+
+    public function facilities()
+    {
+        return $this->hasMany('App\Models\Facility');
     }
 }

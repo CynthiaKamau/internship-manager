@@ -22,4 +22,14 @@ class Facility extends Model
     {
         return $this->hasMany('App\Models\Checkin');
     }
+
+    public function county()
+    {
+        return $this->belongsTo('App\Models\County', 'county');
+    }
+
+    public function subcounty()
+    {
+        return $this->belongsTo('App\Models\Subcounty', 'sub_county');
+    }
 }

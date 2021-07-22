@@ -45,18 +45,18 @@ class HomeController extends Controller
 
             $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('role', 'Student')->groupBy('role')
-                            ->pluck('count')->first();
+                            ->count();
 
             $practitioners = UserSummary::select(DB::raw("COUNT(*) as count"))
                                 ->where('role', 'Practitioner')->groupBy('role')
-                                ->pluck('count')->first();
+                                ->count();
 
             $everyone = UserSummary::select(DB::raw("COUNT(*) as count"))
-                            ->pluck('count')->first();
+                            ->count();
 
             $new_users = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->whereDate('created_at', Carbon::today())
-                            ->pluck('count')->first();
+                            ->count();
 
             $users = UserSummary::select(
                 DB::raw("COUNT(*) as y"),
@@ -79,22 +79,22 @@ class HomeController extends Controller
                             ->where('role', 'Student')
                             ->where('facility_id', Auth::user()->profile->facility_id )
                             ->groupBy('role')
-                            ->pluck('count')->first();
+                            ->count();
 
             $practitioners = UserSummary::select(DB::raw("COUNT(*) as count"))
                                 ->where('role', 'Practitioner')
                                 ->where('facility_id', Auth::user()->profile->facility_id )
                                 ->groupBy('role')
-                                ->pluck('count')->first();
+                                ->count();
 
             $everyone = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('facility_id', Auth::user()->profile->facility_id )
-                            ->pluck('count')->first();
+                            ->count();
 
             $new_users = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->whereDate('created_at', Carbon::today())
                             ->where('facility_id', Auth::user()->profile->facility_id )
-                            ->pluck('count')->first();
+                            ->count();
 
             $users = UserSummary::select(
                 DB::raw("COUNT(*) as y"),
@@ -146,186 +146,92 @@ class HomeController extends Controller
         $start_date = Carbon::createFromFormat('m/d/Y', $unformatted_startdate)->format('Y-m-d');
         $end_date = Carbon::createFromFormat('m/d/Y', $unformatted_enddate)->format('Y-m-d');
 
-        if(Auth::user()->role_id == 1) {
 
-            $students = UserSummary::select(DB::raw("COUNT(*) as count"))
-                        ->where('role', 'Student')
-                        ->whereBetween('created_at', [$start_date, $end_date])
-                        ->groupBy('role');
+        $students = UserSummary::select(DB::raw("COUNT(*) as count"))
+                    ->where('role', 'Student')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->groupBy('role');
 
-            $practitioners = UserSummary::select(DB::raw("COUNT(*) as count"))
-                                ->where('role', 'Practitioner')
-                                ->whereBetween('created_at', [$start_date, $end_date])
-                                ->groupBy('role');
-
-            $everyone = UserSummary::select(DB::raw("COUNT(*) as count"))
-                            ->whereBetween('created_at', [$start_date, $end_date]);
-
-            $new_users = UserSummary::select(DB::raw("COUNT(*) as count"))
-                            ->whereDate('created_at', Carbon::today());
-
-            $users = UserSummary::select(
-                            DB::raw("COUNT(*) as y"),
-                            DB::raw('role as name')
-                        )
-                        ->whereBetween('created_at', [$start_date, $end_date])
-                        ->groupBy('roles.name');
-
-        
-            $g_users = UserSummary::select(
-                            DB::raw("COUNT(*) as y"),
-                        DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear")
-                        )
-                        ->whereBetween('created_at', [$start_date, $end_date])
-                        ->whereYear('created_at', date('Y'))
-                        ->groupBy('monthyear');
-
-            if(!empty($county)) {
-
-                $students = $students->where('county_id', $county);
-
-                $practitioners = $practitioners->where('county_id', $county);
-
-                $everyone = $everyone->where('county_id', $county);
-
-                $new_users = $new_users->where('county_id', $county);
-
-                $users = $users->where('county_id', $county);
-                               
-                $g_users = $g_users->where('county_id', $county);
-
-            }
-
-            if(!empty($sub_county)) {
-
-                $students = $students->where('sub_county_id', $sub_county);
-
-                $practitioners = $practitioners->where('sub_county_id', $sub_county);
-
-                $everyone = $everyone->where('sub_county_id', $sub_county);
-
-                $new_users = $new_users->where('sub_county_id', $sub_county);
-
-                $users = $users->where('sub_county_id', $sub_county);
-                               
-                $g_users = $g_users->where('sub_county_id', $sub_county);
-
-            }
-
-            if(!empty($facility)) {
-
-                $students = $students->where('facility_id', $facility);
-
-                $practitioners = $practitioners->where('facility_id', $facility);
-
-                $everyone = $everyone->where('facility_id', $facility);
-
-                $new_users = $new_users->where('facility_id', $facility);
-
-                $users = $users->where('facility_id', $facility);
-                               
-                $g_users = $g_users->where('facility_id', $facility);
-
-
-            }
-
-        } else {
-
-            $students = UserSummary::select(DB::raw("COUNT(*) as count"))
-                            ->where('role', 'Student')
-                            ->where('facility_id', Auth::user()->profile->facility_id )
+        $practitioners = UserSummary::select(DB::raw("COUNT(*) as count"))
+                            ->where('role', 'Practitioner')
                             ->whereBetween('created_at', [$start_date, $end_date])
                             ->groupBy('role');
 
-            $practitioners = UserSummary::select(DB::raw("COUNT(*) as count"))
-                                ->where('role', 'Practitioner')
-                                ->where('facility_id', Auth::user()->profile->facility_id )
-                                ->whereBetween('created_at', [$start_date, $end_date])
-                                ->groupBy('role');
+        $everyone = UserSummary::select(DB::raw("COUNT(*) as count"))
+                        ->whereBetween('created_at', [$start_date, $end_date]);
 
-            $everyone = UserSummary::select(DB::raw("COUNT(*) as count"))
-                            ->where('facility_id', Auth::user()->profile->facility_id )
-                            ->whereBetween('created_at', [$start_date, $end_date]);
+        $new_users = UserSummary::select(DB::raw("COUNT(*) as count"))
+                        ->whereDate('created_at', Carbon::today());
 
-            $new_users = UserSummary::select(DB::raw("COUNT(*) as count"))
-                            ->where('facility_id', Auth::user()->profile->facility_id )
-                            ->whereDate('created_at', Carbon::today());
+        $users = UserSummary::select(
+                        DB::raw("COUNT(*) as y"),
+                        DB::raw('role as name')
+                    )
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->groupBy('roles.name');
 
-            $users = UserSummary::select(
-                            DB::raw("COUNT(*) as y"),
-                            DB::raw('role as name')
-                        )
-                        ->where('facility_id', Auth::user()->profile->facility_id )
-                        ->whereBetween('created_at', [$start_date, $end_date])
-                        ->groupBy('roles.name');
+        $g_users = UserSummary::select(
+                        DB::raw("COUNT(*) as y"),
+                    DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear")
+                    )
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->whereYear('created_at', date('Y'))
+                    ->groupBy('monthyear');
 
+        if(!empty($county)) {
 
-            $g_users = UserSummary::select(
-                            DB::raw("COUNT(*) as y"),
-                        DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear")
-                        )
-                        ->where('facility_id', Auth::user()->profile->facility_id )
-                        ->whereBetween('created_at', [$start_date, $end_date])
-                        ->whereYear('created_at', date('Y'))
-                        ->groupBy('monthyear');
+            $students = $students->whereIn('county_id', $county);
 
-            if(!empty($county)) {
+            $practitioners = $practitioners->whereIn('county_id', $county);
 
-                $students = $students->where('county_id', $county);
+            $everyone = $everyone->whereIn('county_id', $county);
 
-                $practitioners = $practitioners->where('county_id', $county);
+            $new_users = $new_users->whereIn('county_id', $county);
 
-                $everyone = $everyone->where('county_id', $county);
-
-                $new_users = $new_users->where('county_id', $county);
-
-                $users = $users->where('county_id', $county);
+            $users = $users->whereIn('county_id', $county);
                             
-                $g_users = $g_users->where('county_id', $county);
+            $g_users = $g_users->whereIn('county_id', $county);
 
-            }
+        }
 
-            if(!empty($sub_county)) {
+        if(!empty($sub_county)) {
 
-                $students = $students->where('sub_county_id', $sub_county);
+            $students = $students->whereIn('sub_county_id', $sub_county);
 
-                $practitioners = $practitioners->where('sub_county_id', $sub_county);
+            $practitioners = $practitioners->whereIn('sub_county_id', $sub_county);
 
-                $everyone = $everyone->where('sub_county_id', $sub_county);
+            $everyone = $everyone->whereIn('sub_county_id', $sub_county);
 
-                $new_users = $new_users->where('sub_county_id', $sub_county);
+            $new_users = $new_users->whereIn('sub_county_id', $sub_county);
 
-                $users = $users->where('sub_county_id', $sub_county);
+            $users = $users->whereIn('sub_county_id', $sub_county);
                             
-                $g_users = $g_users->where('sub_county_id', $sub_county);
+            $g_users = $g_users->whereIn('sub_county_id', $sub_county);
 
-            }
+        }
 
-            if(!empty($facility)) {
+        if(!empty($facility)) {
 
-                $students = $students->where('facility_id', $facility);
+            $students = $students->whereIn('facility_id', $facility);
 
-                $practitioners = $practitioners->where('facility_id', $facility);
+            $practitioners = $practitioners->whereIn('facility_id', $facility);
 
-                $everyone = $everyone->where('facility_id', $facility);
+            $everyone = $everyone->whereIn('facility_id', $facility);
 
-                $new_users = $new_users->where('facility_id', $facility);
+            $new_users = $new_users->whereIn('facility_id', $facility);
 
-                $users = $users->where('facility_id', $facility);
+            $users = $users->whereIn('facility_id', $facility);
                             
-                $g_users = $g_users->where('facility_id', $facility);
-
-
-            }
+            $g_users = $g_users->whereIn('facility_id', $facility);
 
         }
 
         $data["users"] = $users->get();
-        $data["students"] = $students->pluck('count')->first();
-        $data["practitioners"] = $practitioners->pluck('count')->first();
+        $data["students"] = $students->count();
+        $data["practitioners"] = $practitioners->count();
         $data["g_users"] = $g_users->get();
-        $data["new_users"] = $new_users->pluck('count')->first();
-        $data["everyone"] = $everyone->pluck('count')->first();
+        $data["new_users"] = $new_users->count();
+        $data["everyone"] = $everyone->count();
         $data["counties"] = $counties;
 
         return $data;
