@@ -48,7 +48,11 @@ COPY . /var/www
 COPY --chown=www:www . /var/www
 
 # Change current user to www
-USER www
+USER root
+
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash
+
+RUN apt-get install -y nodejs
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
