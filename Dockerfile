@@ -1,40 +1,60 @@
 # Set the base image for subsequent instructions
 FROM php:7.4
 
-# Update packages
-RUN apt-get update
+# Copy composer.lock and composer.json
+COPY composer.lock composer.json /var/www/
 
-# Install PHP and composer dependencies
-RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev
+# Set working directory
+WORKDIR /var/www
 
-# Clear out the local repository of retrieved package files
-RUN apt-get clean
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    build-essential \
+    libpng-dev \
+    libzip-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl 
 
-RUN apt install ssh rsync
+RUN apt-get --yes --force-yes install git ssh rsync
 
-RUN apt-get install php7.2-mysql
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install needed extensions
-# Here you can install any other extension that you need during the test and deployment process
-RUN docker-php-ext-install mysqli pdo pdo_mysql exif fileinfo gd2 session gettext pdo_odbc zip
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+# RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
 
-RUN a2enmod rewrite
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN yes | pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
+# Copy existing application directory contents
+COPY . /var/www
 
-COPY php.ini /usr/local/etc/php/
-COPY . /var/www/html/
+# Copy existing application directory permissions
+COPY --chown=www:www . /var/www
 
-# Install Composer
-RUN curl --silent --show-error "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install Laravel Envoy
-RUN composer global require "laravel/envoy=~1.0"
+# Change current user to www
+USER root
 
 RUN curl -sL https://deb.nodesource.com/setup_15.x | bash
 
 RUN apt-get install -y nodejs
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]
+
