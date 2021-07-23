@@ -57,6 +57,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('checkins', 'CheckinController')->except('show');
 
+    Route::resource('students', 'StudentInternshipController')->except('show');
+
     Route::resource('facility_department', 'FacilityDepartmentController')->except('show');
 
     Route::post('/get_facility_departments', 'DataController@get_departments')->name('get_facility_department');
