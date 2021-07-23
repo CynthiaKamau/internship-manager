@@ -11,7 +11,7 @@
                     <div class="col-xl-3 col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="col-form-label"><b>Select County</b></label>
-                            <select class="selectpicker form-control" data-width="100%" id="county" name="county[]" data-live-search="true" multiple>
+                            <select class="county form-control selectpicker" data-width="100%" id="county" name="county[]" data-live-search="true" multiple>
                                 @if(Auth::user()->role_id != '1')
                                     <option selected value="{{Auth::user()->profile->facility->subcounty->county->id}}" > {{ ucwords(Auth::user()->profile->facility->subcounty->county->name) }}</option>
                                 @else
@@ -27,8 +27,8 @@
                     <div class="col-xl-3 col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="col-form-label"><b>Select Sub County</b></label>
-                            <select class="form-control selectpicker" data-width="100%" id="sub_county" name="sub_county[]"  data-live-search="true" multiple>
-                                @if(Auth::user()->role_id != '1')
+                            <select class="sub_county form-control selectpicker" data-width="100%" id="sub_county" name="sub_county[]"  data-live-search="true" multiple>
+                                @if(Auth::user()->role_id == '2')
                                     <option selected value="{{Auth::user()->profile->facility->subcounty->id}}" > {{ ucwords(Auth::user()->profile->facility->subcounty->name) }}</option>
                                 @endif
                             </select>    
@@ -38,7 +38,7 @@
                     <div class="col-xl-3 col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="col-form-label"><b>Select Facility</b></label>
-                            <select class="selectpicker form-control" data-width="100%" id="facility" name="facility" data-live-search="true" multiple>
+                            <select class="facility form-control selectpicker" data-width="100%" id="facility" name="facility[]" data-live-search="true" multiple>
                                 @if(Auth::user()->role_id != '1')
                                     <option selected value="{{Auth::user()->profile->facility->id}}" > {{ ucwords(Auth::user()->profile->facility->name) }}</option>
                                 @endif
@@ -382,6 +382,7 @@
                     
                 var select = document.getElementById("sub_county"),
                     opt = document.createElement("option");
+                    console.log(data[i])
 
                     opt.value = data[i].id;
                     opt.textContent = data[i].name;
