@@ -45,8 +45,14 @@ class HomeController extends Controller
 
             $county_numbers = UserSummary::selectRaw('county_id, count(*) AS users, count(DISTINCT(facility_id)) as facilities')->groupBy('county_id')->get();
 
-            $county_breakdown  = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')->selectRaw('counties.name, COUNT(users_summary.created_at ) AS all_users, COUNT(users_summary.role ) AS roles  ')
-                            ->groupBy('counties.name')->orderBy('counties.name')->get();
+            $county_breakdown = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')
+                        ->selectRaw('counties.name')
+                        ->selectRaw('count(*) as all_users')
+                        ->selectRaw("count(case when role = 'Student' then 1 end) as students")
+                        ->selectRaw("count(case when role = 'Practitioner' then 1 end) as practitioners")
+                        ->selectRaw("count(case when role = 'Super Admin' then 1 end) as admins")
+                        ->groupBy('counties.name')->orderBy('counties.name')
+                        ->get();
 
             $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('role', 'Student')->groupBy('role')
@@ -84,9 +90,15 @@ class HomeController extends Controller
                                 ->where('facility_id', Auth::user()->profile->facility_id )
                                 ->groupBy('county_id')->get();
 
-            $county_breakdown  = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')->selectRaw('counties.name, COUNT(users_summary.created_at ) AS all_users, COUNT(users_summary.role ) AS roles  ')
+            $county_breakdown = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')
+                                ->selectRaw('counties.name')
+                                ->selectRaw('count(*) as all_users')
+                                ->selectRaw("count(case when role = 'Student' then 1 end) as students")
+                                ->selectRaw("count(case when role = 'Practitioner' then 1 end) as practitioners")
+                                ->selectRaw("count(case when role = 'Super Admin' then 1 end) as admins")
                                 ->where('users_summary.facility_id', Auth::user()->profile->facility_id )
-                                ->groupBy('counties.name')->orderBy('counties.name')->get();
+                                ->groupBy('counties.name')->orderBy('counties.name')
+                                ->get();
 
             $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                             ->where('role', 'Student')
@@ -163,8 +175,14 @@ class HomeController extends Controller
 
         $county_numbers = UserSummary::selectRaw('county_id, count(*) AS users, count(DISTINCT(facility_id)) as facilities')->groupBy('county_id')->whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date);
 
-        $county_breakdown  = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')->selectRaw('counties.name, COUNT(users_summary.created_at ) AS all_users, COUNT(users_summary.role ) AS roles  ')
-                            ->groupBy('counties.name')->orderBy('counties.name');
+        $county_breakdown = UserSummary::join('counties', 'counties.id', '=', 'users_summary.county_id')
+                        ->selectRaw('counties.name')
+                        ->selectRaw('count(*) as all_users')
+                        ->selectRaw("count(case when role = 'Student' then 1 end) as students")
+                        ->selectRaw("count(case when role = 'Practitioner' then 1 end) as practitioners")
+                        ->selectRaw("count(case when role = 'Super Admin' then 1 end) as admins")
+                        ->groupBy('counties.name')
+                        ->orderBy('counties.name');
 
         $students = UserSummary::select(DB::raw("COUNT(*) as count"))
                     ->where('role', 'Student')

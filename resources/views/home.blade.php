@@ -382,7 +382,6 @@
                     
                 var select = document.getElementById("sub_county"),
                     opt = document.createElement("option");
-                    console.log(data[i])
 
                     opt.value = data[i].id;
                     opt.textContent = data[i].name;
@@ -484,7 +483,7 @@
                 success: function(data) {
                     charts(data.users, data.g_users);
                     maps(data.county_numbers);
-                    countyBreakdown(data.pulled_data);
+                    countyBreakdown(data.county_breakdown);
                     // $('#county').empty();
                     // $('#sub_county').empty();
                     // $.each(data.all_units, function(number, unit) {
@@ -569,11 +568,15 @@
     function countyBreakdown(data) {
         let counties = [];
         let all_users = [];
-        let roles = [];
+        let students = [];
+        let practitioners = [];
+        let admins = [];
         for (let i = 0; i < data.length; i++) {
             counties.push(data[i].name);
             all_users.push(data[i].all_users);
-            roles.push(data[i].roles);
+            students.push(data[i].students);
+            practitioners.push(data[i].practitioners);
+            admins.push(data[i].admins);
         }
         Highcharts.chart('countyBreakdown', {
             chart: {
@@ -612,9 +615,21 @@
                 pointPadding: 0.3,
                 pointPlacement: 0.2
             }, {
-                name: 'Users By Role',
-                color: 'rgba(186,60,61,.9)',
-                data: roles,
+                name: 'Students',
+                color: 'rgba(60,60,60)',
+                data: students,
+                pointPadding: 0.4,
+                pointPlacement: 0.2
+            }, {
+                name: 'Practitioners',
+                color: 'rgba(0,255,0,0.3)',
+                data: practitioners,
+                pointPadding: 0.4,
+                pointPlacement: 0.2
+            }, {
+                name: 'Admins',
+                color: 'rgba(0,0,255,0.3)',
+                data: admins,
                 pointPadding: 0.4,
                 pointPlacement: 0.2
             }]
