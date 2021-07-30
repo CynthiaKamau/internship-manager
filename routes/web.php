@@ -67,6 +67,10 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::post('/facilities', 'DataController@get_facilities')->name('get_facilities');
 
+    Route::post('/get_dashboard_sub_counties', 'DataController@get_dashboard_sub_counties')->name('get_dashboard_sub_counties');
+
+    Route::post('/get_dashboard_facilities', 'DataController@get_dashboard_facilities')->name('get_dashboard_facilities');
+
     // Route::get('/facility_department/{facility_departmemt}/create', 'FacilityDepartmentController@create')->name('facility_department.create');
 
     // Route::put('/facility_department/{facility_department}/edit', 'FacilityDepartmentController@update')->name('facility_department.update');

@@ -356,80 +356,61 @@
         }, function(start, end, label) {});
     });
 
-    $('#county').change(function () {
-
-        $('#sub_county').empty();
-
-        var s = $(this).val();
-        $.ajax({
+    $("#county").change(function() {
+        let counties = $('#county').val();
+        $.ajaxSetup({
             headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            url: '/sub_counties',
-            data: {
-                "county_id" : s
-            },
-            dataType: "json",
-            success: function (data) {
-                var select = document.getElementById("sub_county"),
-                    opt = document.createElement("option");
-
-                    opt.value = "";
-                    opt.textContent = "Select Sub County";
-                    select.appendChild(opt);
-                for (var i = 0; i < data.length; i++) {
-                    
-                var select = document.getElementById("sub_county"),
-                    opt = document.createElement("option");
-
-                    opt.value = data[i].id;
-                    opt.textContent = data[i].name;
-                    select.appendChild(opt);
-                }
-
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-
-        })
-
-    })
-
-    $('#sub_county').change(function () {
-
-        $('facility').empty();
-
-        var f = $(this).val();
+        });
         $.ajax({
-            headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            url: '/facilities',
+            type: 'POST',
             data: {
-                "sub_county": f
+                "county": counties
             },
-            dataType: "json",
-            success: function (data) {
-
-                var select = document.getElementById("facility"),
-                        opt = document.createElement("option");
-
-                    opt.value = "";
-                    opt.textContent = "Select Facility";
-                    select.appendChild(opt);
-
-                for (var i = 0; i < data.length; i++) {
-                    var select = document.getElementById("facility"),
-                        opt = document.createElement("option");
-
-                    opt.value = data[i].id;
-                    opt.textContent = data[i].name;
-                    select.appendChild(opt);
-                }
+            url: "{{ route('get_dashboard_sub_counties') }}",
+            success: function(data) {
+                $('#sub_county').empty();
+                $.each(data, function(number, subcounty) {
+                    $("#sub_county").append($('<option>').text(
+                            subcounty
+                            .name)
+                        .attr(
+                            'value',
+                            subcounty.id));
+                });
+                $("#sub_county").selectpicker('refresh');
             }
+        });
+    });
 
-        })
-    })
+    $("#sub_county").change(function() {
+        let sub_counties = $('#sub_county').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            data: {
+                "sub_county": sub_counties,
+            },
+            url: "{{ route('get_dashboard_facilities') }}",
+            success: function(data) {
+                $('#facility').empty();
+                $.each(data, function(number, facility) {
+                    $("#facility").append($('<option>').text(
+                            facility
+                            .name)
+                        .attr(
+                            'value',
+                            facility.code));
+                });
+                $("#facility").selectpicker('refresh');
+            }
+        });
+    });
 
     $.ajax({
         type: 'GET',
@@ -466,6 +447,7 @@
         let sub_county = $('#sub_county').val();
         let facility = $('#facility').val();
         let daterange = $('#daterange').val();
+        console.log(county, sub_county, facility, daterange);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

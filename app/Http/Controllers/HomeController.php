@@ -257,21 +257,21 @@ class HomeController extends Controller
 
         if(!empty($facility)) {
 
-            $county_numbers = $county_numbers->whereIn('facility_id', $facility);
+            $county_numbers = $county_numbers->whereIn('mfl_code', $facility);
 
-            $county_breakdown = $county_breakdown->whereIn('facility_id', $facility);
+            $county_breakdown = $county_breakdown->whereIn('mfl_code', $facility);
 
-            $students = $students->whereIn('facility_id', $facility);
+            $students = $students->whereIn('mfl_code', $facility);
 
-            $practitioners = $practitioners->whereIn('facility_id', $facility);
+            $practitioners = $practitioners->whereIn('mfl_code', $facility);
 
-            $everyone = $everyone->whereIn('facility_id', $facility);
+            $everyone = $everyone->whereIn('mfl_code', $facility);
 
-            $new_users = $new_users->whereIn('facility_id', $facility);
+            $new_users = $new_users->whereIn('mfl_code', $facility);
 
-            $users = $users->whereIn('facility_id', $facility);
+            $users = $users->whereIn('mfl_code', $facility);
                             
-            $g_users = $g_users->whereIn('facility_id', $facility);
+            $g_users = $g_users->whereIn('mfl_code', $facility);
 
         }
 
