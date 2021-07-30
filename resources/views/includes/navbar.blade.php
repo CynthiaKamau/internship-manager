@@ -145,7 +145,7 @@
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('students*')) ? 'active' : '' }}" href="#navbar-students"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-students">
                                 <i class="fas text-primary fa-list-alt"></i>
-                                <span class="nav-link-text">Manage students</span>
+                                <span class="nav-link-text">Manage Students</span>
                             </a>
                             <div class="collapse" id="navbar-students">
                                 <ul class="nav nav-sm flex-column">
@@ -157,6 +157,30 @@
                                     @can( 'create-students')
                                     <li class="nav-item">
                                         <a href="{{route('students.edit', $student ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Student</span></a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </li>
+
+                    @endcan
+
+                    @canany(['view-internships', 'create-internships'])
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('internships*')) ? 'active' : '' }}" href="#navbar-internships"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-internships">
+                                <i class="fas text-primary fa-list-alt"></i>
+                                <span class="nav-link-text">Manage Internships</span>
+                            </a>
+                            <div class="collapse" id="navbar-internships">
+                                <ul class="nav nav-sm flex-column">
+                                 @can('view-internships')
+                                    <li class="nav-item">
+                                        <a href="{{route('internships.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Internships</span></a>
+                                    </li>
+                                    @endcan
+                                    @can( 'create-internships')
+                                    <li class="nav-item">
+                                        <a href="{{route('internships.edit', $internship ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Internship</span></a>
                                     </li>
                                     @endcan
                                 </ul>

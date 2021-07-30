@@ -1,66 +1,66 @@
 @extends('layouts.app')
 @push('pg_btn')
-    <a href="{{route('facility_department.index')}}" class="btn btn-sm btn-neutral">All Facility Departments</a>
+    <a href="{{route('students.index')}}" class="btn btn-sm btn-neutral">All Students</a>
 @endpush
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-5">
                 <div class="card-body">
-                    @can('update-facility-department')
-                    {!! Form::open(['route' => ['facility_department.update', $facility_department], 'method'=>'put']) !!}
+                    @can('update-students')
+                    {!! Form::open(['route' => ['students.update', $student], 'method'=>'put']) !!}
                     @endcan
-                    <h6 class="heading-small text-muted mb-4">department information</h6>
+                    <h6 class="heading-small text-muted mb-4">Student Information</h6>
+                       
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Select Department</label>
-                                        <select class="selectpicker form-control" data-width="100%" id="department_id" name="department_id" data-actions-box="true" data-live-search="true">
-                                            @foreach($departments as $department)
-                                                <option value="{{ $department->id}}" {{ $department->id == $facility_department->department_id ? 'selected' : '' }} > {{$department->name}}</option>
-                                            @endforeach
-                                        </select>    
+                                        <label> <strong> Student Name : </strong> </label>
+                                        <label> {{$student->student->first_name}} {{$student->student->last_name}}  </label>
+                                        
                                     </div>
-                                </div>
 
-                            </div>
-
-                        </div>
-
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Select Facility</label>
-                                        <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true">
-                                            @foreach($facilities as $facility)
-                                                <option value="{{ $facility->id}}" {{ $facility->id == $facility_department->facility_id ? 'selected' : ''}} > {{$facility->name}}</option>
-                                            @endforeach
-                                        </select>    
+                                        <label> <strong> Facility : </strong> </label>
+                                        <label> {{$student->student->profile->facility->name}} </label>
+                                        
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> <strong> Department : </strong> </label>
+                                        <label> {{$student->student->profile->department->name}} </label>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <hr class="my-4" />
                         <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-checkbox">
-                                        {!! Form::hidden('status', 0) !!}
-                                        <input type="checkbox" name="status" value="1" {{ $facility_department->status ? 'checked' : ''}} class="custom-control-input" id="status">
-                                        {{ Form::label('status', 'Status', ['class' => 'custom-control-label']) }}
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Select Supervisor</label>
+                                        <select class="selectpicker form-control" data-width="100%" id="supervisor_id" name="supervisor_id" data-actions-box="true">
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id}}" {{ $user->id == $student->supervisor_id ? 'selected' : ''}} > {{$user->first_name}} {{$user->last_name}}</option>
+                                            @endforeach
+                                        </select>    
                                     </div>
                                 </div>
-                                @can('update-facility-department')
+                            </div>
+                        </div>
+
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                @can('update-students')
                                 <div class="col-md-12">
                                     {{ Form::submit('Submit', ['class'=> 'mt-5 btn btn-primary']) }}
                                 </div>
                                 @endcan
                             </div>
                         </div>
-                    @can('update-facility-department')
+                    @can('update-students')
                     {!! Form::close() !!}
                     @endcan
                 </div>

@@ -18,7 +18,9 @@ class CreateInternshipsTable extends Migration
             $table->string('title');
             $table->string('qualifications');
             $table->string('responsibilities');
+            $table->string('duration');
             $table->unsignedBigInteger('facility_id')->nullable();
+            $table->boolean('status')->default(1);
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
             $table->unsignedInteger('deleted_by')->nullable();

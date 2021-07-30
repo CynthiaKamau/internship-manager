@@ -11,4 +11,10 @@ class Internship extends Model
     protected $fillable = [
         'id', 'name', 'description'
     ];
+
+    public function facility()
+    {
+        return $this->belongsTo('App\Models\Facility', 'facility_id');
+    }
+
 }

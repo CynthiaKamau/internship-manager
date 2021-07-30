@@ -57,6 +57,10 @@ class RolePermissionSeeder extends Seeder
             'create-students',
             'update-students',
             'destroy-students',
+            'view-internships',
+            'create-internships',
+            'update-internships',
+            'destroy-internships',
         ];
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
@@ -103,6 +107,10 @@ class RolePermissionSeeder extends Seeder
         $role->givePermissionTo('create-students');
         $role->givePermissionTo('update-students');
         $role->givePermissionTo('destroy-students');
+        $role->givePermissionTo('view-internships');
+        $role->givePermissionTo('create-internships');
+        $role->givePermissionTo('update-internships');
+        $role->givePermissionTo('destroy-internships');
 
         $user = User::create([
             'first_name'=> 'Practitioner',

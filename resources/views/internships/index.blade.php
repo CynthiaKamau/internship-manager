@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @push('pg_btn')
-@can('create-student')
-    <a href="{{ route('students.create', $student ?? '') }}" class="btn btn-sm btn-neutral">Create New Student</a>
+@can('create-internship')
+    <a href="{{ route('internships.create', $internship ?? '') }}" class="btn btn-sm btn-neutral">Create New Internship</a>
 @endcan
 @endpush
 @section('content')
@@ -11,12 +11,12 @@
                 <div class="card-header bg-transparent">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h3 class="mb-0">All Students</h3>
+                            <h3 class="mb-0">All Internships</h3>
                         </div>
                         <div class="col-lg-4">
                     {!! Form::open(['route' => 'users.index', 'method'=>'get']) !!}
                         <div class="form-group mb-0">
-                        {{ Form::text('search', request()->query('search'), ['class' => 'form-control form-control-sm', 'placeholder'=>'Search Students']) }}
+                        {{ Form::text('search', request()->query('search'), ['class' => 'form-control form-control-sm', 'placeholder'=>'Search Internships']) }}
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -29,55 +29,63 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Facility</th>
-                                    <th scope="col">Internship</th>
-                                    <th scope="col">Supervisor</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Qualifications</th>
+                                    <th scope="col">Duration</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created at</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="list">
-                                @foreach($students as $student)
+                                @foreach($internships as $internship)
                                     <tr>
                                         <th scope="row">
-                                            {{$student->student->first_name}} {{$student->student->last_name}}
+                                            {{$internship->title}}
                                         </th>
                                         <th scope="row">
-                                            {{$student->student->profile->facility->name}}
+                                            {{$internship->title}}
                                         </th>
                                         <th scope="row">
-                                            {{$student->internship->title}}
+                                            {{$internship->qualifications}}
                                         </th>
                                         <th scope="row">
-                                            {{$student->supervisor->first_name}} {{$student->supervisor->last_name}}
+                                            {{$internship->duration}}
                                         </th>
                                         <td>
-                                            @if($student->student->status)
+                                            @if($internship->status)
                                                 <span class="badge badge-pill badge-lg badge-success">Active</span>
                                             @else
                                                 <span class="badge badge-pill badge-lg badge-danger">Disabled</span>
                                             @endif
                                         </td>
                                         <td>
-                                            {{$student->created_at}}
+                                            {{$internship->created_at}}
                                         </td>
                                         <td class="text-center">
-                                            @can('destroy-students')
-                                            {!! Form::open(['route' => ['students.destroy', $student],'method' => 'delete',  'class'=>'d-inline-block dform']) !!}
+                                            @can('destroy-internships')
+                                            {!! Form::open(['route' => ['internships.destroy', $internship],'method' => 'delete',  'class'=>'d-inline-block dform']) !!}
                                             @endcan
 
-                                            @can('update-students')
-                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit Students Details" href="{{route('students.edit', $student)}}">
+                                            <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit Internships Details" href="{{route('internships.edit', $internship)}}">
                                                 <i class="fa fa-edit" aria-hidden="true"></i>
                                             </a>
-                                            @endcan
-                                            @can('destroy-students')
-                                                <button type="submit" class="btn delete btn-danger btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Delete students" href="">
+                                            
+                                            <button type="submit" class="btn delete btn-danger btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Delete Internships" href="">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            
+                                            <!-- @can('update-internships') -->
+                                            <!-- <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit Internships Details" href="{{route('internships.edit', $internship)}}">
+                                                <i class="fa fa-edit" aria-hidden="true"></i>
+                                            </a> -->
+                                            <!-- @endcan
+                                            @can('destroy-internships') -->
+                                                <!-- <button type="submit" class="btn delete btn-danger btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Delete Internships" href="">
                                                     <i class="fas fa-trash"></i>
-                                                </button>
-                                            {!! Form::close() !!}
-                                            @endcan
+                                                </button> -->
+                                            <!-- {!! Form::close() !!}
+                                            @endcan -->
                                         </td>
                                     </tr>
                                 @endforeach
@@ -85,7 +93,7 @@
                                 <tfoot >
                                 <tr>
                                     <td colspan="6">
-                                        {{$students->links()}}
+                                        {{$internships->links()}}
                                     </td>
                                 </tr>
                                 </tfoot>
