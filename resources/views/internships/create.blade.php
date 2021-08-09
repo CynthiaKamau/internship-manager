@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.0.0/js/bootstrap-datetimepicker.min.js" type="text/css">
+
 @push('pg_btn')
     <a href="{{route('internships.index')}}" class="btn btn-sm btn-neutral">All Facility Internships</a>
 @endpush
@@ -26,7 +29,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         {{ Form::label('qualifications', 'Qualifications', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('qualifications', null, ['class' => 'form-control']) }}
+                                        {{ Form::textarea('qualifications', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +40,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         {{ Form::label('responsibilities', 'Responsibilities', ['class' => 'form-control-label']) }}
-                                        {{ Form::text('responsibilities', null, ['class' => 'form-control']) }}
+                                        {{ Form::textarea('responsibilities', null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>
@@ -57,9 +60,29 @@
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-6">
+
+                                    <div class="form-group">
+                                    
+                                        {{ Form::label('validity', 'Applications Open Till', ['class' => 'form-control-label']) }}
+
+                                        <div class='input-group date' id='datetimepicker' name='validity'>
+                                            <input type='text' class="form-control" />
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Select Facility</label>
-                                        <select class="selectpicker form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true" data-live-search="true">
+                                        <select class="form-control" data-width="100%" id="facility_id" name="facility_id" data-actions-box="true" data-live-search="true">
                                             @foreach($facilities as $facility)
                                                 <option value="{{ $facility->id}}" > {{$facility->name}}</option>
                                             @endforeach
@@ -88,4 +111,24 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 
+
+@push('scripts')
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+
+$('#datetimepicker').datetimepicker({
+    minDate: moment()
+});
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+@endpush

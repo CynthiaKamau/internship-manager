@@ -9,7 +9,7 @@ class Internship extends Model
     public $table = 'internships';
 
     protected $fillable = [
-        'id', 'name', 'description'
+        'id', 'name', 'description', 'qualifications', 'responsibilities', 'validity', 'facility_id', 'duration', 'status'
     ];
 
     public function facility()

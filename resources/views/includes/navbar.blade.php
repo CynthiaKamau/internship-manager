@@ -154,7 +154,7 @@
                                         <a href="{{route('students.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All students</span></a>
                                     </li>
                                     @endcan
-                                    @can( 'create-students')
+                                    @can('create-students')
                                     <li class="nav-item">
                                         <a href="{{route('students.edit', $student ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Student</span></a>
                                     </li>
@@ -177,12 +177,12 @@
                                     <li class="nav-item">
                                         <a href="{{route('internships.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Internships</span></a>
                                     </li>
-                                    @endcan
-                                    @can( 'create-internships')
-                                    <li class="nav-item">
-                                        <a href="{{route('internships.edit', $internship ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Internship</span></a>
+                                @endcan
+                                @can('update-internships')
+                                <li class="nav-item">
+                                        <a href="{{route('internships.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add Internship</span></a>
                                     </li>
-                                    @endcan
+                                @endcan
                                 </ul>
                             </div>
                         </li>

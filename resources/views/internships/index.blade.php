@@ -28,10 +28,9 @@
                             <table class="table table-hover align-items-center">
                                 <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Name</th>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Qualifications</th>
                                     <th scope="col">Duration</th>
+                                    <th scope="col">Facility</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created at</th>
                                     <th scope="col" class="text-center">Action</th>
@@ -44,13 +43,10 @@
                                             {{$internship->title}}
                                         </th>
                                         <th scope="row">
-                                            {{$internship->title}}
-                                        </th>
-                                        <th scope="row">
-                                            {{$internship->qualifications}}
-                                        </th>
-                                        <th scope="row">
                                             {{$internship->duration}}
+                                        </th>
+                                        <th scope="row">
+                                            {{$internship->facility->name}}
                                         </th>
                                         <td>
                                             @if($internship->status)

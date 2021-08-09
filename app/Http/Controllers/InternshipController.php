@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Internship;
 use App\Models\Facility;
+use App\Models\UserSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 
@@ -63,7 +64,8 @@ class InternshipController extends Controller
             $internship->title = $request->title;
             $internship->qualifications = $request->qualifications;
             $internship->facility_id = $request->facility_id;
-            $internship->responsibilities = $request->responsibillities;
+            $internship->responsibilities = $request->responsibilities;
+            $internship->validity = $request->validity;
             $internship->duration = $request->duration;
 
             if (empty($request->status)) {
@@ -95,18 +97,21 @@ class InternshipController extends Controller
 
         if (Auth::user()->role_id == '1') {
             $users = UserSummary::where('role', 'Practitioner')->get();
+            $facilities = Facility::all();
         } else {
             $users = UserSummary::where('role', 'Practitioner')->where('facility_id', Auth::user()->facility_id )->get();
+            $facilities = Facility::where('id', Auth::user()->profile->facility_id)->get();
         }
 
-        return view('student_internship.edit', compact('title', 'student', 'users'));
+        return view('internships.edit', compact('title', 'users', 'internship', 'facilities'));
         
     }
 
     public function update(Internship $internship, Request $request)
     {
-        $student->update($request->all());
-        flash('Student updated successfully!')->success();
+        
+        $internship->update($request->all());
+        flash('Internship updated successfully!')->success();
         return back();
 
     }
