@@ -37,7 +37,7 @@
 
                             <div class="card-body"> 
 
-                                <div class="card-title"> {{ $post->post_title }} </div>
+                                <div class="card-title"> <strong>{{ $post->post_title }} </strong> </div>
 
                                 <div class="card-title"> {{ $post->category->category_name }} </div>
 

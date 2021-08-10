@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('pg_btn')
-@can('create-internship')
+@can('create-internships')
     <a href="{{ route('internships.create', $internship ?? '') }}" class="btn btn-sm btn-neutral">Create New Internship</a>
 @endcan
 @endpush
@@ -62,26 +62,23 @@
                                             @can('destroy-internships')
                                             {!! Form::open(['route' => ['internships.destroy', $internship],'method' => 'delete',  'class'=>'d-inline-block dform']) !!}
                                             @endcan
-
+                                            @can('update-internships')
+                                            <a class="btn btn-primary btn-sm m-1" data-toggle="tooltip" data-placement="top" title="View Internship" href="{{route('internships.show', $internship)}}">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                            @endcan
+                                            @can('update-internships')
                                             <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit Internships Details" href="{{route('internships.edit', $internship)}}">
                                                 <i class="fa fa-edit" aria-hidden="true"></i>
                                             </a>
-                                            
+                                            @endcan
+                                            @can('destroy-internships') 
                                             <button type="submit" class="btn delete btn-danger btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Delete Internships" href="">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                            
-                                            <!-- @can('update-internships') -->
-                                            <!-- <a class="btn btn-info btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Edit Internships Details" href="{{route('internships.edit', $internship)}}">
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                            </a> -->
-                                            <!-- @endcan
-                                            @can('destroy-internships') -->
-                                                <!-- <button type="submit" class="btn delete btn-danger btn-sm m-1" data-toggle="tooltip" data-placement="top" title="Delete Internships" href="">
-                                                    <i class="fas fa-trash"></i>
-                                                </button> -->
-                                            <!-- {!! Form::close() !!}
-                                            @endcan -->
+                                            @endcan
+                                            {!! Form::close() !!}
+                                   
                                         </td>
                                     </tr>
                                 @endforeach

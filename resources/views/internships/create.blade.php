@@ -1,7 +1,4 @@
 @extends('layouts.app')
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.0.0/js/bootstrap-datetimepicker.min.js" type="text/css">
-
 @push('pg_btn')
     <a href="{{route('internships.index')}}" class="btn btn-sm btn-neutral">All Facility Internships</a>
 @endpush
@@ -60,19 +57,16 @@
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-6">
-
-                                    <div class="form-group">
                                     
-                                        {{ Form::label('validity', 'Applications Open Till', ['class' => 'form-control-label']) }}
-
-                                        <div class='input-group date' id='datetimepicker' name='validity'>
-                                            <input type='text' class="form-control" />
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                                    <div class="form-group">                                
+                                        <label>Application Valid Till :</label>
+                                        <div class="input-group date" data-provide="datepicker">
+                                            <input type="text" class="form-control" name="validity" id="validity" placeholder="dd/mm/yy"  >
+                                            <div class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th"></span>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -115,20 +109,14 @@
 
 @push('scripts')
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-
 <script>
 
-$('#datetimepicker').datetimepicker({
-    minDate: moment()
-});
+    $('.datepicker').datepicker({
+        minDate: new Date(),
+        startView: 2,
+    });
 
 
 </script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 @endpush

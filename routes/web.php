@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::resource('students', 'StudentInternshipController')->except('show');
 
-    Route::resource('internships', 'InternshipController')->except('show');
+    Route::resource('internships', 'InternshipController');
 
     Route::resource('facility_department', 'FacilityDepartmentController')->except('show');
 

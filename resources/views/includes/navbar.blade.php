@@ -34,12 +34,99 @@
                             <span class="nav-link-text">Dashboard</span>
                         </a>
                     </li>
-                    @can('update-settings')
+
+                    @canany(['view-user', 'create-user'])
+
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}" href="{{route('settings.index')}}">
-                                <i class="ni ni-settings-gear-65 text-primary"></i>
-                                <span class="nav-link-text">Manage Settings</span>
+                            <a class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}" href="#navbar-users"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-users">
+                                <i class="fas text-primary fa-tasks"></i>
+                                <span class="nav-link-text">Manage Users</span>
                             </a>
+                            <div class="collapse" id="navbar-users">
+                                <ul class="nav nav-sm flex-column">
+                                 @can('view-user')
+                                    <li class="nav-item">
+                                        <a href="{{route('users.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Users</span></a>
+                                    </li>
+                                    @endcan
+                                    @can( 'create-user')
+                                    <li class="nav-item">
+                                        <a href="{{route('users.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New User</span></a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </li>
+                    @endcan
+
+                    @canany(['view-internships', 'create-internships'])
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('internships*')) ? 'active' : '' }}" href="#navbar-internships"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-internships">
+                                <i class="fas text-primary fa-list-alt"></i>
+                                <span class="nav-link-text">Manage Internships</span>
+                            </a>
+                            <div class="collapse" id="navbar-internships">
+                                <ul class="nav nav-sm flex-column">
+                                 @can('view-internships')
+                                    <li class="nav-item">
+                                        <a href="{{route('internships.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Internships</span></a>
+                                    </li>
+                                @endcan
+                                @can('create-internships')
+                                <li class="nav-item">
+                                        <a href="{{route('internships.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add Internship</span></a>
+                                    </li>
+                                @endcan
+                                </ul>
+                            </div>
+                        </li>
+
+                    @endcan
+
+                    @canany(['view-students', 'create-students'])
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('students*')) ? 'active' : '' }}" href="#navbar-students"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-students">
+                                <i class="fas text-primary fa-list-alt"></i>
+                                <span class="nav-link-text">Manage Students</span>
+                            </a>
+                            <div class="collapse" id="navbar-students">
+                                <ul class="nav nav-sm flex-column">
+                                 @can('view-students')
+                                    <li class="nav-item">
+                                        <a href="{{route('students.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All students</span></a>
+                                    </li>
+                                @endcan
+                                    <!-- @can('create-students')
+                                    <li class="nav-item">
+                                        <a href="{{route('students.edit', $student ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Student</span></a>
+                                    </li>
+                                    @endcan -->
+                                </ul>
+                            </div>
+                        </li>
+
+                    @endcan
+
+                    @canany(['view-post', 'create-post'])
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('post*')) ? 'active' : '' }}" href="#navbar-post"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-post">
+                                <i class="fas text-primary fa-tasks"></i>
+                                <span class="nav-link-text">Manage Resources</span>
+                            </a>
+                            <div class="collapse" id="navbar-post">
+                                <ul class="nav nav-sm flex-column">
+                                @can('view-post')
+                                    <li class="nav-item">
+                                        <a href="{{route('post.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Resources</span></a>
+                                    </li>
+                                    @endcan
+                                    @can( 'create-post')
+                                    <li class="nav-item">
+                                        <a href="{{route('post.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Resource</span></a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </div>
                         </li>
                     @endcan
 
@@ -130,109 +217,23 @@
                                         <a href="{{route('checkins.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Checkins</span></a>
                                     </li>
                                     @endcan
-                                    @can( 'create-checkins')
+                                    <!-- @can( 'create-checkins')
                                     <li class="nav-item">
                                         <a href="{{route('checkins.edit', $checkin ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Checkins</span></a>
                                     </li>
-                                    @endcan
+                                    @endcan -->
                                 </ul>
                             </div>
                         </li>
 
                     @endcan
 
-                    @canany(['view-students', 'create-students'])
+                    @canany(['view-role', 'create-role'])
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('students*')) ? 'active' : '' }}" href="#navbar-students"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-students">
-                                <i class="fas text-primary fa-list-alt"></i>
-                                <span class="nav-link-text">Manage Students</span>
+                            <a class="nav-link {{ (request()->is('roles*')) ? 'active' : '' }}" href="{{route('roles.index')}}">
+                                <i class="fas fa-lock text-primary"></i>
+                                <span class="nav-link-text">Manage Roles</span>
                             </a>
-                            <div class="collapse" id="navbar-students">
-                                <ul class="nav nav-sm flex-column">
-                                 @can('view-students')
-                                    <li class="nav-item">
-                                        <a href="{{route('students.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All students</span></a>
-                                    </li>
-                                    @endcan
-                                    @can('create-students')
-                                    <li class="nav-item">
-                                        <a href="{{route('students.edit', $student ?? '')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Student</span></a>
-                                    </li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </li>
-
-                    @endcan
-
-                    @canany(['view-internships', 'create-internships'])
-                        <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('internships*')) ? 'active' : '' }}" href="#navbar-internships"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-internships">
-                                <i class="fas text-primary fa-list-alt"></i>
-                                <span class="nav-link-text">Manage Internships</span>
-                            </a>
-                            <div class="collapse" id="navbar-internships">
-                                <ul class="nav nav-sm flex-column">
-                                 @can('view-internships')
-                                    <li class="nav-item">
-                                        <a href="{{route('internships.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Internships</span></a>
-                                    </li>
-                                @endcan
-                                @can('update-internships')
-                                <li class="nav-item">
-                                        <a href="{{route('internships.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add Internship</span></a>
-                                    </li>
-                                @endcan
-                                </ul>
-                            </div>
-                        </li>
-
-                    @endcan
-
-                    @canany(['view-post', 'create-post'])
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('post*')) ? 'active' : '' }}" href="#navbar-post"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-post">
-                                <i class="fas text-primary fa-tasks"></i>
-                                <span class="nav-link-text">Manage Resources</span>
-                            </a>
-                            <div class="collapse" id="navbar-post">
-                                <ul class="nav nav-sm flex-column">
-                                 @can('view-post')
-                                    <li class="nav-item">
-                                        <a href="{{route('post.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Resources</span></a>
-                                    </li>
-                                    @endcan
-                                    @can( 'create-post')
-                                    <li class="nav-item">
-                                        <a href="{{route('post.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New Resource</span></a>
-                                    </li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </li>
-                    @endcan
-                    @canany(['view-user', 'create-user'])
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}" href="#navbar-users"  data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-users">
-                                <i class="fas text-primary fa-tasks"></i>
-                                <span class="nav-link-text">Manage Users</span>
-                            </a>
-                            <div class="collapse" id="navbar-users">
-                                <ul class="nav nav-sm flex-column">
-                                 @can('view-user')
-                                    <li class="nav-item">
-                                        <a href="{{route('users.index')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">All Users</span></a>
-                                    </li>
-                                    @endcan
-                                    @can( 'create-user')
-                                    <li class="nav-item">
-                                        <a href="{{route('users.create')}}" class="nav-link"><span class="sidenav-mini-icon">D </span><span class="sidenav-normal">Add New User</span></a>
-                                    </li>
-                                    @endcan
-                                </ul>
-                            </div>
                         </li>
                     @endcan
 
@@ -244,11 +245,12 @@
                             </a>
                         </li>
                     @endcan
-                    @canany(['view-role', 'create-role'])
+
+                    @can('update-settings')
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('roles*')) ? 'active' : '' }}" href="{{route('roles.index')}}">
-                                <i class="fas fa-lock text-primary"></i>
-                                <span class="nav-link-text">Manage Roles</span>
+                            <a class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}" href="{{route('settings.index')}}">
+                                <i class="ni ni-settings-gear-65 text-primary"></i>
+                                <span class="nav-link-text">Manage Settings</span>
                             </a>
                         </li>
                     @endcan
@@ -261,6 +263,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @canany(['view-activity-log'])
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('activity-log*')) ? 'active' : '' }}" href="{{route('activity-log.index')}}">
@@ -269,6 +272,7 @@
                             </a>
                         </li>
                     @endcan
+
                     <li class="nav-item">
                         <hr class="my-3">
                     </li>

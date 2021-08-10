@@ -67,6 +67,7 @@ class InternshipController extends Controller
             $internship->responsibilities = $request->responsibilities;
             $internship->validity = $request->validity;
             $internship->duration = $request->duration;
+            $internship->duration = Auth::user()->id;
 
             if (empty($request->status)) {
                 $internship->status = 0;
@@ -88,7 +89,9 @@ class InternshipController extends Controller
 
     public function show(Internship $internship)
     {
-        return back();
+        $title = "Internship Details";
+        $internship->with(['facility']);
+        return view('internships.show', compact('title', 'internship'));
     }
 
     public function edit(Internship $internship)
@@ -118,6 +121,10 @@ class InternshipController extends Controller
 
     public function destroy(Internship $internship)
     {
+
+        $internship->delete();
+        flash('Internship deleted successfully!')->info();
+        return back();
 
     }
 

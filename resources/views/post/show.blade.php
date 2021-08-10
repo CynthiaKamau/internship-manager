@@ -16,12 +16,13 @@
                             Title
                         </div>
                         <div class="col-sm-3">
-                            <strong>{{ $post->post_title }}</strong>
+                            {{ $post->post_title }}
+                            
                         </div>
                         <div class="col-sm-4">
                             @if ($post->featured_image)
                                 <a href="{{ asset('storage/'.$post->featured_image) }}" target="_blank">
-                                    <img width="150" height="150" class="img-fluid" src="{{ asset('storage/'.$post->featured_image) }}" alt="">
+                                    <img width="250" height="250" class="img-fluid" src="{{ $post->featured_image }}" alt="">
                                 </a>
                             @endif
                         </div>
@@ -31,7 +32,7 @@
                             Category
                         </div>
                         <div class="col-sm-3">
-                            <strong>{{ $post->category->category_name }}</strong>
+                            {{ $post->category->category_name }}
                         </div>
                     </div>
                     <div class="row">
@@ -39,15 +40,19 @@
                             Created By
                         </div>
                         <div class="col-sm-3">
-                            <strong>{{ $post->user->name }}</strong>
+                            {{ $post->user->name }}
                         </div>
                     </div>
+
+                    <hr>
+                    
                     <div class="row">
                         <div class="col-sm-1">
                             Body
                         </div>
                         <div class="col-sm-3">
-                            <strong>{!! $post->post_body !!}</strong>
+                            {!! $post->post_body !!}
+                            
                         </div>
                     </div>
 
@@ -56,7 +61,7 @@
                             Status
                         </div>
                         <div class="col-sm-3">
-                            {{ $post->status ? 'Active' : 'Disable'}}
+                            {{ $post->status ? 'Active' : 'Disabled'}}
                         </div>
                     </div>
                 </div>

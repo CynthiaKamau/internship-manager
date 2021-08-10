@@ -74,9 +74,14 @@
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                        {{ Form::label('validity', 'Applications Open Till', ['class' => 'form-control-label']) }}
-                                        <input type="text" value="$internship->validity" class="form-control" id="datetimepicker" name="validity">
+                                    <div class="form-group">                                
+                                        <label>Application Valid Till :</label>
+                                        <div class="input-group date" data-provide="datepicker">
+                                            <input type="text" class="form-control" name="validity" id="validity" value="{{$internship->validity}}" >
+                                            <div class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -107,21 +112,14 @@
 
 @push('scripts')
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-
 <script>
 
-$('#datetimepicker').datepicker({
-    format: 'mm/dd/yyyy',
-    startDate: '-3d',
-    minDate: moment()
+$('.datepicker').datepicker({
+    startView: 2,
+    minDate: new Date()
 });
 
 </script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 @endpush
 
