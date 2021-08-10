@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+    <div class="header py-7 py-lg-8 pt-lg-9" style="background-image: url('../assets/img/brand/stethoscope.jpg')" >
         <div class="container">
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
